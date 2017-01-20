@@ -1,0 +1,3 @@
+recursive-include pretix_sepadebit/static *
+recursive-include pretix_sepadebit/templates *
+recursive-include pretix_sepadebit/locale *
