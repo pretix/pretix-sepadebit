@@ -1,0 +1,8 @@
+{% load i18n %}
+{% blocktrans trimmed with iban=iban reference=reference %}
+    We will debit the total amount displayed above from your bank account {{ iban }}
+    with the mandate reference {{reference}}.
+{% endblocktrans %}
+{% blocktrans trimmed with id=creditor_id %}
+    Our SEPA creditor ID is {{ id }}.
+{% endblocktrans %}

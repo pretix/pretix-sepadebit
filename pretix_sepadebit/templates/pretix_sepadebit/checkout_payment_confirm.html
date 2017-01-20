@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load bootstrap3 %}
+
+<div class="form-horizontal">
+    <p>
+        {% blocktrans trimmed with iban=iban %}
+            We will debit the total amount displayed above from your bank account <strong>{{ iban }}</strong>. We will
+            inform you via email about the exact date of the charge.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed with creditor=settings.creditor_name %}
+            By submitting this mandate form, you authorise (A) the Creditor <strong>{{ creditor }}</strong> to
+            send instructions to your bank to debit your account and (B) your bank to debit your account in
+            accordance with the instructions from the Creditor.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            As part of your rights, you are entitled to a refund from your bank under the terms and conditions of
+            your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which
+            your account was debited. Your rights are explained in a statement that you can obtain from your bank.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed with id=settings.creditor_id %}
+            The creditors ID is <strong>{{ id }}</strong>. Your mandate reference will be sent to you via email after
+            your order has been submitted.
+        {% endblocktrans %}
+    </p>
+
+</div>

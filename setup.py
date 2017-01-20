@@ -18,7 +18,7 @@ setup(
     author='Raphael Michel',
     author_email='mail@raphaelmichel.de',
 
-    install_requires=[],
+    install_requires=['django-localflavor', 'sepadd'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     entry_points="""
