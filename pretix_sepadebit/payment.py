@@ -78,13 +78,20 @@ class SepaDebit(BasePaymentProvider):
         )
 
     def settings_content_render(self, request):
-        return "<div class='alert alert-info'>%s</div>" % (
+        box = "<div class='alert alert-info'>%s</div>" % (
             _('If you activate this payment method, SEPA direct debit mandates will be collected via an online form. '
               'Depending on your legislation, it might be necessary to collect them on paper (currently not '
               'supported) to exclude the risk of charge backs. SEPA debit payments will be immediately marked as paid '
               'in the shop, so please mark it as unpaid and contact the user if any charge backs occur or the charge '
               'fails due to insufficient funds.'),
         )
+        if '{payment_info}' not in str(request.event.settings.mail_text_order_paid):
+            box += "<div class='alert alert-danger'>%s</div>" % (
+                _('The placeholder <code>{payment_info}</code> is not present in your configured email template for '
+                  'order payment notifications. This is legally required as it includes the mandate reference and the '
+                  'due date.'),
+            )
+        return box
 
     def payment_is_valid_session(self, request):
         return (
@@ -136,6 +143,7 @@ class SepaDebit(BasePaymentProvider):
     def payment_perform(self, request, order) -> str:
         from pretix.base.services.orders import mark_order_paid
 
+        due_date = self._due_date()
         ref = '%s-%s' % (self.event.slug.upper(), order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
@@ -146,8 +154,8 @@ class SepaDebit(BasePaymentProvider):
                 'iban': request.session['payment_sepa_iban'],
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
-                'date': self._due_date(order).strftime("%Y-%m-%d")
-            }))
+                'date': due_date.strftime("%Y-%m-%d")
+            }), mail_text=self.order_pending_mail_render(order))
         except Quota.QuotaExceededException as e:
             messages.error(request, str(e))
         else:
@@ -181,7 +189,7 @@ class SepaDebit(BasePaymentProvider):
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
 
-        template = get_template('pretix_sepadebit/order_pending.txt')
+        template = get_template('pretix_sepadebit/mail.txt')
         ctx = {
             'event': self.event,
             'order': order,
