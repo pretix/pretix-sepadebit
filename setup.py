@@ -14,7 +14,7 @@ setup(
     version='1.0.0',
     description='This plugin adds SEPA direct debit support to pretix',
     long_description=long_description,
-    url='https://pretix.eu/pretix/pretix-sepadebit',
+    url='https://github.com/pretix/pretix-sepadebit',
     author='Raphael Michel',
     author_email='mail@raphaelmichel.de',
     license='Apache Software License',
