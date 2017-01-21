@@ -17,6 +17,7 @@ setup(
     url='https://pretix.eu/pretix/pretix-sepadebit',
     author='Raphael Michel',
     author_email='mail@raphaelmichel.de',
+    license='Apache Software License',
 
     install_requires=['django-localflavor', 'sepadd'],
     packages=find_packages(exclude=['tests', 'tests.*']),
