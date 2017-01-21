@@ -1,0 +1,278 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Raphael Michel <michel@rami.io>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: pretix_sepadebit/payment.py:22
+msgid "Account holder"
+msgstr "Kontoinhaber"
+
+#: pretix_sepadebit/payment.py:23
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:17
+msgid "IBAN"
+msgstr "IBAN"
+
+#: pretix_sepadebit/payment.py:24
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:19
+msgid "BIC"
+msgstr "BIC"
+
+#: pretix_sepadebit/payment.py:25
+msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
+msgstr ""
+"Ich ermächtige hiermit den Veranstalter zum Bankeinzug mittels SEPA-"
+"Lastschrift (siehe unten)"
+
+#: pretix_sepadebit/payment.py:30 pretix_sepadebit/signals.py:24
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
+msgid "SEPA debit"
+msgstr "SEPA-Lastschrift"
+
+#: pretix_sepadebit/payment.py:38
+msgid "Creditor name"
+msgstr "Name des Gläubigers"
+
+#: pretix_sepadebit/payment.py:42
+msgid "Creditor IBAN"
+msgstr "Gläubiger-IBAN"
+
+#: pretix_sepadebit/payment.py:46
+msgid "Creditor BIC"
+msgstr "Gläubiger-BIC"
+
+#: pretix_sepadebit/payment.py:50
+msgid "Creditor ID"
+msgstr "Gläubiger-ID"
+
+#: pretix_sepadebit/payment.py:54
+msgid "Mandate reference prefix"
+msgstr "Mandatsreferenz-Prefix"
+
+#: pretix_sepadebit/payment.py:58
+msgid ""
+"This may only contain letters, numbers, and the following special "
+"characters: ' , . : + - / ( ) ?"
+msgstr ""
+"Dieses Feld darf nur Buchstaben, Zahlen und die folgenden Zeichen enthalten: "
+"' , . : + - / ( ) ?"
+
+#: pretix_sepadebit/payment.py:63
+msgid ""
+"We will use this string and append the event slug and the order code to "
+"build a unique SEPA mandate reference."
+msgstr ""
+"Wir werden diese Zeichen der von pretix aus dem Veranstaltungs-Kurznamen und "
+"der Bestellnummer generierten Mandatsreferenz voranstellen."
+
+#: pretix_sepadebit/payment.py:69
+msgid "Pre-notification time"
+msgstr "Vorabinformationszeit"
+
+#: pretix_sepadebit/payment.py:70
+msgid ""
+"Number of days between the placement of the order and the due date of the "
+"direct debit. Depending on your legislation and your bank rules, you might "
+"be required to hand in a debit at least 5 days before the due date at your "
+"bank and you might even be required to inform the customer at least 14 days "
+"beforehand. We recommend configuring at least 7 days."
+msgstr ""
+"Anzahl an Tagen zwischen der Bestellung und dem Fälligkeitsdatum der "
+"Lastschrift. Abhängig von deiner Gesetzeslage und den Regeln deiner Bank "
+"musst du die Lastschriften 5-6 Tage vor Fälligkeit bei der Bank einreichen "
+"und bist möglicherweise verpflichtet, den Benutzer 14 Tage vor Fälligkeit zu "
+"informieren. Wir empfehlen, mindestens 7 Tage einzustellen."
+
+#: pretix_sepadebit/payment.py:82
+msgid ""
+"If you activate this payment method, SEPA direct debit mandates will be "
+"collected via an online form. Depending on your legislation, it might be "
+"necessary to collect them on paper (currently not supported) to exclude the "
+"risk of charge backs. SEPA debit payments will be immediately marked as paid "
+"in the shop, so please mark it as unpaid and contact the user if any charge "
+"backs occur or the charge fails due to insufficient funds."
+msgstr ""
+"Wenn du diese Zahlungsmethode aktivierst, werden SEPA-Lastschriftmandate "
+"über ein Webformular entgegengenommen. Abhängig von deiner Gesetzeslage, "
+"kann es nötig sein diese auf Papier einzufordern um das Risiko der "
+"Rücklastschrift zu verringern. SEPA-Lastschriften werden in der Shopsoftware "
+"sofort nach Bestellung als bezahlt markiert. Im Falle einer Rücklastschrift "
+"musst du die Bestellung wieder als unbezahlt markieren und Kontakt zum "
+"Nutzer aufnehmen."
+
+#: pretix_sepadebit/payment.py:90
+#, python-brace-format
+msgid ""
+"The placeholder <code>{payment_info}</code> is not present in your "
+"configured email template for order payment notifications. This is legally "
+"required as it includes the mandate reference and the due date."
+msgstr ""
+"Der Platzhalter <code>{payment_info}</code> ist nicht in deiner E-Mail-"
+"Vorlage enthalten, die für erhaltene Zahlungen verschickt wird. Dies ist "
+"aber rechtlich notwendig, da hier die Mandatsreferenz und das "
+"Fälligkeitsdatum mitgeteilt werden."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
+#, python-format
+msgid ""
+"We will debit the total amount displayed above from your bank account "
+"<strong>%(iban)s</strong>. You hereby agree that the amount will be "
+"withdrawn from your bank account <strong>on or shortly after %(date)s</"
+"strong>."
+msgstr ""
+"Wir werden den oben angezeigten Gesamtbetrag von deinem Bankkonto <strong>"
+"%(iban)s</strong> einziehen. Du stimmst hiermit zu, dass dieser Betrag "
+"<strong>am oder kurz nach dem %(date)s</strong> von deinem Konto eingezogen "
+"wird."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
+#, python-format
+msgid ""
+"By submitting this mandate form, you authorise (A) the Creditor <strong>"
+"%(creditor)s</strong> to send instructions to your bank to debit your "
+"account and (B) your bank to debit your account in accordance with the "
+"instructions from the Creditor."
+msgstr ""
+"Mit Abschicken dieses Formulars ermächtige ich <strong>%(creditor)s</"
+"strong>, Zahlungen von meinem Konto mittels Lastschrift einzuziehen. "
+"Zugleich weise ich mein Kreditinstitut an, die von <strong>%(creditor)s</"
+"strong> auf mein Konto gezogenen Lastschriften einzulösen."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
+msgid ""
+"As part of your rights, you are entitled to a refund from your bank under "
+"the terms and conditions of your agreement with your bank. A refund must be "
+"claimed within 8 weeks starting from the date on which your account was "
+"debited. Your rights are explained in a statement that you can obtain from "
+"your bank."
+msgstr ""
+"Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die "
+"Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem "
+"Kreditinstitut vereinbarten Bedingungen."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
+#, python-format
+msgid ""
+"The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
+"sent to you via email after your order has been submitted."
+msgstr ""
+"Unsere Gläubiger-Identifikationsnummer ist <strong>%(id)s</strong>. Ihre "
+"Mandatsreferenz wird dir kurz nach Eingang der Bestellung per E-Mail "
+"mitgeteilt."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
+#, python-format
+msgid ""
+"You hereby agree that the amount will be withdrawn from your bank account "
+"<strong>on or shortly after %(date)s</strong>."
+msgstr ""
+"Du stimmst hiermit zu, dass dieser Betrag <strong>am oder kurz nach dem "
+"%(date)s</strong> von deinem Konto eingezogen wird."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:5
+msgid "This order has been paid via SEPA debit."
+msgstr "Diese Bestellung wurde per SEPA-Lastschrift bezahlt."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:9
+msgid ""
+"This order has been planned to be paid via SEPA debit but has been marked as "
+"unpaid again (or could never be marked as paid)."
+msgstr ""
+"Diese Bestellung sollte per SEPA-Lastschrift bezahlt werden, wurde aber "
+"entweder wieder als unbezahlt markiert oder konnte nie als bezahlt markiert "
+"werden."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:21
+msgid "Account name"
+msgstr "Kontoinhaber"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:23
+msgid "Mandate reference"
+msgstr "Mandatsrefernz"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:25
+msgid "Due date"
+msgstr "Fälligkeitsdatum"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:8
+#, python-format
+msgid ""
+"<strong>%(num_new)s</strong> SEPA debit orders have been placed and are not "
+"yet exported as Sepa XML."
+msgstr ""
+"<strong>%(num_new)s</strong> neue Bestellungen mit SEPA-Lastschrift als "
+"Zahlungsart wurden getätigt und noch nicht als XML exportiert."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:16
+msgid "Create new export file"
+msgstr "Neue Export-Datei erstellen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:20
+msgid "Exported XML files"
+msgstr "Exportierte XML-Dateien"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:25
+msgid "Export date"
+msgstr "Exportdatum"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:26
+msgid "Number of orders"
+msgstr "Anzahl Bestellungen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:37
+msgid "Download XML"
+msgstr "XML herunterladen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
+msgid "No exports have been created yet."
+msgstr "Es wurden noch keine Dateien exportiert."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
+#, python-format
+msgid ""
+"We will debit the total amount of this order from your bank account by "
+"direct debit on or shortly after %(date)s."
+msgstr ""
+"Wir werden den vollen Bestellbetrag am oder kurz nach dem %(date)s von "
+"deinem Bankkonto einziehen."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
+#, python-format
+msgid ""
+"This payment will appear on your bank statement as %(creditor_name)s with "
+"mandate reference %(reference)s and creditor ID %(id)s."
+msgstr ""
+"Diese Zahlung wird auf deinem Kontoauszug als %(creditor_name)s mit "
+"Mandatsreferenz %(reference)s und Gläubiger-ID %(id)s erscheinen."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
+msgid ""
+"The SEPA direct debit failed to be completed. Please contact the organizer "
+"of the event as soon as possible!"
+msgstr ""
+"Die SEPA-Lastschrift konnte nicht abgeschlossen werden. Bitte kontaktiere "
+"schnellstmöglich den Veranstalter!"
+
+#: pretix_sepadebit/views.py:84
+#, python-brace-format
+msgid "Event ticket {event}-{code}"
+msgstr "Ticket {event}-{code}"
+
+#: pretix_sepadebit/views.py:98
+msgid "A new export file has been created."
+msgstr "Eine neue Export-Datei wurde erstellt."
+
+#: pretix_sepadebit/views.py:100
+msgid "No valid orders have been found."
+msgstr "Es wurden keine gültigen Bestellungen gefunden."
