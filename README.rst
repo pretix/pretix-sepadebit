@@ -1,5 +1,5 @@
 SEPA Direct debit for pretix
-==========================
+============================
 
 This is a plugin for `pretix`_. 
 
