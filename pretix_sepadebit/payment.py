@@ -2,11 +2,13 @@ import json
 import logging
 from collections import OrderedDict
 
+from datetime import timedelta
 from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.core.validators import RegexValidator
 from django.template.loader import get_template
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
 
@@ -62,6 +64,16 @@ class SepaDebit(BasePaymentProvider):
                                  'unique SEPA mandate reference.'),
                      max_length=35 - settings.ENTROPY['order_code'] - 2 - len(self.event.slug)
                  )),
+                ('prenotification_days',
+                 forms.IntegerField(
+                     label=_('Pre-notification time'),
+                     help_text=_('Number of days between the placement of the order and the due date of the direct '
+                                 'debit. Depending on your legislation and your bank rules, you might be required to '
+                                 'hand in a debit at least 5 days before the due date at your bank and you might even '
+                                 'be required to inform the customer at least 14 days beforehand. We recommend '
+                                 'configuring at least 7 days.'),
+                     min_value=1
+                 )),
             ]
         )
 
@@ -102,7 +114,8 @@ class SepaDebit(BasePaymentProvider):
             'request': request,
             'event': self.event,
             'settings': self.settings,
-            'form': self._payment_form(request)
+            'form': self._payment_form(request),
+            'date': self._due_date()
         }
         return template.render(ctx)
 
@@ -112,7 +125,8 @@ class SepaDebit(BasePaymentProvider):
             'request': request,
             'event': self.event,
             'settings': self.settings,
-            'iban': request.session['payment_sepa_iban']
+            'iban': request.session['payment_sepa_iban'],
+            'date': self._due_date()
         }
         return template.render(ctx)
 
@@ -127,11 +141,12 @@ class SepaDebit(BasePaymentProvider):
             ref = self.settings.reference_prefix + "-" + ref
 
         try:
-            mark_order_paid(order, 'sepadebit', json.dumps({
+            mark_order_paid(order, 'sepadebit', info=json.dumps({
                 'account': request.session['payment_sepa_account'],
                 'iban': request.session['payment_sepa_iban'],
                 'bic': request.session['payment_sepa_bic'],
-                'reference': ref
+                'reference': ref,
+                'date': self._due_date(order).strftime("%Y-%m-%d")
             }))
         except Quota.QuotaExceededException as e:
             messages.error(request, str(e))
@@ -141,38 +156,42 @@ class SepaDebit(BasePaymentProvider):
             del request.session['payment_sepa_bic']
 
     def order_pending_render(self, request, order) -> str:
-        if order.payment_info:
-            payment_info = json.loads(order.payment_info)
-        else:
-            payment_info = None
         template = get_template('pretix_sepadebit/pending.html')
         ctx = {'request': request, 'event': self.event, 'settings': self.settings,
-               'order': order, 'payment_info': payment_info}
+               'order': order}
         return template.render(ctx)
 
     def order_control_render(self, request, order) -> str:
         if order.payment_info:
             payment_info = json.loads(order.payment_info)
-            if 'amount' in payment_info:
-                payment_info['amount'] /= 100
         else:
             payment_info = None
         template = get_template('pretix_sepadebit/control.html')
-        ctx = {'request': request, 'event': self.event, 'settings': self.settings,
-               'payment_info': payment_info, 'order': order}
+        ctx = {
+            'request': request,
+            'event': self.event,
+            'settings': self.settings,
+            'payment_info': payment_info,
+            'order': order,
+        }
         return template.render(ctx)
 
     def order_pending_mail_render(self, order) -> str:
-        if order.payment_info:
-            payment_info = json.loads(order.payment_info)
-        else:
-            payment_info = None
+        ref = '%s-%s' % (self.event.slug.upper(), order.code)
+        if self.settings.reference_prefix:
+            ref = self.settings.reference_prefix + "-" + ref
+
         template = get_template('pretix_sepadebit/order_pending.txt')
         ctx = {
             'event': self.event,
             'order': order,
             'creditor_id': self.settings.creditor_id,
-            'iban': payment_info['iban'],
-            'reference': payment_info['reference'],
+            'creditor_name': self.settings.creditor_name,
+            'reference': ref,
+            'date': self._due_date(order)
         }
         return template.render(ctx)
+
+    def _due_date(self, order=None):
+        startdate = order.datetime.date() if order else now().date()
+        return startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))

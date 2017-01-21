@@ -1,8 +1,9 @@
 {% load i18n %}
-{% blocktrans trimmed with iban=iban reference=reference %}
-    We will debit the total amount displayed above from your bank account {{ iban }}
-    with the mandate reference {{reference}}.
+{% blocktrans trimmed with date=date|date:"SHORT_DATE_FORMAT" %}
+    We will debit the total amount of this order from your bank account by direct
+    debit on or shortly after {{date}}.
 {% endblocktrans %}
-{% blocktrans trimmed with id=creditor_id %}
-    Our SEPA creditor ID is {{ id }}.
+{% blocktrans trimmed with reference=reference id=creditor_id name=creditor_name %}
+    This payment will appear on your bank statement as {{creditor_name}}
+    with mandate reference {{reference}} and creditor ID {{id}}.
 {% endblocktrans %}

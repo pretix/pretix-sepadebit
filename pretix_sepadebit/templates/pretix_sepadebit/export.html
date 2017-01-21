@@ -1,0 +1,51 @@
+{% extends "pretixcontrol/event/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "SEPA debit" %}{% endblock %}
+{% block content %}
+    <h1>{% trans "SEPA debit" %}</h1>
+    <p>
+        {% blocktrans trimmed %}
+            <strong>{{ num_new }}</strong> SEPA debit orders have been placed and are not yet exported as Sepa XML.
+        {% endblocktrans %}
+    </p>
+    {% if num_new > 0 %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary">
+                {% trans "Create new export file" %}
+            </button>
+        </form>
+    {% endif %}
+    <h2>{% trans "Exported XML files" %}</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{% trans "Export date" %}</th>
+                <th>{% trans "Number of orders" %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for export in exports %}
+                <tr>
+                    <td>{{ export.datetime|date:"SHORT_DATETIME_FORMAT" }}</td>
+                    <td>{{ export.cnt }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-primary" href="{% url "plugins:pretix_sepadebit:download" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
+                            <span class="fa fa-download"></span> {% trans "Download XML" %}
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">
+                        {% trans "No exports have been created yet." %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

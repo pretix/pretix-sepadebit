@@ -3,9 +3,10 @@
 
 <div class="form-horizontal">
     <p>
-        {% blocktrans trimmed with iban=iban %}
-            We will debit the total amount displayed above from your bank account <strong>{{ iban }}</strong>. We will
-            inform you via email about the exact date of the charge.
+        {% blocktrans trimmed with iban=iban date=date|date:"SHORT_DATE_FORMAT" %}
+            We will debit the total amount displayed above from your bank account <strong>{{ iban }}</strong>.
+            You hereby agree that the amount will be withdrawn from your bank account <strong>on or shortly after
+            {{ date }}</strong>.
         {% endblocktrans %}
     </p>
     <p>

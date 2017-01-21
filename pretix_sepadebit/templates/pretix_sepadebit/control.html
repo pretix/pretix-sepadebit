@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% if order.status == "p" %}
+    <p>{% blocktrans trimmed %}
+        This order has been paid via SEPA debit.
+    {% endblocktrans %}</p>
+{% else %}
+    <p>{% blocktrans trimmed %}
+        This order has been planned to be paid via SEPA debit but has been marked as unpaid again (or could never be
+        marked as paid).
+    {% endblocktrans %}</p>
+{% endif %}
+
+{% if payment_info %}
+    <dl class="dl-horizontal">
+        <dt>{% trans "IBAN" %}</dt>
+        <dd>{{ payment_info.iban }}</dd>
+        <dt>{% trans "BIC" %}</dt>
+        <dd>{{ payment_info.bic }}</dd>
+        <dt>{% trans "Account name" %}</dt>
+        <dd>{{ payment_info.account }}</dd>
+        <dt>{% trans "Mandate reference" %}</dt>
+        <dd>{{ payment_info.reference }}</dd>
+        <dt>{% trans "Due date" %}</dt>
+        <dd>{{ payment_info.date }}</dd>
+    </dl>
+{% endif %}
