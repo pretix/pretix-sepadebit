@@ -13,16 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
 
 from pretix.base.models import Quota
-from pretix.base.payment import BasePaymentProvider
+from pretix.base.payment import BasePaymentProvider, PaymentProviderForm
 
 logger = logging.getLogger(__name__)
-
-
-class PaymentForm(forms.Form):
-    account = forms.CharField(label=_('Account holder'))
-    iban = IBANFormField(label=_('IBAN'))
-    bic = BICFormField(label=_('BIC'))
-    confirm = forms.BooleanField(label=_('I hereby grant the SEPA direct debit mandate for this order (see below)'))
 
 
 class SepaDebit(BasePaymentProvider):
@@ -100,14 +93,21 @@ class SepaDebit(BasePaymentProvider):
             request.session.get('payment_sepa_bic', '') != ''
         )
 
-    def _payment_form(self, request):
-        return PaymentForm(data=request.POST if request.method == 'POST' else None)
+    @property
+    def payment_form_fields(self):
+        return OrderedDict([
+            ('account', forms.CharField(label=_('Account holder'))),
+            ('iban', IBANFormField(label=_('IBAN'))),
+            ('bic', BICFormField(label=_('BIC'))),
+            ('mandate', forms.BooleanField(
+                label=_('I hereby grant the SEPA direct debit mandate for this order (see below)'))),
+        ])
 
     def order_prepare(self, request, order):
         return self.checkout_prepare(request, None)
 
     def checkout_prepare(self, request, cart):
-        form = self._payment_form(request)
+        form = self.payment_form(request)
         if form.is_valid():
             request.session['payment_sepa_account'] = form.cleaned_data['account']
             request.session['payment_sepa_iban'] = form.cleaned_data['iban']
@@ -121,7 +121,7 @@ class SepaDebit(BasePaymentProvider):
             'request': request,
             'event': self.event,
             'settings': self.settings,
-            'form': self._payment_form(request),
+            'form': self.payment_form(request),
             'date': self._due_date()
         }
         return template.render(ctx)
