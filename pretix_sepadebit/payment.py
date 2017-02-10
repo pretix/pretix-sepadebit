@@ -29,6 +29,7 @@ class SepaDebit(BasePaymentProvider):
                 ('creditor_name',
                  forms.CharField(
                      label=_('Creditor name'),
+                     max_length=70,
                  )),
                 ('creditor_iban',
                  IBANFormField(
@@ -41,6 +42,14 @@ class SepaDebit(BasePaymentProvider):
                 ('creditor_id',
                  forms.CharField(
                      label=_('Creditor ID'),
+                     validators=[
+                         RegexValidator(
+                             regex=(r"^[a-zA-Z]{2,2}[0-9]{2,2}([A-Za-z0-9]|[\+|\?|/|\-|:|\(|\)|\.|,|']){3,3}"
+                                    r"([A-Za-z0-9]|[\+|\?|/|\-|:|\(|\)|\.|,|']){1,28}$"),
+                             message=_('This must be a valid SEPA creditor ID.'),
+                         )
+                     ],
+                     max_length=28
                  )),
                 ('reference_prefix',
                  forms.CharField(
