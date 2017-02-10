@@ -59,7 +59,7 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
             "creditor_id": request.event.settings.payment_sepadebit_creditor_id,
             "currency": request.event.currency
         }
-        sepa = SepaDD(config)
+        sepa = SepaDD(config, schema='pain.008.003.02')
 
         valid_orders = []
         for order in self.get_unexported():

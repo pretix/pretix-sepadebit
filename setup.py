@@ -19,7 +19,7 @@ setup(
     author_email='mail@raphaelmichel.de',
     license='Apache Software License',
 
-    install_requires=['django-localflavor', 'sepadd'],
+    install_requires=['django-localflavor', 'sepadd>=1.1.0'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     entry_points="""
