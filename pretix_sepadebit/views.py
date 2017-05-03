@@ -1,13 +1,10 @@
 import json
 import logging
 
-from datetime import date
-
 import dateutil
 from django.contrib import messages
 from django.db import transaction
 from django.db.models import Count
-from django.http import FileResponse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -17,7 +14,7 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 from sepadd import SepaDD
 
-from pretix.base.models import Order, orders
+from pretix.base.models import Order
 from pretix.control.permissions import EventPermissionRequiredMixin
 from pretix_sepadebit.models import SepaExport
 

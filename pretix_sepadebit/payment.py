@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
 
 from pretix.base.models import Quota
-from pretix.base.payment import BasePaymentProvider, PaymentProviderForm
+from pretix.base.payment import BasePaymentProvider
 
 logger = logging.getLogger(__name__)
 
