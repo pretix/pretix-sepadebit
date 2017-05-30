@@ -33,6 +33,9 @@
                     <td>{{ export.datetime|date:"SHORT_DATETIME_FORMAT" }}</td>
                     <td>{{ export.cnt }}</td>
                     <td class="text-right">
+                        <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
+                            <span class="fa fa-list"></span> {% trans "Orders" %}
+                        </a>
                         <a class="btn btn-primary" href="{% url "plugins:pretix_sepadebit:download" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
                             <span class="fa fa-download"></span> {% trans "Download XML" %}
                         </a>

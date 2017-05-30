@@ -7,4 +7,7 @@ urlpatterns = [
         name='export'),
     url(r'^control/event/(?P<organizer>[^/]+)/(?P<event>[^/]+)/exports/(?P<id>\d+).xml$', views.DownloadView.as_view(),
         name='download'),
+    url(r'^control/event/(?P<organizer>[^/]+)/(?P<event>[^/]+)/exports/(?P<id>\d+)/orders/$',
+        views.OrdersView.as_view(),
+        name='orders'),
 ]

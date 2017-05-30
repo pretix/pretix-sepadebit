@@ -16,7 +16,7 @@ from sepadd import SepaDD
 
 from pretix.base.models import Order
 from pretix.control.permissions import EventPermissionRequiredMixin
-from pretix_sepadebit.models import SepaExport
+from pretix_sepadebit.models import SepaExport, SepaExportOrder
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
         return SepaExport.objects.filter(
             event=self.request.event
         ).annotate(
-            cnt=Count('orders')
+            cnt=Count('sepaexportorder')
         ).order_by('-datetime')
 
     def get_context_data(self, **kwargs):
@@ -44,7 +44,7 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
             event=self.request.event,
             payment_provider='sepadebit',
             status=Order.STATUS_PAID,
-            sepa_exports__isnull=True
+            sepaexportorder__isnull=True
         )
 
     def post(self, request, *args, **kwargs):
@@ -91,7 +91,9 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
                 exp = SepaExport(event=request.event, xmldata='')
                 exp.xmldata = sepa.export().decode('utf-8')
                 exp.save()
-                exp.orders.add(*valid_orders)
+                SepaExportOrder.objects.bulk_create([
+                    SepaExportOrder(order=o, export=exp, amount=o.total) for o in valid_orders
+                ])
             messages.success(request, _('A new export file has been created.'))
         else:
             messages.warning(request, _('No valid orders have been found.'))
@@ -101,11 +103,9 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
         }))
 
 
-
 class DownloadView(EventPermissionRequiredMixin, DetailView):
     permission = 'can_change_orders'
     model = SepaExport
-    context_object_name = 'exports'
 
     def get_object(self, *args, **kwargs):
         return SepaExport.objects.get(
@@ -122,3 +122,21 @@ class DownloadView(EventPermissionRequiredMixin, DetailView):
             self.object.datetime.strftime('%Y-%m-%d-%H-%M-%S'),
         )
         return resp
+
+
+class OrdersView(EventPermissionRequiredMixin, DetailView):
+    permission = 'can_change_orders'
+    model = SepaExport
+    context_object_name = 'export'
+    template_name = 'pretix_sepadebit/orders.html'
+
+    def get_object(self, *args, **kwargs):
+        return SepaExport.objects.get(
+            event=self.request.event,
+            pk=self.kwargs.get('id')
+        )
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['seorders'] = self.object.sepaexportorder_set.select_related('order').prefetch_related('order__invoices')
+        return ctx

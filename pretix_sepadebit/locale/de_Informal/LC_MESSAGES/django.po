@@ -1,63 +1,49 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-30 17:55+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
-"X-Generator: Poedit 1.8.11\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
 
-#: pretix_sepadebit/payment.py:22
-msgid "Account holder"
-msgstr "Kontoinhaber"
-
-#: pretix_sepadebit/payment.py:23
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:17
-msgid "IBAN"
-msgstr "IBAN"
-
-#: pretix_sepadebit/payment.py:24
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:19
-msgid "BIC"
-msgstr "BIC"
-
-#: pretix_sepadebit/payment.py:25
-msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
-msgstr ""
-"Ich erm‰chtige hiermit den Veranstalter zum Bankeinzug mittels SEPA-"
-"Lastschrift (siehe unten)"
-
-#: pretix_sepadebit/payment.py:30 pretix_sepadebit/signals.py:24
+#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
 msgstr "SEPA-Lastschrift"
 
-#: pretix_sepadebit/payment.py:38
+#: pretix_sepadebit/payment.py:31
 msgid "Creditor name"
-msgstr "Name des Gl‰ubigers"
+msgstr "Name des Gl√§ubigers"
 
-#: pretix_sepadebit/payment.py:42
+#: pretix_sepadebit/payment.py:36
 msgid "Creditor IBAN"
-msgstr "Gl‰ubiger-IBAN"
+msgstr "Gl√§ubiger-IBAN"
 
-#: pretix_sepadebit/payment.py:46
+#: pretix_sepadebit/payment.py:40
 msgid "Creditor BIC"
-msgstr "Gl‰ubiger-BIC"
+msgstr "Gl√§ubiger-BIC"
 
-#: pretix_sepadebit/payment.py:50
+#: pretix_sepadebit/payment.py:44
 msgid "Creditor ID"
-msgstr "Gl‰ubiger-ID"
+msgstr "Gl√§ubiger-ID"
 
-#: pretix_sepadebit/payment.py:54
+#: pretix_sepadebit/payment.py:49
+#, fuzzy
+msgid "This must be a valid SEPA creditor ID."
+msgstr "Dies muss eine g√ºltige SEPA-Gl√§ubiger-ID sein."
+
+#: pretix_sepadebit/payment.py:56
 msgid "Mandate reference prefix"
 msgstr "Mandatsreferenz-Prefix"
 
-#: pretix_sepadebit/payment.py:58
+#: pretix_sepadebit/payment.py:60
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
@@ -65,7 +51,7 @@ msgstr ""
 "Dieses Feld darf nur Buchstaben, Zahlen und die folgenden Zeichen enthalten: "
 "' , . : + - / ( ) ?"
 
-#: pretix_sepadebit/payment.py:63
+#: pretix_sepadebit/payment.py:65
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
@@ -73,11 +59,11 @@ msgstr ""
 "Wir werden diese Zeichen der von pretix aus dem Veranstaltungs-Kurznamen und "
 "der Bestellnummer generierten Mandatsreferenz voranstellen."
 
-#: pretix_sepadebit/payment.py:69
+#: pretix_sepadebit/payment.py:71
 msgid "Pre-notification time"
 msgstr "Vorabinformationszeit"
 
-#: pretix_sepadebit/payment.py:70
+#: pretix_sepadebit/payment.py:72
 msgid ""
 "Number of days between the placement of the order and the due date of the "
 "direct debit. Depending on your legislation and your bank rules, you might "
@@ -85,13 +71,13 @@ msgid ""
 "bank and you might even be required to inform the customer at least 14 days "
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
-"Anzahl an Tagen zwischen der Bestellung und dem F‰lligkeitsdatum der "
-"Lastschrift. Abh‰ngig von deiner Gesetzeslage und den Regeln deiner Bank "
-"musst du die Lastschriften 5-6 Tage vor F‰lligkeit bei der Bank einreichen "
-"und bist mˆglicherweise verpflichtet, den Benutzer 14 Tage vor F‰lligkeit zu "
+"Anzahl an Tagen zwischen der Bestellung und dem F√§lligkeitsdatum der "
+"Lastschrift. Abh√§ngig von deiner Gesetzeslage und den Regeln deiner Bank "
+"musst du die Lastschriften 5-6 Tage vor F√§lligkeit bei der Bank einreichen "
+"und bist m√∂glicherweise verpflichtet, den Benutzer 14 Tage vor F√§lligkeit zu "
 "informieren. Wir empfehlen, mindestens 7 Tage einzustellen."
 
-#: pretix_sepadebit/payment.py:82
+#: pretix_sepadebit/payment.py:84
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -101,14 +87,14 @@ msgid ""
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
 "Wenn du diese Zahlungsmethode aktivierst, werden SEPA-Lastschriftmandate "
-"¸ber ein Webformular entgegengenommen. Abh‰ngig von deiner Gesetzeslage, "
-"kann es nˆtig sein diese auf Papier einzufordern um das Risiko der "
-"R¸cklastschrift zu verringern. SEPA-Lastschriften werden in der Shopsoftware "
-"sofort nach Bestellung als bezahlt markiert. Im Falle einer R¸cklastschrift "
+"√ºber ein Webformular entgegengenommen. Abh√§ngig von deiner Gesetzeslage, "
+"kann es n√∂tig sein diese auf Papier einzufordern um das Risiko der "
+"R√ºcklastschrift zu verringern. SEPA-Lastschriften werden in der Shopsoftware "
+"sofort nach Bestellung als bezahlt markiert. Im Falle einer R√ºcklastschrift "
 "musst du die Bestellung wieder als unbezahlt markieren und Kontakt zum "
 "Nutzer aufnehmen."
 
-#: pretix_sepadebit/payment.py:90
+#: pretix_sepadebit/payment.py:92
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -116,9 +102,29 @@ msgid ""
 "required as it includes the mandate reference and the due date."
 msgstr ""
 "Der Platzhalter <code>{payment_info}</code> ist nicht in deiner E-Mail-"
-"Vorlage enthalten, die f¸r erhaltene Zahlungen verschickt wird. Dies ist "
+"Vorlage enthalten, die f√ºr erhaltene Zahlungen verschickt wird. Dies ist "
 "aber rechtlich notwendig, da hier die Mandatsreferenz und das "
-"F‰lligkeitsdatum mitgeteilt werden."
+"F√§lligkeitsdatum mitgeteilt werden."
+
+#: pretix_sepadebit/payment.py:108
+msgid "Account holder"
+msgstr "Kontoinhaber"
+
+#: pretix_sepadebit/payment.py:109
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
+msgid "IBAN"
+msgstr "IBAN"
+
+#: pretix_sepadebit/payment.py:110
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
+msgid "BIC"
+msgstr "BIC"
+
+#: pretix_sepadebit/payment.py:112
+msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
+msgstr ""
+"Ich erm√§chtige hiermit den Veranstalter zum Bankeinzug mittels SEPA-"
+"Lastschrift (siehe unten)"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -142,10 +148,10 @@ msgid ""
 "account and (B) your bank to debit your account in accordance with the "
 "instructions from the Creditor."
 msgstr ""
-"Mit Abschicken dieses Formulars erm‰chtige ich <strong>%(creditor)s</"
+"Mit Abschicken dieses Formulars erm√§chtige ich <strong>%(creditor)s</"
 "strong>, Zahlungen von meinem Konto mittels Lastschrift einzuziehen. "
 "Zugleich weise ich mein Kreditinstitut an, die von <strong>%(creditor)s</"
-"strong> auf mein Konto gezogenen Lastschriften einzulˆsen."
+"strong> auf mein Konto gezogenen Lastschriften einzul√∂sen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
@@ -167,7 +173,7 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
-"Unsere Gl‰ubiger-Identifikationsnummer ist <strong>%(id)s</strong>. Ihre "
+"Unsere Gl√§ubiger-Identifikationsnummer ist <strong>%(id)s</strong>. Ihre "
 "Mandatsreferenz wird dir kurz nach Eingang der Bestellung per E-Mail "
 "mitgeteilt."
 
@@ -180,11 +186,28 @@ msgstr ""
 "Du stimmst hiermit zu, dass dieser Betrag <strong>am oder kurz nach dem "
 "%(date)s</strong> von deinem Konto eingezogen wird."
 
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:5
-msgid "This order has been paid via SEPA debit."
-msgstr "Diese Bestellung wurde per SEPA-Lastschrift bezahlt."
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
+#, python-format
+msgid ""
+"This order has been paid via SEPA debit. It was part of the export file "
+"exported at %(date)s."
+msgstr ""
+"Diese Bestellung wurde per SEPA-Lastschrift bezahlt. Sie war Teil der "
+"Exportdatei vom %(date)s."
 
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:9
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
+msgid "View export file"
+msgstr "Export-Datei ansehen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
+msgid ""
+"This shall be paid via SEPA debit, but has not yet been included in any SEPA "
+"file export."
+msgstr ""
+"Diese Bestellung soll per SEPA-Lastschrift bezahlt werden, war aber bis "
+"jetzt noch nicht Teil einer exportierten SEPA-XML-Datei."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
 msgid ""
 "This order has been planned to be paid via SEPA debit but has been marked as "
 "unpaid again (or could never be marked as paid)."
@@ -193,17 +216,17 @@ msgstr ""
 "entweder wieder als unbezahlt markiert oder konnte nie als bezahlt markiert "
 "werden."
 
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:21
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
 msgstr "Kontoinhaber"
 
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:23
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
 msgstr "Mandatsrefernz"
 
-#: pretix_sepadebit/templates/pretix_sepadebit/control.html:25
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
 msgid "Due date"
-msgstr "F‰lligkeitsdatum"
+msgstr "F√§lligkeitsdatum"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:8
 #, python-format
@@ -212,7 +235,7 @@ msgid ""
 "yet exported as Sepa XML."
 msgstr ""
 "<strong>%(num_new)s</strong> neue Bestellungen mit SEPA-Lastschrift als "
-"Zahlungsart wurden get‰tigt und noch nicht als XML exportiert."
+"Zahlungsart wurden get√§tigt und noch nicht als XML exportiert."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:16
 msgid "Create new export file"
@@ -231,10 +254,15 @@ msgid "Number of orders"
 msgstr "Anzahl Bestellungen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:37
+msgid "Orders"
+msgstr "Bestellungen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:40
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:9
 msgid "Download XML"
 msgstr "XML herunterladen"
 
-#: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:47
 msgid "No exports have been created yet."
 msgstr "Es wurden noch keine Dateien exportiert."
 
@@ -254,7 +282,40 @@ msgid ""
 "mandate reference %(reference)s and creditor ID %(id)s."
 msgstr ""
 "Diese Zahlung wird auf deinem Kontoauszug als %(creditor_name)s mit "
-"Mandatsreferenz %(reference)s und Gl‰ubiger-ID %(id)s erscheinen."
+"Mandatsreferenz %(reference)s und Gl√§ubiger-ID %(id)s erscheinen."
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:4
+msgid "SEPA export"
+msgstr "SEPA-Export"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:7
+#, python-format
+msgid "SEPA export: %(date)s"
+msgstr "SEPA-Export: %(date)s"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:12
+msgid "Included orders"
+msgstr "Enthaltene Bestellungen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:17
+msgid "Order"
+msgstr "Bestellung"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:18
+msgid "Order date"
+msgstr "Bestelldatum"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
+msgid "Associated invoices"
+msgstr "Zugeh√∂rige Rechnungen"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:20
+msgid "Payment amount"
+msgstr "Zahlbetrag"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:43
+msgid "No orders have been part of this export."
+msgstr "Es wurden keine passenden Bestellungen gefunden."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
 msgid ""
@@ -262,17 +323,17 @@ msgid ""
 "of the event as soon as possible!"
 msgstr ""
 "Die SEPA-Lastschrift konnte nicht abgeschlossen werden. Bitte kontaktiere "
-"schnellstmˆglich den Veranstalter!"
+"schnellstm√∂glich den Veranstalter!"
 
-#: pretix_sepadebit/views.py:84
+#: pretix_sepadebit/views.py:81
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
 msgstr "Ticket {event}-{code}"
 
-#: pretix_sepadebit/views.py:98
+#: pretix_sepadebit/views.py:97
 msgid "A new export file has been created."
 msgstr "Eine neue Export-Datei wurde erstellt."
 
-#: pretix_sepadebit/views.py:100
+#: pretix_sepadebit/views.py:99
 msgid "No valid orders have been found."
-msgstr "Es wurden keine g¸ltigen Bestellungen gefunden."
+msgstr "Es wurden keine g√ºltigen Bestellungen gefunden."

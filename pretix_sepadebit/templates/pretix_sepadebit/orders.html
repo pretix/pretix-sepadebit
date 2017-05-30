@@ -1,0 +1,50 @@
+{% extends "pretixcontrol/event/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% trans "SEPA export" %}{% endblock %}
+{% block content %}
+    <h1>
+        {% blocktrans with date=export.datetime|date:"SHORT_DATETIME_FORMAT" %}SEPA export: {{ date }}{% endblocktrans %}
+        <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:download" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
+            <span class="fa fa-download"></span> {% trans "Download XML" %}
+        </a>
+    </h1>
+    <h2>{% trans "Included orders" %}</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{% trans "Order" %}</th>
+                <th>{% trans "Order date" %}</th>
+                <th>{% trans "Associated invoices" %}</th>
+                <th>{% trans "Payment amount" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for seo in seorders %}
+                <tr>
+                    <td><strong><a href="{% url "control:event.order" event=request.event.slug organizer=request.event.organizer.slug code=seo.order.code %}">
+                        {{ seo.order.code }}
+                    </a></strong></td>
+                    <td>{{ seo.order.datetime|date:"SHORT_DATETIME_FORMAT" }}</td>
+                    <td>
+                        {% for i in seo.order.invoices.all %}
+                            <a href="{% url "control:event.invoice.download" invoice=i.pk event=request.event.slug organizer=request.event.organizer.slug %}">
+                                {{ i.number }}</a>{% if forloop.revcounter0 > 0 %},{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="text-right">
+                        {{ seo.order.total|floatformat:2 }} {{ request.event.currency }}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">
+                        {% trans "No orders have been part of this export." %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
