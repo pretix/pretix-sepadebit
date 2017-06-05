@@ -4,7 +4,7 @@ import logging
 import dateutil
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -31,7 +31,8 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
         return SepaExport.objects.filter(
             event=self.request.event
         ).annotate(
-            cnt=Count('sepaexportorder')
+            cnt=Count('sepaexportorder'),
+            sum=Sum('sepaexportorder__amount'),
         ).order_by('-datetime')
 
     def get_context_data(self, **kwargs):
@@ -139,4 +140,5 @@ class OrdersView(EventPermissionRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['seorders'] = self.object.sepaexportorder_set.select_related('order').prefetch_related('order__invoices')
+        ctx['total'] = self.object.sepaexportorder_set.aggregate(sum=Sum('amount'))['sum']
         return ctx

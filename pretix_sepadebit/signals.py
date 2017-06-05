@@ -3,7 +3,7 @@ from django.urls import resolve
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from pretix.base.signals import register_payment_providers
+from pretix.base.signals import register_payment_providers, register_data_exporters
 from pretix.control.signals import nav_event
 
 from .payment import SepaDebit
@@ -30,3 +30,9 @@ def control_nav_import(sender, request=None, **kwargs):
             'icon': 'bank',
         }
     ]
+
+
+@receiver(register_data_exporters, dispatch_uid="payment_sepadebit_export_csv")
+def register_csv(sender, **kwargs):
+    from .exporters import DebitList
+    return DebitList

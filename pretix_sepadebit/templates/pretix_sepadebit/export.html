@@ -24,6 +24,7 @@
             <tr>
                 <th>{% trans "Export date" %}</th>
                 <th>{% trans "Number of orders" %}</th>
+                <th>{% trans "Total amount" %}</th>
                 <th></th>
             </tr>
             </thead>
@@ -32,6 +33,7 @@
                 <tr>
                     <td>{{ export.datetime|date:"SHORT_DATETIME_FORMAT" }}</td>
                     <td>{{ export.cnt }}</td>
+                    <td>{{ export.sum|default_if_none:"0.00" }} {{ request.event.currency }}</td>
                     <td class="text-right">
                         <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
                             <span class="fa fa-list"></span> {% trans "Orders" %}

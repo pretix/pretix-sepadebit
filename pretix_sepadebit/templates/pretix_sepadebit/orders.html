@@ -10,6 +10,11 @@
         </a>
     </h1>
     <h2>{% trans "Included orders" %}</h2>
+    <span>
+        {% blocktrans trimmed with currency=request.event.currency total=total %}
+            Total amount: {{ total }} {{ currency }}
+        {% endblocktrans %}
+    </span>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
