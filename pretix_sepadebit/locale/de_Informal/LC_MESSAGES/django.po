@@ -173,7 +173,7 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
-"Unsere Gläubiger-Identifikationsnummer ist <strong>%(id)s</strong>. Ihre "
+"Unsere Gläubiger-Identifikationsnummer ist <strong>%(id)s</strong>. Deine "
 "Mandatsreferenz wird dir kurz nach Eingang der Bestellung per E-Mail "
 "mitgeteilt."
 
