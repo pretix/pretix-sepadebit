@@ -14,6 +14,7 @@ from localflavor.generic.forms import BICFormField, IBANFormField
 
 from pretix.base.models import Quota
 from pretix.base.payment import BasePaymentProvider
+# TODO reimport from pretix.presale.views.cart import cart_session
 
 logger = logging.getLogger(__name__)
 
@@ -96,10 +97,11 @@ class SepaDebit(BasePaymentProvider):
         return box
 
     def payment_is_valid_session(self, request):
+        cs = cart_session(request)
         return (
-            request.session.get('payment_sepa_account', '') != '' and
-            request.session.get('payment_sepa_iban', '') != '' and
-            request.session.get('payment_sepa_bic', '') != ''
+            cs.get('payment_sepa_account', '') != '' and
+            cs.get('payment_sepa_iban', '') != '' and
+            cs.get('payment_sepa_bic', '') != ''
         )
 
     @property
@@ -116,11 +118,12 @@ class SepaDebit(BasePaymentProvider):
         return self.checkout_prepare(request, None)
 
     def checkout_prepare(self, request, cart):
+        cs = cart_session(request)
         form = self.payment_form(request)
         if form.is_valid():
-            request.session['payment_sepa_account'] = form.cleaned_data['account']
-            request.session['payment_sepa_iban'] = form.cleaned_data['iban']
-            request.session['payment_sepa_bic'] = form.cleaned_data['bic']
+            cs['payment_sepa_account'] = form.cleaned_data['account']
+            cs['payment_sepa_iban'] = form.cleaned_data['iban']
+            cs['payment_sepa_bic'] = form.cleaned_data['bic']
             return True
         return False
 
@@ -136,12 +139,13 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def checkout_confirm_render(self, request) -> str:
+        cs = cart_session(request)
         template = get_template('pretix_sepadebit/checkout_payment_confirm.html')
         ctx = {
             'request': request,
             'event': self.event,
             'settings': self.settings,
-            'iban': request.session['payment_sepa_iban'],
+            'iban': cs['payment_sepa_iban'],
             'date': self._due_date()
         }
         return template.render(ctx)
@@ -152,6 +156,7 @@ class SepaDebit(BasePaymentProvider):
     def payment_perform(self, request, order) -> str:
         from pretix.base.services.orders import mark_order_paid
 
+        cs = cart_session(request)
         due_date = self._due_date()
         ref = '%s-%s' % (self.event.slug.upper(), order.code)
         if self.settings.reference_prefix:
@@ -159,18 +164,18 @@ class SepaDebit(BasePaymentProvider):
 
         try:
             mark_order_paid(order, 'sepadebit', info=json.dumps({
-                'account': request.session['payment_sepa_account'],
-                'iban': request.session['payment_sepa_iban'],
-                'bic': request.session['payment_sepa_bic'],
+                'account': cs['payment_sepa_account'],
+                'iban': cs['payment_sepa_iban'],
+                'bic': cs['payment_sepa_bic'],
                 'reference': ref,
                 'date': due_date.strftime("%Y-%m-%d")
             }), mail_text=self.order_pending_mail_render(order))
         except Quota.QuotaExceededException as e:
             messages.error(request, str(e))
         else:
-            del request.session['payment_sepa_account']
-            del request.session['payment_sepa_iban']
-            del request.session['payment_sepa_bic']
+            del cs['payment_sepa_account']
+            del cs['payment_sepa_iban']
+            del cs['payment_sepa_bic']
 
     def order_pending_render(self, request, order) -> str:
         template = get_template('pretix_sepadebit/pending.html')
