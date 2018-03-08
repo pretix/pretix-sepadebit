@@ -8,13 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-06 16:55+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-03-15 08:54+0000\n"
+"Last-Translator: Matheus Nunes <matheus@integrate.com.br>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://translate.pretix.eu/projects/pretix/pretix-plugin-sepadebit/pt_BR/>"
+"\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.19.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -30,12 +34,12 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Order code"
-msgstr ""
+msgstr "Código do pedido"
 
 #: pretix_sepadebit/exporters.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order date"
-msgstr ""
+msgstr "Data do pedido"
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Invoices"
