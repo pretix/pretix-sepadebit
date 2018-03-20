@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-06 16:55+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2018-03-20 21:00+0000\n"
+"Last-Translator: Mikkel Ricky <rimi@aarhus.dk>\n"
+"Language-Team: Danish <https://translate.pretix.eu/projects/pretix/pretix-"
+"plugin-sepadebit/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.19.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -30,16 +33,16 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Order code"
-msgstr ""
+msgstr "Bestillingskode"
 
 #: pretix_sepadebit/exporters.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order date"
-msgstr ""
+msgstr "Bestillingsdato"
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Invoices"
-msgstr ""
+msgstr "Fakturaer"
 
 #: pretix_sepadebit/exporters.py:25
 msgid "SEPA export date"
@@ -125,7 +128,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:108
 msgid "Account holder"
-msgstr ""
+msgstr "Kontoejer"
 
 #: pretix_sepadebit/payment.py:109
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
@@ -245,11 +248,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Total amount"
-msgstr ""
+msgstr "Samlet beløb"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:39
 msgid "Orders"
-msgstr ""
+msgstr "Bestillinger"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:9
@@ -294,7 +297,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:22
 msgid "Order"
-msgstr ""
+msgstr "Rækkefølge"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
 msgid "Associated invoices"
