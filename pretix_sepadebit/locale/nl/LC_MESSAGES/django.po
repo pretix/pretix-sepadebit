@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-19 17:34+0200\n"
-"PO-Revision-Date: 2018-03-19 16:51+0000\n"
-"Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
+"PO-Revision-Date: 2018-04-06 14:06+0000\n"
+"Last-Translator: Pieter Roziers <pieter@trippeltwiejenul.be>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/nl/>\n"
 "Language: nl\n"
@@ -42,7 +42,6 @@ msgid "Invoices"
 msgstr "Facturen"
 
 #: pretix_sepadebit/exporters.py:25
-#, fuzzy
 msgid "SEPA export date"
 msgstr "SEPA-exportdatum"
 
@@ -74,9 +73,8 @@ msgid "Creditor ID"
 msgstr "Incassant-ID begunstigde"
 
 #: pretix_sepadebit/payment.py:49
-#, fuzzy
 msgid "This must be a valid SEPA creditor ID."
-msgstr "Dit moet een geldig SEPA-incassant ID zijn."
+msgstr "Dit moet een geldige SEPA-incassant ID zijn."
 
 #: pretix_sepadebit/payment.py:56
 msgid "Mandate reference prefix"
@@ -135,7 +133,7 @@ msgstr ""
 "afschrijving mislukt door onvoldoende saldo."
 
 #: pretix_sepadebit/payment.py:92
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
 "configured email template for order payment notifications. This is legally "
@@ -195,7 +193,6 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
-#, fuzzy
 msgid ""
 "As part of your rights, you are entitled to a refund from your bank under "
 "the terms and conditions of your agreement with your bank. A refund must be "
@@ -203,10 +200,10 @@ msgid ""
 "debited. Your rights are explained in a statement that you can obtain from "
 "your bank."
 msgstr ""
-"U heeft recht op een terugbetaling van uw bank volgens de voorwaarden van uw "
-"overeenkomt met uw bank. Een terugbetaling moet binnen 8 weken na de datum "
+"U heeft recht op een terugbetaling van uw bank volgens de voorwaarden van de "
+"overeenkomst met uw bank. Een terugbetaling moet binnen 8 weken na de datum "
 "waarop het bedrag is afgeschreven worden aangevraagd. Uw rechten worden "
-"uitgelegd in een verklaring die u bij uw bank kunt opvragen."
+"beschreven in een verklaring die u bij uw bank kunt opvragen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
@@ -228,7 +225,7 @@ msgstr ""
 "bankrekening <strong>op of kort na %(date)s</strong>."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "This order has been paid via SEPA debit. It was part of the export file "
 "exported at %(date)s."
@@ -237,12 +234,10 @@ msgstr ""
 "op %(date)s geëxporteerde bestand."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
-#, fuzzy
 msgid "View export file"
 msgstr "Toon geëxporteerd bestand"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
-#, fuzzy
 msgid ""
 "This shall be paid via SEPA debit, but has not yet been included in any SEPA "
 "file export."
@@ -251,13 +246,12 @@ msgstr ""
 "SEPA-bestandsexport."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
-#, fuzzy
 msgid ""
 "This order has been planned to be paid via SEPA debit but has been marked as "
 "unpaid again (or could never be marked as paid)."
 msgstr ""
-"De bestelling is gepland om te worden betaald via SEPA-incasso, maar is weer "
-"als onbetaald aangemerkt (of kon nooit als betaald worden aangemerkt)."
+"De bestelling werd gepland om te worden betaald via SEPA-incasso, maar werd "
+"weer als onbetaald aangeduid (of kon nooit als betaald worden aangeduid)."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
@@ -354,7 +348,6 @@ msgid "Order"
 msgstr "Bestelling"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
-#, fuzzy
 msgid "Associated invoices"
 msgstr "Geassocieerde facturen"
 
@@ -363,18 +356,17 @@ msgid "No orders have been part of this export."
 msgstr "Geen bestellingen waren deel van deze export."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
-#, fuzzy
 msgid ""
 "The SEPA direct debit failed to be completed. Please contact the organizer "
 "of the event as soon as possible!"
 msgstr ""
 "De SEPA-incasso kon niet worden voltooid. Neem zo snel mogelijk contact op "
-"met de organisator van het evenement."
+"met de organisator van het evenement!"
 
 #: pretix_sepadebit/views.py:82
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr "Evenement kaartje {event}-{code}"
+msgstr "Evenement ticket {event}-{code}"
 
 #: pretix_sepadebit/views.py:98
 msgid "A new export file has been created."
