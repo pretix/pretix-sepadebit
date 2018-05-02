@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-06 16:55+0100\n"
+"POT-Creation-Date: 2018-05-02 16:07+0200\n"
 "PO-Revision-Date: 2018-04-08 02:00+0000\n"
 "Last-Translator: Claude <superoxyde@laposte.net>\n"
 "Language-Team: French <https://translate.pretix.eu/projects/pretix/pretix-"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Payment amount"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:24
+#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
@@ -108,7 +108,7 @@ msgid ""
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:84
+#: pretix_sepadebit/payment.py:86
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -118,7 +118,7 @@ msgid ""
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:92
+#: pretix_sepadebit/payment.py:94
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -126,22 +126,32 @@ msgid ""
 "required as it includes the mandate reference and the due date."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:108
+#: pretix_sepadebit/payment.py:110
 msgid "Account holder"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:109
+#: pretix_sepadebit/payment.py:111
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:110
+#: pretix_sepadebit/payment.py:112
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:112
+#: pretix_sepadebit/payment.py:114
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
+msgstr ""
+
+#: pretix_sepadebit/signals.py:43
+msgid "SEPA debit history"
+msgstr ""
+
+#: pretix_sepadebit/signals.py:45
+msgid ""
+"This will remove previously exported SEPA XML files containing banking "
+"information."
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-19 17:34+0200\n"
+"POT-Creation-Date: 2018-05-02 16:07+0200\n"
 "PO-Revision-Date: 2018-04-06 14:06+0000\n"
 "Last-Translator: Pieter Roziers <pieter@trippeltwiejenul.be>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
@@ -50,7 +50,7 @@ msgstr "SEPA-exportdatum"
 msgid "Payment amount"
 msgstr "Te betalen bedrag"
 
-#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:24
+#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
@@ -85,8 +85,8 @@ msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
 msgstr ""
-"Dit mag alleen letters, cijfers, en de volgende speciale tekens bevatten: ' "
-", . : + - / ( ) ?"
+"Dit mag alleen letters, cijfers, en de volgende speciale tekens bevatten: "
+"' , . : + - / ( ) ?"
 
 #: pretix_sepadebit/payment.py:65
 msgid ""
@@ -115,7 +115,7 @@ msgstr ""
 "klant ten minste 14 dagen van tevoren te informeren. We raden aan om ten "
 "minste 7 dagen in te stellen."
 
-#: pretix_sepadebit/payment.py:84
+#: pretix_sepadebit/payment.py:86
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -132,7 +132,7 @@ msgstr ""
 "en neem contact met de gebruiker op als een stornering plaatsvindt of de "
 "afschrijving mislukt door onvoldoende saldo."
 
-#: pretix_sepadebit/payment.py:92
+#: pretix_sepadebit/payment.py:94
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -144,25 +144,37 @@ msgstr ""
 "wettelijk verplicht, omdat hierin de mandaatreferentie en uitvoeringsdatum "
 "worden vermeld."
 
-#: pretix_sepadebit/payment.py:108
+#: pretix_sepadebit/payment.py:110
 msgid "Account holder"
 msgstr "Rekeninghouder"
 
-#: pretix_sepadebit/payment.py:109
+#: pretix_sepadebit/payment.py:111
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
 msgstr "IBAN"
 
-#: pretix_sepadebit/payment.py:110
+#: pretix_sepadebit/payment.py:112
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
 msgstr "BIC"
 
-#: pretix_sepadebit/payment.py:112
+#: pretix_sepadebit/payment.py:114
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
 msgstr ""
 "Hierbij geef ik toestemming voor de SEPA-incassomachtiging voor deze "
 "bestelling (zie onder)"
+
+#: pretix_sepadebit/signals.py:43
+#, fuzzy
+#| msgid "SEPA debit"
+msgid "SEPA debit history"
+msgstr "SEPA-afschrijving"
+
+#: pretix_sepadebit/signals.py:45
+msgid ""
+"This will remove previously exported SEPA XML files containing banking "
+"information."
+msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format

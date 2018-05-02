@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-06 16:55+0100\n"
+"POT-Creation-Date: 2018-05-02 16:07+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: \n"
@@ -46,7 +46,7 @@ msgstr "SEPA-Exportdatum"
 msgid "Payment amount"
 msgstr "Zahlbetrag"
 
-#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:24
+#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
@@ -110,7 +110,7 @@ msgstr ""
 "und bist möglicherweise verpflichtet, den Benutzer 14 Tage vor Fälligkeit zu "
 "informieren. Wir empfehlen, mindestens 7 Tage einzustellen."
 
-#: pretix_sepadebit/payment.py:84
+#: pretix_sepadebit/payment.py:86
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -127,7 +127,7 @@ msgstr ""
 "musst du die Bestellung wieder als unbezahlt markieren und Kontakt zum "
 "Nutzer aufnehmen."
 
-#: pretix_sepadebit/payment.py:92
+#: pretix_sepadebit/payment.py:94
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -139,25 +139,37 @@ msgstr ""
 "aber rechtlich notwendig, da hier die Mandatsreferenz und das "
 "Fälligkeitsdatum mitgeteilt werden."
 
-#: pretix_sepadebit/payment.py:108
+#: pretix_sepadebit/payment.py:110
 msgid "Account holder"
 msgstr "Kontoinhaber"
 
-#: pretix_sepadebit/payment.py:109
+#: pretix_sepadebit/payment.py:111
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
 msgstr "IBAN"
 
-#: pretix_sepadebit/payment.py:110
+#: pretix_sepadebit/payment.py:112
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
 msgstr "BIC"
 
-#: pretix_sepadebit/payment.py:112
+#: pretix_sepadebit/payment.py:114
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
 msgstr ""
 "Ich ermächtige hiermit den Veranstalter zum Bankeinzug mittels SEPA-"
 "Lastschrift (siehe unten)"
+
+#: pretix_sepadebit/signals.py:43
+#, fuzzy
+#| msgid "SEPA debit"
+msgid "SEPA debit history"
+msgstr "SEPA-Lastschrift"
+
+#: pretix_sepadebit/signals.py:45
+msgid ""
+"This will remove previously exported SEPA XML files containing banking "
+"information."
+msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
