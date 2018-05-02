@@ -24,8 +24,8 @@ class SepaDebit(BasePaymentProvider):
 
     @property
     def settings_form_fields(self):
-        return OrderedDict(
-            list(super().settings_form_fields.items()) + [
+        d = OrderedDict(
+            [
                 ('creditor_name',
                  forms.CharField(
                      label=_('Creditor name'),
@@ -76,8 +76,10 @@ class SepaDebit(BasePaymentProvider):
                                  'configuring at least 7 days.'),
                      min_value=1
                  )),
-            ]
+            ] + list(super().settings_form_fields.items())
         )
+        d.move_to_end('_enabled', last=False)
+        return d
 
     def settings_content_render(self, request):
         box = "<div class='alert alert-info'>%s</div>" % (
