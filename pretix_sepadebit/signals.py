@@ -3,7 +3,8 @@ from django.urls import resolve
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from pretix.base.signals import register_payment_providers, register_data_exporters
+from pretix.base.shredder import BaseDataShredder
+from pretix.base.signals import register_payment_providers, register_data_exporters, register_data_shredders
 from pretix.control.signals import nav_event
 
 from .payment import SepaDebit
@@ -36,3 +37,27 @@ def control_nav_import(sender, request=None, **kwargs):
 def register_csv(sender, **kwargs):
     from .exporters import DebitList
     return DebitList
+
+
+class PaymentLogsShredder(BaseDataShredder):
+    verbose_name = _('SEPA debit history')
+    identifier = 'sepadebit_history'
+    description = _('This will remove previously exported SEPA XML files containing banking information.')
+
+    def generate_files(self):
+        for f in self.event.sepa_exports.all():
+            yield (
+                'sepadebit/{}-{}.xml'.format(self.event.slug.upper(), f.datetime.strftime('%Y-%m-%d-%H-%M-%S')),
+                'text/plain',
+                f.xmldata
+            )
+
+    def shred_data(self):
+        self.event.sepa_exports.update(xmldata="<shredded></shredded>")
+
+
+@receiver(register_data_shredders, dispatch_uid="sepadebit_shredders")
+def register_shredder(sender, **kwargs):
+    return [
+        PaymentLogsShredder,
+    ]

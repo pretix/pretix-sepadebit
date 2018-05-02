@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
 
-from pretix.base.models import Quota
+from pretix.base.models import Quota, Order
 from pretix.base.payment import BasePaymentProvider
 
 logger = logging.getLogger(__name__)
@@ -214,3 +214,14 @@ class SepaDebit(BasePaymentProvider):
     def _due_date(self, order=None):
         startdate = order.datetime.date() if order else now().date()
         return startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
+
+    def shred_payment_info(self, order: Order):
+        if not order.payment_info:
+            return
+        d = json.loads(order.payment_info)
+        d['account'] = '█'
+        d['iban'] = '█'
+        d['bic'] = '█'
+        d['_shredded'] = True
+        order.payment_info = json.dumps(d)
+        order.save(update_fields=['payment_info'])
