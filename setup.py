@@ -25,7 +25,7 @@ cmdclass = {
 
 setup(
     name='pretix-sepadebit',
-    version='1.2.2',
+    version='1.3.0',
     description='This plugin adds SEPA direct debit support to pretix',
     long_description=long_description,
     url='https://github.com/pretix/pretix-sepadebit',
