@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:07+0200\n"
-"PO-Revision-Date: 2018-05-29 16:00+0000\n"
-"Last-Translator: CVA <uz508560@gmail.com>\n"
+"PO-Revision-Date: 2018-05-31 00:00+0000\n"
+"Last-Translator: Lorenzo Peña <lorinkoz@nauta.cu>\n"
 "Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/es/>\n"
 "Language: es\n"
@@ -33,12 +33,12 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Order code"
-msgstr "Código de pedido"
+msgstr "Código de la orden"
 
 #: pretix_sepadebit/exporters.py:25
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order date"
-msgstr "Fecha de pedido"
+msgstr "Fecha de la orden"
 
 #: pretix_sepadebit/exporters.py:25
 msgid "Invoices"
