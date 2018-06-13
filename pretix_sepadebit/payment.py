@@ -26,6 +26,12 @@ class SepaDebit(BasePaymentProvider):
     def settings_form_fields(self):
         d = OrderedDict(
             [
+                ('ack',
+                 forms.BooleanField(
+                     label=_('I have understood that I need to regularly create SEPA XML export files and transfer '
+                             'them to my bank in order to have my bank collect the customer payments.'),
+                     required=True,
+                 )),
                 ('creditor_name',
                  forms.CharField(
                      label=_('Creditor name'),
