@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-02 16:07+0200\n"
+"POT-Creation-Date: 2018-06-13 12:08+0200\n"
 "PO-Revision-Date: 2018-05-02 14:22+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
@@ -57,30 +57,37 @@ msgid "SEPA debit"
 msgstr "SEPA-afschrijving"
 
 #: pretix_sepadebit/payment.py:31
+msgid ""
+"I have understood that I need to regularly create SEPA XML export files and "
+"transfer them to my bank in order to have my bank collect the customer "
+"payments."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:37
 msgid "Creditor name"
 msgstr "Naam begunstigde"
 
-#: pretix_sepadebit/payment.py:36
+#: pretix_sepadebit/payment.py:42
 msgid "Creditor IBAN"
 msgstr "IBAN begunstigde"
 
-#: pretix_sepadebit/payment.py:40
+#: pretix_sepadebit/payment.py:46
 msgid "Creditor BIC"
 msgstr "BIC begunstigde"
 
-#: pretix_sepadebit/payment.py:44
+#: pretix_sepadebit/payment.py:50
 msgid "Creditor ID"
 msgstr "Incassant-ID begunstigde"
 
-#: pretix_sepadebit/payment.py:49
+#: pretix_sepadebit/payment.py:55
 msgid "This must be a valid SEPA creditor ID."
 msgstr "Dit moet een geldige SEPA-incassant ID zijn."
 
-#: pretix_sepadebit/payment.py:56
+#: pretix_sepadebit/payment.py:62
 msgid "Mandate reference prefix"
 msgstr "Machtigingskenmerkvoorvoegsel"
 
-#: pretix_sepadebit/payment.py:60
+#: pretix_sepadebit/payment.py:66
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
@@ -88,7 +95,7 @@ msgstr ""
 "Dit mag alleen letters, cijfers, en de volgende speciale tekens bevatten: "
 "' , . : + - / ( ) ?"
 
-#: pretix_sepadebit/payment.py:65
+#: pretix_sepadebit/payment.py:71
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
@@ -96,11 +103,11 @@ msgstr ""
 "We zullen deze tekst gebruiken en hier de evenementsslug en bestelcode aan "
 "toevoegen om een uniek SEPA-machtigingskenmerk op te bouwen."
 
-#: pretix_sepadebit/payment.py:71
+#: pretix_sepadebit/payment.py:77
 msgid "Pre-notification time"
 msgstr "Vooraanmeldingstijd"
 
-#: pretix_sepadebit/payment.py:72
+#: pretix_sepadebit/payment.py:78
 msgid ""
 "Number of days between the placement of the order and the due date of the "
 "direct debit. Depending on your legislation and your bank rules, you might "
@@ -115,7 +122,7 @@ msgstr ""
 "klant ten minste 14 dagen van tevoren te informeren. We raden aan om ten "
 "minste 7 dagen in te stellen."
 
-#: pretix_sepadebit/payment.py:86
+#: pretix_sepadebit/payment.py:92
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -132,7 +139,7 @@ msgstr ""
 "en neem contact met de gebruiker op als een stornering plaatsvindt of de "
 "afschrijving mislukt door onvoldoende saldo."
 
-#: pretix_sepadebit/payment.py:94
+#: pretix_sepadebit/payment.py:100
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -144,21 +151,21 @@ msgstr ""
 "wettelijk verplicht, omdat hierin de mandaatreferentie en uitvoeringsdatum "
 "worden vermeld."
 
-#: pretix_sepadebit/payment.py:110
+#: pretix_sepadebit/payment.py:116
 msgid "Account holder"
 msgstr "Rekeninghouder"
 
-#: pretix_sepadebit/payment.py:111
+#: pretix_sepadebit/payment.py:117
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
 msgstr "IBAN"
 
-#: pretix_sepadebit/payment.py:112
+#: pretix_sepadebit/payment.py:118
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
 msgstr "BIC"
 
-#: pretix_sepadebit/payment.py:114
+#: pretix_sepadebit/payment.py:120
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
 msgstr ""
 "Hierbij geef ik toestemming voor de SEPA-incassomachtiging voor deze "
