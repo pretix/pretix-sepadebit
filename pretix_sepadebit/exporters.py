@@ -6,7 +6,6 @@ import pytz
 from django import forms
 from django.db.models.functions import Coalesce
 from django.utils.translation import ugettext as _, ugettext_lazy
-
 from pretix.base.exporter import BaseExporter
 from pretix.base.models import Order, OrderPosition, Question
 from pretix_sepadebit.models import SepaExportOrder
