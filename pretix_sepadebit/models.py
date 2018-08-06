@@ -10,4 +10,5 @@ class SepaExport(models.Model):
 class SepaExportOrder(models.Model):
     export = models.ForeignKey(SepaExport, on_delete=models.CASCADE)
     order = models.ForeignKey('pretixbase.Order', on_delete=models.CASCADE)
+    payment = models.ForeignKey('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
