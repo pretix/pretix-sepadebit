@@ -1,10 +1,11 @@
 from django.dispatch import receiver
-from django.urls import resolve
-from django.urls import reverse
+from django.urls import resolve, reverse
 from django.utils.translation import ugettext_lazy as _
-
 from pretix.base.shredder import BaseDataShredder
-from pretix.base.signals import register_payment_providers, register_data_exporters, register_data_shredders
+from pretix.base.signals import (
+    register_data_exporters, register_data_shredders,
+    register_payment_providers,
+)
 from pretix.control.signals import nav_event
 
 from .payment import SepaDebit
