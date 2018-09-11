@@ -1,19 +1,20 @@
 import json
 import logging
 from collections import OrderedDict
-
 from datetime import timedelta
+from typing import Union
+
 from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.core.validators import RegexValidator
+from django.http import HttpRequest
 from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
-
-from pretix.base.models import Quota, Order
-from pretix.base.payment import BasePaymentProvider
+from pretix.base.models import Order, OrderPayment, OrderRefund, Quota
+from pretix.base.payment import BasePaymentProvider, PaymentException
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 class SepaDebit(BasePaymentProvider):
     identifier = 'sepadebit'
     verbose_name = _('SEPA debit')
+    abort_pending_allowed = True
 
     @property
     def settings_form_fields(self):
@@ -120,7 +122,7 @@ class SepaDebit(BasePaymentProvider):
                 label=_('I hereby grant the SEPA direct debit mandate for this order (see below)'))),
         ])
 
-    def order_prepare(self, request, order):
+    def payment_prepare(self, request: HttpRequest, payment: OrderPayment):
         return self.checkout_prepare(request, None)
 
     def checkout_prepare(self, request, cart):
@@ -154,50 +156,41 @@ class SepaDebit(BasePaymentProvider):
         }
         return template.render(ctx)
 
-    def order_can_retry(self, order):
-        return self._is_still_available()
-
-    def payment_perform(self, request, order) -> str:
-        from pretix.base.services.orders import mark_order_paid
-
+    def execute_payment(self, request: HttpRequest, payment: OrderPayment):
         due_date = self._due_date()
-        ref = '%s-%s' % (self.event.slug.upper(), order.code)
+        ref = '%s-%s' % (self.event.slug.upper(), payment.order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
 
         try:
-            mark_order_paid(order, 'sepadebit', info=json.dumps({
+            payment.info_data = {
                 'account': request.session['payment_sepa_account'],
                 'iban': request.session['payment_sepa_iban'],
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
                 'date': due_date.strftime("%Y-%m-%d")
-            }), mail_text=self.order_pending_mail_render(order))
+            }
+            payment.confirm(mail_text=self.order_pending_mail_render(payment.order))
         except Quota.QuotaExceededException as e:
-            messages.error(request, str(e))
-        else:
+            raise PaymentException(str(e))
+        finally:
             del request.session['payment_sepa_account']
             del request.session['payment_sepa_iban']
             del request.session['payment_sepa_bic']
 
-    def order_pending_render(self, request, order) -> str:
+    def payment_pending_render(self, request: HttpRequest, payment: OrderPayment):
         template = get_template('pretix_sepadebit/pending.html')
-        ctx = {'request': request, 'event': self.event, 'settings': self.settings,
-               'order': order}
+        ctx = {'request': request, 'event': self.event, 'settings': self.settings}
         return template.render(ctx)
 
-    def order_control_render(self, request, order) -> str:
-        if order.payment_info:
-            payment_info = json.loads(order.payment_info)
-        else:
-            payment_info = None
+    def payment_control_render(self, request: HttpRequest, payment: OrderPayment):
         template = get_template('pretix_sepadebit/control.html')
         ctx = {
             'request': request,
             'event': self.event,
             'settings': self.settings,
-            'payment_info': payment_info,
-            'order': order,
+            'payment_info': payment.info_data,
+            'order': payment.order,
         }
         return template.render(ctx)
 
@@ -221,13 +214,11 @@ class SepaDebit(BasePaymentProvider):
         startdate = order.datetime.date() if order else now().date()
         return startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
 
-    def shred_payment_info(self, order: Order):
-        if not order.payment_info:
-            return
-        d = json.loads(order.payment_info)
+    def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
+        d = obj.info_data
         d['account'] = '█'
         d['iban'] = '█'
         d['bic'] = '█'
         d['_shredded'] = True
-        order.payment_info = json.dumps(d)
-        order.save(update_fields=['payment_info'])
+        obj.info_data = d
+        obj.save(update_fields=['info'])

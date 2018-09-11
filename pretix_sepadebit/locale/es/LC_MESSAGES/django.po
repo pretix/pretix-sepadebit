@@ -7,14 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-13 12:08+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2018-08-06 12:31+0200\n"
+"PO-Revision-Date: 2018-05-31 00:00+0000\n"
+"Last-Translator: Lorenzo Peña <lorinkoz@nauta.cu>\n"
+"Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/pretix-"
+"plugin-sepadebit/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.19.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -24,86 +27,85 @@ msgstr ""
 msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:17
+#: pretix_sepadebit/exporters.py:16
 msgid "List of SEPA debits (CSV)"
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:25
+#: pretix_sepadebit/exporters.py:24
 msgid "Order code"
-msgstr ""
+msgstr "Código de la orden"
 
-#: pretix_sepadebit/exporters.py:25
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Order date"
-msgstr ""
+msgstr "Fecha de la orden"
 
-#: pretix_sepadebit/exporters.py:25
+#: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:25
+#: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:25
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
+#: pretix_sepadebit/exporters.py:24
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:27
 msgid "Payment amount"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:23 pretix_sepadebit/signals.py:25
+#: pretix_sepadebit/payment.py:24 pretix_sepadebit/signals.py:26
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:31
+#: pretix_sepadebit/payment.py:33
 msgid ""
 "I have understood that I need to regularly create SEPA XML export files and "
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:37
+#: pretix_sepadebit/payment.py:39
 msgid "Creditor name"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:42
+#: pretix_sepadebit/payment.py:44
 msgid "Creditor IBAN"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:46
+#: pretix_sepadebit/payment.py:48
 msgid "Creditor BIC"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:50
+#: pretix_sepadebit/payment.py:52
 msgid "Creditor ID"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:55
+#: pretix_sepadebit/payment.py:57
 msgid "This must be a valid SEPA creditor ID."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:62
+#: pretix_sepadebit/payment.py:64
 msgid "Mandate reference prefix"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:66
+#: pretix_sepadebit/payment.py:68
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:71
+#: pretix_sepadebit/payment.py:73
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:77
+#: pretix_sepadebit/payment.py:79
 msgid "Pre-notification time"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:78
+#: pretix_sepadebit/payment.py:80
 msgid ""
 "Number of days between the placement of the order and the due date of the "
 "direct debit. Depending on your legislation and your bank rules, you might "
@@ -112,7 +114,7 @@ msgid ""
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:92
+#: pretix_sepadebit/payment.py:94
 msgid ""
 "If you activate this payment method, SEPA direct debit mandates will be "
 "collected via an online form. Depending on your legislation, it might be "
@@ -122,7 +124,7 @@ msgid ""
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:100
+#: pretix_sepadebit/payment.py:102
 #, python-brace-format
 msgid ""
 "The placeholder <code>{payment_info}</code> is not present in your "
@@ -130,29 +132,29 @@ msgid ""
 "required as it includes the mandate reference and the due date."
 msgstr ""
 
-#: pretix_sepadebit/payment.py:116
+#: pretix_sepadebit/payment.py:118
 msgid "Account holder"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:117
+#: pretix_sepadebit/payment.py:119
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:118
+#: pretix_sepadebit/payment.py:120
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
 msgstr ""
 
-#: pretix_sepadebit/payment.py:120
+#: pretix_sepadebit/payment.py:122
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
 msgstr ""
 
-#: pretix_sepadebit/signals.py:43
+#: pretix_sepadebit/signals.py:44
 msgid "SEPA debit history"
 msgstr ""
 
-#: pretix_sepadebit/signals.py:45
+#: pretix_sepadebit/signals.py:46
 msgid ""
 "This will remove previously exported SEPA XML files containing banking "
 "information."
@@ -269,7 +271,7 @@ msgid "Orders"
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:9
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:10
 msgid "Download XML"
 msgstr ""
 
@@ -291,33 +293,43 @@ msgid ""
 "mandate reference %(reference)s and creditor ID %(id)s."
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:4
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:7
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:8
 #, python-format
 msgid "SEPA export: %(date)s"
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:12
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:13
 msgid "Included orders"
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:14
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:15
 #, python-format
 msgid "Total amount: %(total)s %(currency)s"
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:22
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order"
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
+msgid "Payment"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
+#, fuzzy
+#| msgid "Order date"
+msgid "Mandate date"
+msgstr "Fecha de la orden"
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:26
 msgid "Associated invoices"
 msgstr ""
 
-#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:48
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:57
 msgid "No orders have been part of this export."
 msgstr ""
 
@@ -327,15 +339,15 @@ msgid ""
 "of the event as soon as possible!"
 msgstr ""
 
-#: pretix_sepadebit/views.py:82
+#: pretix_sepadebit/views.py:80
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
 msgstr ""
 
-#: pretix_sepadebit/views.py:98
+#: pretix_sepadebit/views.py:96
 msgid "A new export file has been created."
 msgstr ""
 
-#: pretix_sepadebit/views.py:100
+#: pretix_sepadebit/views.py:98
 msgid "No valid orders have been found."
 msgstr ""

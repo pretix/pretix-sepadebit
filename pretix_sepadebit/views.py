@@ -10,13 +10,11 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import DetailView
-from django.views.generic import ListView
-from sepadd import SepaDD
-
-from pretix.base.models import Order
+from django.views.generic import DetailView, ListView
+from pretix.base.models import Order, OrderPayment
 from pretix.control.permissions import EventPermissionRequiredMixin
 from pretix_sepadebit.models import SepaExport, SepaExportOrder
+from sepadd import SepaDD
 
 logger = logging.getLogger(__name__)
 
@@ -41,10 +39,10 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
         return ctx
 
     def get_unexported(self):
-        return Order.objects.filter(
-            event=self.request.event,
-            payment_provider='sepadebit',
-            status=Order.STATUS_PAID,
+        return OrderPayment.objects.filter(
+            order__event=self.request.event,
+            provider='sepadebit',
+            state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             sepaexportorder__isnull=True
         )
 
@@ -59,41 +57,41 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
         }
         sepa = SepaDD(config, schema='pain.008.003.02')
 
-        valid_orders = []
-        for order in self.get_unexported():
-            if order.payment_info:
-                payment_info = json.loads(order.payment_info)
-            else:
+        valid_payments = []
+        for payment in self.get_unexported():
+            if not payment.info_data:
                 # Should not happen
                 # TODO: Notify user
-                order.status = Order.STATUS_PENDING
-                order.save()
+                payment.state = OrderPayment.PAYMENT_STATE_FAILED
+                payment.save()
+                payment.order.status = Order.STATUS_PENDING
+                payment.order.save()
                 continue
 
-            payment = {
-                "name": payment_info['account'],
-                "IBAN": payment_info['iban'],
-                "BIC": payment_info['bic'],
-                "amount": int(order.total * 100),
+            payment_dict = {
+                "name": payment.info_data['account'],
+                "IBAN": payment.info_data['iban'],
+                "BIC": payment.info_data['bic'],
+                "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().date(), dateutil.parser.parse(payment_info['date']).date()),
-                "mandate_id": payment_info['reference'],
-                "mandate_date": order.datetime.date(),
+                "collection_date": max(now().date(), dateutil.parser.parse(payment.info_data['date']).date()),
+                "mandate_id": payment.info_data['reference'],
+                "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
                     event=request.event.slug.upper(),
-                    code=order.code
+                    code=payment.order.code
                 )
             }
-            sepa.add_payment(payment)
-            valid_orders.append(order)
+            sepa.add_payment(payment_dict)
+            valid_payments.append(payment)
 
-        if valid_orders:
+        if valid_payments:
             with transaction.atomic():
                 exp = SepaExport(event=request.event, xmldata='')
                 exp.xmldata = sepa.export().decode('utf-8')
                 exp.save()
                 SepaExportOrder.objects.bulk_create([
-                    SepaExportOrder(order=o, export=exp, amount=o.total) for o in valid_orders
+                    SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments
                 ])
             messages.success(request, _('A new export file has been created.'))
         else:
@@ -139,6 +137,7 @@ class OrdersView(EventPermissionRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['seorders'] = self.object.sepaexportorder_set.select_related('order').prefetch_related('order__invoices')
+        ctx['seorders'] = self.object.sepaexportorder_set.select_related('order', 'payment').prefetch_related(
+            'order__invoices')
         ctx['total'] = self.object.sepaexportorder_set.aggregate(sum=Sum('amount'))['sum']
         return ctx
