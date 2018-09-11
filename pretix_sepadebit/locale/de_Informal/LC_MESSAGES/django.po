@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19.1\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -59,6 +59,9 @@ msgid ""
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
+"Ich habe verstanden, dass ich regelmäßig SEPA-XML-Dateien herunterladen und "
+"zu meiner Bank übertragen muss, damit meine Bank die Zahlungen der Kunden "
+"einzieht."
 
 #: pretix_sepadebit/payment.py:39
 msgid "Creditor name"
