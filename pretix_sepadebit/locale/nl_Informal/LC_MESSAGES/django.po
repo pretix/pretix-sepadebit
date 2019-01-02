@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-06 12:31+0200\n"
-"PO-Revision-Date: 2019-01-02 13:20+0000\n"
+"PO-Revision-Date: 2019-01-02 13:21+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
 "Language-Team: Dutch (informal) <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/nl_Informal/>\n"
@@ -379,7 +379,7 @@ msgstr "Betaling"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
 msgid "Mandate date"
-msgstr ""
+msgstr "Mandaatdatum"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:26
 msgid "Associated invoices"
