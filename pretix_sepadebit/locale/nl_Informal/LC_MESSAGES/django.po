@@ -21,15 +21,17 @@ msgstr ""
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
-msgstr ""
+msgstr "SEPA Automatische incasso voor pretix"
 
 #: pretix_sepadebit/__init__.py:12
 msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr ""
+"Deze plug-in voegt ondersteuning voor automatische SEPA-incasso's toe aan "
+"pretix"
 
 #: pretix_sepadebit/exporters.py:16
 msgid "List of SEPA debits (CSV)"
-msgstr ""
+msgstr "Lijst van SEPA-incasso's (CSV)"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order code"
@@ -45,7 +47,7 @@ msgstr "Facturen"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
-msgstr ""
+msgstr "SEPA-exportdatum"
 
 #: pretix_sepadebit/exporters.py:24
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:27
@@ -56,7 +58,7 @@ msgstr "Te betalen bedrag"
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:6
 msgid "SEPA debit"
-msgstr ""
+msgstr "SEPA-afschrijving"
 
 #: pretix_sepadebit/payment.py:33
 msgid ""
@@ -64,46 +66,53 @@ msgid ""
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
+"Ik heb begrepen dat ik regelmatig SEPA XML-exportbestanden moet aanmaken en "
+"ze moet overdragen aan mijn bank om mijn bank de betalingen van de klanten "
+"te laten innen."
 
 #: pretix_sepadebit/payment.py:39
 msgid "Creditor name"
-msgstr ""
+msgstr "Naam begunstigde"
 
 #: pretix_sepadebit/payment.py:44
 msgid "Creditor IBAN"
-msgstr ""
+msgstr "IBAN begunstigde"
 
 #: pretix_sepadebit/payment.py:48
 msgid "Creditor BIC"
-msgstr ""
+msgstr "BIC begunstigde"
 
 #: pretix_sepadebit/payment.py:52
 msgid "Creditor ID"
-msgstr ""
+msgstr "Incassant-ID begunstigde"
 
 #: pretix_sepadebit/payment.py:57
 msgid "This must be a valid SEPA creditor ID."
-msgstr ""
+msgstr "Dit moet een geldig SEPA-incassant-ID zijn."
 
 #: pretix_sepadebit/payment.py:64
 msgid "Mandate reference prefix"
-msgstr ""
+msgstr "Machtigingskenmerkvoorvoegsel"
 
 #: pretix_sepadebit/payment.py:68
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
 msgstr ""
+"Dit mag alleen letters, cijfers, en de volgende speciale tekens bevatten: ' "
+", . : + - / ( ) ?"
 
 #: pretix_sepadebit/payment.py:73
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
 msgstr ""
+"We zullen deze tekst gebruiken en hier de evenementsslug en bestelcode aan "
+"toevoegen om een uniek SEPA-machtigingskenmerk op te bouwen."
 
 #: pretix_sepadebit/payment.py:79
 msgid "Pre-notification time"
-msgstr ""
+msgstr "Vooraanmeldingstijd"
 
 #: pretix_sepadebit/payment.py:80
 msgid ""
@@ -113,6 +122,12 @@ msgid ""
 "bank and you might even be required to inform the customer at least 14 days "
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
+"Aantal dagen tussen het plaatsen van de bestelling en de uitvoeringsdatum "
+"van de afschrijving. Afhankelijk van je wetgeving en regels van je bank kan "
+"je verplicht zijn om een afschrijving ten minste 5 dagen voor de "
+"uitvoeringsdatum bij je bank te melden, en kan je zelfs verplicht zijn om de "
+"klant ten minste 14 dagen van tevoren te informeren. We raden aan om ten "
+"minste 7 dagen in te stellen."
 
 #: pretix_sepadebit/payment.py:94
 msgid ""
@@ -123,6 +138,13 @@ msgid ""
 "in the shop, so please mark it as unpaid and contact the user if any charge "
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
+"Als je deze betalingsmethode activeert zullen SEPA-machtigingen worden "
+"verzameld via een online formulier. Afhankelijk van je wetgeving kan het "
+"nodig zijn om deze op papier te verzamelen (momenteel niet ondersteund) om "
+"de kans op storneringen te verkleinen. SEPA-incasso's zullen direct als "
+"betaald worden gemarkeerd in de winkel, markeer de bestelling als onbetaald "
+"en neem contact met de gebruiker op als een stornering plaatsvindt of de "
+"afschrijving mislukt door onvoldoende saldo."
 
 #: pretix_sepadebit/payment.py:102
 #, python-brace-format
@@ -131,6 +153,10 @@ msgid ""
 "configured email template for order payment notifications. This is legally "
 "required as it includes the mandate reference and the due date."
 msgstr ""
+"De plaatsaanduiding <code>{payment_info}</code> is niet aanwezig in je "
+"ingestelde e-mailsjabloon voor betalingsmeldingen voor bestellingen. Dit is "
+"wettelijk verplicht, omdat hierin de mandaatreferentie en uitvoeringsdatum "
+"worden vermeld."
 
 #: pretix_sepadebit/payment.py:118
 msgid "Account holder"
@@ -149,16 +175,20 @@ msgstr "BIC"
 #: pretix_sepadebit/payment.py:122
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
 msgstr ""
+"Hierbij geef ik toestemming voor de SEPA-incassomachtiging voor deze "
+"bestelling (zie onder)"
 
 #: pretix_sepadebit/signals.py:44
 msgid "SEPA debit history"
-msgstr ""
+msgstr "SEPA-afschrijvingsgeschiedenis"
 
 #: pretix_sepadebit/signals.py:46
 msgid ""
 "This will remove previously exported SEPA XML files containing banking "
 "information."
 msgstr ""
+"Dit zal eerder geëxporteerde SEPA-XML-bestanden met bankinformatie "
+"verwijderen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -168,6 +198,10 @@ msgid ""
 "withdrawn from your bank account <strong>on or shortly after %(date)s</"
 "strong>."
 msgstr ""
+"We zullen het hierboven weergegeven totaalbedrag afschrijven van je "
+"bankrekening <strong>%(iban)s</strong>. Je gaat hierbij ermee akkoord dat "
+"het bedrag zal worden afgeschreven van je bankrekening <strong>op of kort na "
+"%(date)s</strong>."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
@@ -204,6 +238,8 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
+"De incassant-ID is <strong>%(id)s</strong>. Je machtingskenmerk zal via e-"
+"mail naar je worden gestuurd nadat je bestelling is geplaatst."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
 #, python-format
@@ -211,6 +247,8 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
+"Je gaat hierbij ermee akkoord dat het bedrag zal worden afgeschreven van je "
+"bankrekening <strong>op of kort na %(date)s</strong>."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
 #, python-format
@@ -218,30 +256,36 @@ msgid ""
 "This order has been paid via SEPA debit. It was part of the export file "
 "exported at %(date)s."
 msgstr ""
+"Deze bestelling is betaald via SEPA-incasso. De bestelling was deel van het "
+"op %(date)s geëxporteerde bestand."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
 msgid "View export file"
-msgstr ""
+msgstr "Toon geëxporteerd bestand"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
 msgid ""
 "This shall be paid via SEPA debit, but has not yet been included in any SEPA "
 "file export."
 msgstr ""
+"Dit zal worden betaald via SEPA-incasso, maar is nog niet meegenomen in een "
+"SEPA-bestandsexport."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
 msgid ""
 "This order has been planned to be paid via SEPA debit but has been marked as "
 "unpaid again (or could never be marked as paid)."
 msgstr ""
+"De bestelling werd gepland om te worden betaald via SEPA-incasso, maar werd "
+"weer als onbetaald aangeduid (of kon nooit als betaald worden aangeduid)."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
-msgstr ""
+msgstr "Naam rekeninghouder"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
-msgstr ""
+msgstr "Machtigingskenmerk"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
 msgid "Due date"
@@ -253,22 +297,24 @@ msgid ""
 "<strong>%(num_new)s</strong> SEPA debit orders have been placed and are not "
 "yet exported as Sepa XML."
 msgstr ""
+"<strong>%(num_new)s</strong> bestellingen via SEPA-incasso zijn geplaatst en "
+"zijn nog niet geëxporteerd als SEPA-XML."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:16
 msgid "Create new export file"
-msgstr ""
+msgstr "Maak nieuw exportbestand"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:20
 msgid "Exported XML files"
-msgstr ""
+msgstr "Geëxporteerde XML-bestanden"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:25
 msgid "Export date"
-msgstr ""
+msgstr "Exportdatum"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:26
 msgid "Number of orders"
-msgstr ""
+msgstr "Aantal bestellingen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Total amount"
@@ -281,11 +327,11 @@ msgstr "Bestellingen"
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:10
 msgid "Download XML"
-msgstr ""
+msgstr "Download XML"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:49
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Er zijn nog geen exports aangemaakt."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -293,6 +339,8 @@ msgid ""
 "We will debit the total amount of this order from your bank account by "
 "direct debit on or shortly after %(date)s."
 msgstr ""
+"We zullen het totaalbedrag van deze bestelling op of kort na %(date)s van je "
+"bankrekening afschrijven via automatische incasso."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
 #, python-format
@@ -300,24 +348,26 @@ msgid ""
 "This payment will appear on your bank statement as %(creditor_name)s with "
 "mandate reference %(reference)s and creditor ID %(id)s."
 msgstr ""
+"Deze betaling zal in je bankafschriften verschijnen als %(creditor_name)s, "
+"met machtigingskenmerk %(reference)s en incassant-ID %(id)s."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
-msgstr ""
+msgstr "SEPA-export"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:8
 #, python-format
 msgid "SEPA export: %(date)s"
-msgstr ""
+msgstr "SEPA-export: %(date)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:13
 msgid "Included orders"
-msgstr ""
+msgstr "Inbegrepen bestellingen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:15
 #, python-format
 msgid "Total amount: %(total)s %(currency)s"
-msgstr ""
+msgstr "Totaalbedrag: %(total)s %(currency)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order"
@@ -333,27 +383,29 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:26
 msgid "Associated invoices"
-msgstr ""
+msgstr "Geassocieerde facturen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:57
 msgid "No orders have been part of this export."
-msgstr ""
+msgstr "Geen bestellingen waren deel van deze export."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
 msgid ""
 "The SEPA direct debit failed to be completed. Please contact the organizer "
 "of the event as soon as possible!"
 msgstr ""
+"De SEPA-incasso kon niet worden voltooid. Neem zo snel mogelijk contact op "
+"met de organisator van het evenement!"
 
 #: pretix_sepadebit/views.py:80
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Evenement kaartje {event}-{code}"
 
 #: pretix_sepadebit/views.py:96
 msgid "A new export file has been created."
-msgstr ""
+msgstr "Een nieuw exportbestand is aangemaakt."
 
 #: pretix_sepadebit/views.py:98
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "Er zijn geen geldige bestellingen gevonden."
