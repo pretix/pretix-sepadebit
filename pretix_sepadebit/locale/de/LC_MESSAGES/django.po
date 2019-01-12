@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-11 17:52+0200\n"
-"PO-Revision-Date: 2018-08-07 13:57+0000\n"
+"PO-Revision-Date: 2019-01-12 15:56+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
-"Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/de/>\n"
+"Language-Team: German <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -365,16 +365,12 @@ msgid "Order"
 msgstr "Bestellung"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
-#, fuzzy
-#| msgid "Payment amount"
 msgid "Payment"
-msgstr "Zahlbetrag"
+msgstr "Zahlung"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
-#, fuzzy
-#| msgid "Order date"
 msgid "Mandate date"
-msgstr "Bestelldatum"
+msgstr "Mandatsdatum"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:26
 msgid "Associated invoices"
