@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-11 17:52+0200\n"
-"PO-Revision-Date: 2018-05-31 00:00+0000\n"
-"Last-Translator: Lorenzo Peña <lorinkoz@nauta.cu>\n"
-"Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/es/>\n"
+"PO-Revision-Date: 2019-02-20 05:00+0000\n"
+"Last-Translator: oocf <oswaldocerna@gmail.com>\n"
+"Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.19.1\n"
+"X-Generator: Weblate 3.4\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit for pretix"
@@ -41,7 +41,7 @@ msgstr "Fecha de la orden"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
-msgstr ""
+msgstr "Facturas"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
@@ -134,17 +134,17 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:118
 msgid "Account holder"
-msgstr ""
+msgstr "Titular de la cuenta"
 
 #: pretix_sepadebit/payment.py:119
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:120
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:122
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -264,16 +264,16 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Total amount"
-msgstr ""
+msgstr "Cantidad total"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:39
 msgid "Orders"
-msgstr ""
+msgstr "Ordenes"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:10
 msgid "Download XML"
-msgstr ""
+msgstr "Descargar XML"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:49
 msgid "No exports have been created yet."
@@ -304,30 +304,28 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:13
 msgid "Included orders"
-msgstr ""
+msgstr "Ordenes incluidas"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:15
 #, python-format
 msgid "Total amount: %(total)s %(currency)s"
-msgstr ""
+msgstr "Cantidad total: %(total)s %(currency)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:23
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
 msgid "Payment"
-msgstr ""
+msgstr "Pago"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
-#, fuzzy
-#| msgid "Order date"
 msgid "Mandate date"
-msgstr "Fecha de la orden"
+msgstr "Fecha de mandato"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:26
 msgid "Associated invoices"
-msgstr ""
+msgstr "Facturas asociadas"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:57
 msgid "No orders have been part of this export."
@@ -342,12 +340,12 @@ msgstr ""
 #: pretix_sepadebit/views.py:80
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Ticket del evento {event} {code}"
 
 #: pretix_sepadebit/views.py:96
 msgid "A new export file has been created."
-msgstr ""
+msgstr "Un nuevo archivo exportado ha sido creado."
 
 #: pretix_sepadebit/views.py:98
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "No se han encontrado ordenes validas."
