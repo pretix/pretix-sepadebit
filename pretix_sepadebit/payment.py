@@ -25,6 +25,10 @@ class SepaDebit(BasePaymentProvider):
     abort_pending_allowed = True
 
     @property
+    def test_mode_message(self):
+        return _('Test mode payments will only be debited if you submit a file created in test mode to your bank.')
+
+    @property
     def settings_form_fields(self):
         d = OrderedDict(
             [

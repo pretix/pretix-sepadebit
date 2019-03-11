@@ -9,6 +9,12 @@
             <strong>{{ num_new }}</strong> SEPA debit orders have been placed and are not yet exported as Sepa XML.
         {% endblocktrans %}
     </p>
+    {% if request.event.testmode %}
+        <div class="alert alert-warning">
+            {% trans "In test mode, your exports will only contain test mode orders." %}
+        </div>
+    {% endif %}
+
     {% if num_new > 0 %}
         <form action="" method="post">
             {% csrf_token %}
@@ -31,7 +37,12 @@
             <tbody>
             {% for export in exports %}
                 <tr>
-                    <td>{{ export.datetime|date:"SHORT_DATETIME_FORMAT" }}</td>
+                    <td>
+                        {{ export.datetime|date:"SHORT_DATETIME_FORMAT" }}
+                        {% if export.testmode %}
+                            <span class="label label-warning">{% trans "TEST MODE" %}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ export.cnt }}</td>
                     <td>{{ export.sum|default_if_none:"0.00" }} {{ request.event.currency }}</td>
                     <td class="text-right">

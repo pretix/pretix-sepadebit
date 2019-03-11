@@ -9,6 +9,9 @@
         <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:download" organizer=request.event.organizer.slug event=request.event.slug id=export.id %}">
             <span class="fa fa-download"></span> {% trans "Download XML" %}
         </a>
+        {% if export.testmode %}
+            <span class="label label-warning">{% trans "TEST MODE" %}</span>
+        {% endif %}
     </h1>
     <h2>{% trans "Included orders" %}</h2>
     <span>

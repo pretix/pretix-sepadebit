@@ -43,6 +43,7 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
             order__event=self.request.event,
             provider='sepadebit',
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
+            order__testmode=self.request.event.testmode,
             sepaexportorder__isnull=True
         )
 
@@ -89,6 +90,7 @@ class ExportListView(EventPermissionRequiredMixin, ListView):
             with transaction.atomic():
                 exp = SepaExport(event=request.event, xmldata='')
                 exp.xmldata = sepa.export().decode('utf-8')
+                exp.testmode = request.event.testmode
                 exp.save()
                 SepaExportOrder.objects.bulk_create([
                     SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments
