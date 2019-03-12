@@ -14,7 +14,7 @@ from django.views.generic import DetailView, ListView
 from pretix.base.models import Order, OrderPayment
 from pretix.control.permissions import EventPermissionRequiredMixin
 from pretix_sepadebit.models import SepaExport, SepaExportOrder
-from sepadd import SepaDD
+from sepaxml import SepaDD
 
 logger = logging.getLogger(__name__)
 
