@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-11 17:52+0200\n"
-"PO-Revision-Date: 2019-03-09 17:00+0000\n"
+"PO-Revision-Date: 2019-03-13 19:00+0000\n"
 "Last-Translator: yichengsd <sunzl@jxepub.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/zh_Hans/>\n"
@@ -264,7 +264,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Total amount"
-msgstr ""
+msgstr "总价"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:39
 msgid "Orders"
