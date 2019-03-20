@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-11 17:52+0200\n"
-"PO-Revision-Date: 2019-03-13 19:00+0000\n"
+"PO-Revision-Date: 2019-03-20 11:00+0000\n"
 "Last-Translator: yichengsd <sunzl@jxepub.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/zh_Hans/>\n"
@@ -50,7 +50,7 @@ msgstr ""
 #: pretix_sepadebit/exporters.py:24
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:27
 msgid "Payment amount"
-msgstr ""
+msgstr "支付金额"
 
 #: pretix_sepadebit/payment.py:24 pretix_sepadebit/signals.py:26
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:4
@@ -134,17 +134,17 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:118
 msgid "Account holder"
-msgstr ""
+msgstr "账户持有人"
 
 #: pretix_sepadebit/payment.py:119
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "国际银行账号"
 
 #: pretix_sepadebit/payment.py:120
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:122
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -317,7 +317,7 @@ msgstr "订单"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
 msgid "Payment"
-msgstr ""
+msgstr "支付"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:25
 msgid "Mandate date"
