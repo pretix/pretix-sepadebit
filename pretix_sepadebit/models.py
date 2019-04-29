@@ -2,10 +2,12 @@ from django.db import models
 
 
 class SepaExport(models.Model):
-    event = models.ForeignKey('pretixbase.Event', related_name='sepa_exports', on_delete=models.CASCADE)
+    event = models.ForeignKey('pretixbase.Event', related_name='sepa_exports', on_delete=models.CASCADE, null=True, blank=True)
+    organizer = models.ForeignKey('pretixbase.Organizer', related_name='sepa_exports', on_delete=models.PROTECT, null=True, blank=True)
     xmldata = models.TextField()
     datetime = models.DateTimeField(auto_now_add=True)
     testmode = models.BooleanField(default=False)
+    currency = models.CharField(max_length=9, blank=True)
 
 
 class SepaExportOrder(models.Model):

@@ -6,7 +6,7 @@ from pretix.base.signals import (
     register_data_exporters, register_data_shredders,
     register_payment_providers,
 )
-from pretix.control.signals import nav_event
+from pretix.control.signals import nav_event, nav_organizer
 
 from .payment import SepaDebit
 
@@ -27,6 +27,25 @@ def control_nav_import(sender, request=None, **kwargs):
             'url': reverse('plugins:pretix_sepadebit:export', kwargs={
                 'event': request.event.slug,
                 'organizer': request.event.organizer.slug,
+            }),
+            'active': (url.namespace == 'plugins:pretix_sepadebit' and url.url_name == 'export'),
+            'icon': 'bank',
+        }
+    ]
+
+
+@receiver(nav_organizer, dispatch_uid="payment_sepadebit_organav")
+def control_nav_orga_sepadebit(sender, request=None, **kwargs):
+    url = resolve(request.path_info)
+    if not request.user.has_organizer_permission(request.organizer, 'can_change_organizer_settings', request=request):
+        return []
+    if not request.organizer.events.filter(plugins__icontains='pretix_sepadebit'):
+        return []
+    return [
+        {
+            'label': _('SEPA debit'),
+            'url': reverse('plugins:pretix_sepadebit:export', kwargs={
+                'organizer': request.organizer.slug,
             }),
             'active': (url.namespace == 'plugins:pretix_sepadebit' and url.url_name == 'export'),
             'icon': 'bank',
