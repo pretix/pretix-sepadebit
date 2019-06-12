@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 
 import json
@@ -16,7 +17,7 @@ from django.views.generic import DetailView, ListView
 from pretix.base.models import Order, OrderPayment
 from pretix.control.permissions import EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin
 from pretix_sepadebit.models import SepaExport, SepaExportOrder
-from sepaxml import SepaDD
+from sepaxml import SepaDD, validation
 
 from pretix.control.views.organizer import OrganizerDetailViewMixin
 
@@ -90,23 +91,37 @@ class ExportListView(ListView):
 
         if valid_payments:
             with transaction.atomic():
-                for f in files.values():
+                for k, f in list(files.items()):
                     if hasattr(request, 'event'):
                         exp = SepaExport(event=request.event, xmldata='')
                         exp.testmode = request.event.testmode
                     else:
                         exp = SepaExport(organizer=request.organizer, xmldata='')
                         exp.testmode = False
-                    exp.xmldata = f.export().decode('utf-8')
-                    exp.currency = f._config['currency']
-                    exp.save()
-                    SepaExportOrder.objects.bulk_create([
-                        SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments[f]
-                    ])
+                    exp.xmldata = f.export(validate=False).decode('utf-8')
+
+                    import xmlschema  # xmlschema does some weird monkeypatching in etree, if we import it globally, things fail
+                    my_schema = xmlschema.XMLSchema(
+                        os.path.join(os.path.dirname(validation.__file__), 'schemas', f.schema + '.xsd')
+                    )
+                    errs = []
+                    for e in my_schema.iter_errors(exp.xmldata):
+                        errs.append(str(e))
+                    if errs:
+                        messages.error(request, _('The generated file did not validate for the following reasons. '
+                                                  'Please contact pretix support for more information.\n{}').format(
+                            "\n".join(errs)))
+                        del files[k]
+                    else:
+                        exp.currency = f._config['currency']
+                        exp.save()
+                        SepaExportOrder.objects.bulk_create([
+                            SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments[f]
+                        ])
             if len(files) > 1:
                 messages.warning(request, _('Multiple new export files have been created, since your events '
                                             'have differing SEPA settings. Please make sure to process all of them!'))
-            else:
+            elif len(files) > 0:
                 messages.success(request, _('A new export file has been created.'))
         else:
             messages.warning(request, _('No valid orders have been found.'))
