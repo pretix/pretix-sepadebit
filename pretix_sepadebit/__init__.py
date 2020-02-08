@@ -7,7 +7,8 @@ class PluginApp(AppConfig):
     verbose_name = 'SEPA Direct debit for pretix'
 
     class PretixPluginMeta:
-        name = ugettext_lazy('SEPA Direct debit for pretix')
+        name = ugettext_lazy('SEPA Direct debit')
+        category = 'PAYMENT'
         author = 'Raphael Michel'
         description = ugettext_lazy('This plugin adds SEPA direct debit support to pretix')
         visible = True
