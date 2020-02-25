@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-08 13:04+0100\n"
-"PO-Revision-Date: 2019-06-11 17:00+0000\n"
+"PO-Revision-Date: 2020-02-25 18:00+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
 "Language-Team: Dutch (informal) <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/nl_Informal/>\n"
@@ -17,13 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.5.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: pretix_sepadebit/__init__.py:10
-#, fuzzy
-#| msgid "SEPA Direct debit for pretix"
 msgid "SEPA Direct debit"
-msgstr "SEPA Automatische incasso voor pretix"
+msgstr "SEPA Automatische incasso"
 
 #: pretix_sepadebit/__init__.py:13
 msgid "This plugin adds SEPA direct debit support to pretix"
@@ -68,6 +66,8 @@ msgid ""
 "Test mode payments will only be debited if you submit a file created in test "
 "mode to your bank."
 msgstr ""
+"Betalingen in de testmodus worden alleen afgeschreven als je een bestand dat "
+"je in de testmodus hebt gemaakt indient bij je bank."
 
 #: pretix_sepadebit/payment.py:37
 msgid ""
@@ -312,16 +312,20 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:15
 msgid "In test mode, your exports will only contain test mode orders."
 msgstr ""
+"In de testmodus zullen je geëxporteerde bestanden alleen bestellingen uit de "
+"testmodus bevatten."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:19
 msgid ""
 "If you want, you can now also create SEPA debit files for multiple events "
 "combined."
 msgstr ""
+"Als je dit wilt kan je nu ook SEPA-incassobestanden maken voor meerdere "
+"evenementen tegelijk."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:22
 msgid "Go to organizer-level exports"
-msgstr ""
+msgstr "Ga naar exporteren op organisator-niveau"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
 msgid "Create new export file"
@@ -346,7 +350,7 @@ msgstr "Totaalbedrag"
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:53
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
 msgid "TEST MODE"
-msgstr ""
+msgstr "TESTMODUS"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:67
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:74
@@ -439,12 +443,18 @@ msgid ""
 "contact pretix support for more information.\n"
 "{}"
 msgstr ""
+"Het gegenereerde bestand is om de onderstaande redenen niet geldig. Neem "
+"contact op met de pretix-ondersteuning voor meer informatie.\n"
+"{}"
 
 #: pretix_sepadebit/views.py:122
 msgid ""
 "Multiple new export files have been created, since your events have "
 "differing SEPA settings. Please make sure to process all of them!"
 msgstr ""
+"Er zijn meerdere exportbestanden aangemaakt, omdat je evenementen "
+"verschillende SEPA-instellingen hebben. Zorg ervoor dat je alle bestanden "
+"correct verwerkt!"
 
 #: pretix_sepadebit/views.py:125
 msgid "A new export file has been created."
