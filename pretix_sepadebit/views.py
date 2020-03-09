@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from pretix.base.models import Order, OrderPayment
 from pretix.control.permissions import EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin

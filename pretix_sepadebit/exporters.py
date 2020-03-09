@@ -5,7 +5,7 @@ from collections import OrderedDict
 import pytz
 from django import forms
 from django.db.models.functions import Coalesce
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import gettext as _, gettext_lazy
 from pretix.base.exporter import BaseExporter
 from pretix.base.models import Order, OrderPosition, Question
 from pretix_sepadebit.models import SepaExportOrder
@@ -13,7 +13,7 @@ from pretix_sepadebit.models import SepaExportOrder
 
 class DebitList(BaseExporter):
     identifier = 'debitlistcsv'
-    verbose_name = ugettext_lazy('List of SEPA debits (CSV)')
+    verbose_name = gettext_lazy('List of SEPA debits (CSV)')
 
     def render(self, form_data: dict):
         output = io.StringIO()

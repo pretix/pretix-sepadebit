@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 
 class PluginApp(AppConfig):
@@ -7,10 +7,10 @@ class PluginApp(AppConfig):
     verbose_name = 'SEPA Direct debit for pretix'
 
     class PretixPluginMeta:
-        name = ugettext_lazy('SEPA Direct debit')
+        name = gettext_lazy('SEPA Direct debit')
         category = 'PAYMENT'
         author = 'Raphael Michel'
-        description = ugettext_lazy('This plugin adds SEPA direct debit support to pretix')
+        description = gettext_lazy('This plugin adds SEPA direct debit support to pretix')
         visible = True
         version = '1.6.1'
 
