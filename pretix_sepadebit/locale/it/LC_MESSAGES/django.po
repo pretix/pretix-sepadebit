@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-08 13:04+0100\n"
-"PO-Revision-Date: 2020-06-12 20:00+0000\n"
+"PO-Revision-Date: 2020-06-18 17:00+0000\n"
 "Last-Translator: Frank <webappconcept@gmail.com>\n"
 "Language-Team: Italian <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/it/>\n"
@@ -290,7 +290,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:53
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
 msgid "TEST MODE"
-msgstr ""
+msgstr "MODALITA' TEST"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:67
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:74
