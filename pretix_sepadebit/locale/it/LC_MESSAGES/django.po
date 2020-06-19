@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-08 13:04+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-06-18 17:00+0000\n"
+"Last-Translator: Frank <webappconcept@gmail.com>\n"
+"Language-Team: Italian <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -30,15 +33,15 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order code"
-msgstr ""
+msgstr "Codice ordine"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order date"
-msgstr ""
+msgstr "Data dell'ordine"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
-msgstr ""
+msgstr "Fatture"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
@@ -287,12 +290,12 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:53
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
 msgid "TEST MODE"
-msgstr ""
+msgstr "MODALITA' TEST"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:67
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:74
 msgid "Orders"
-msgstr ""
+msgstr "Ordini"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:70
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -339,7 +342,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
-msgstr ""
+msgstr "Ordine"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
 msgid "Payment"
@@ -366,7 +369,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:79
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Biglietto dell'evento {event}-{code}"
 
 #: pretix_sepadebit/views.py:111
 msgid ""
