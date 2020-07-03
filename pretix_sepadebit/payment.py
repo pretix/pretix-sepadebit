@@ -226,3 +226,14 @@ class SepaDebit(BasePaymentProvider):
         d['_shredded'] = True
         obj.info_data = d
         obj.save(update_fields=['info'])
+
+    def execute_refund(self, refund: OrderRefund):
+        if refund.payment.sepaexportorder_set.exists():
+            raise PaymentException('Already exported.')
+        refund.done()
+
+    def payment_refund_supported(self, payment: OrderPayment) -> bool:
+        return not payment.sepaexportorder_set.exists()
+
+    def payment_partial_refund_supported(self, payment: OrderPayment) -> bool:
+        return False
