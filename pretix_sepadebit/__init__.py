@@ -12,7 +12,7 @@ class PluginApp(AppConfig):
         author = 'Raphael Michel'
         description = gettext_lazy('This plugin adds SEPA direct debit support to pretix')
         visible = True
-        version = '1.6.2'
+        version = '1.7.0'
 
     def ready(self):
         from . import signals  # NOQA
