@@ -1,4 +1,3 @@
-import json
 import logging
 from collections import OrderedDict
 from datetime import timedelta
@@ -6,23 +5,49 @@ from typing import Union
 
 from django import forms
 from django.conf import settings
-from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.http import HttpRequest
 from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
-from pretix.base.models import Order, OrderPayment, OrderRefund, Quota
-from pretix.base.payment import BasePaymentProvider, PaymentException
+
+from pretix.base.models import OrderPayment, OrderRefund, Quota
+from pretix.base.payment import BasePaymentProvider, PaymentException, PaymentProviderForm
 
 logger = logging.getLogger(__name__)
+
+
+class SEPAPaymentProviderForm(PaymentProviderForm):
+    def clean(self):
+        from .bicdata import DATA
+
+        d = super().clean()
+
+        if d.get('iban'):
+            iban_without_checksum = d['iban'][0:2] + 'XX' + d['iban'][4:]
+            for k in range(6, 15):
+                if iban_without_checksum[:k] in DATA:
+                    correct_bic = DATA[iban_without_checksum[:k]]
+                    input_bic = d.get('bic', '')
+                    if len(input_bic) < len(correct_bic):
+                        input_bic += 'XXX'
+                    if correct_bic != input_bic:
+                        raise ValidationError(
+                            _('The BIC number {bic} does not match the IBAN. Please double, check your banking details. According to our data, the correct BIC would be {correctbic}.').format(
+                                bic=input_bic, correctbic=correct_bic
+                            )
+                        )
+
+        return d
 
 
 class SepaDebit(BasePaymentProvider):
     identifier = 'sepadebit'
     verbose_name = _('SEPA debit')
     abort_pending_allowed = True
+    payment_form_class = SEPAPaymentProviderForm
 
     @property
     def test_mode_message(self):
