@@ -12,6 +12,7 @@ from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
+from localflavor.generic.validators import IBANValidator, BICValidator
 
 from pretix.base.models import OrderPayment, OrderRefund, Quota
 from pretix.base.payment import BasePaymentProvider, PaymentException, PaymentProviderForm
@@ -252,13 +253,34 @@ class SepaDebit(BasePaymentProvider):
         obj.info_data = d
         obj.save(update_fields=['info'])
 
+    @staticmethod
+    def norm(s):
+        return s.strip().upper().replace(" ", "")
+
     def execute_refund(self, refund: OrderRefund):
         if refund.payment.sepaexportorder_set.exists():
-            raise PaymentException('Already exported.')
-        refund.done()
+            refund.info_data = {
+                'payer': refund.payment.info_data['account'],  # Use payer to keep it compatible with the banktransfer-refunds
+                'iban': self.norm(refund.payment.info_data['iban']),
+                'bic': self.norm(refund.payment.info_data['bic']),
+            }
+            refund.save(update_fields=["info"])
+        else:
+            refund.done()
 
     def payment_refund_supported(self, payment: OrderPayment) -> bool:
-        return not payment.sepaexportorder_set.exists()
+        if not payment.sepaexportorder_set.exists():
+            return True
+
+        if not all(payment.info_data.get(key) for key in ("account", "iban", "bic")):
+            return False
+        try:
+            IBANValidator()(self.norm(payment.info_data['iban']))
+            BICValidator()(self.norm(payment.info_data['bic']))
+        except ValidationError:
+            return False
+        else:
+            return True
 
     def payment_partial_refund_supported(self, payment: OrderPayment) -> bool:
-        return False
+        return self.payment_refund_supported(payment)
