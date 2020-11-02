@@ -269,6 +269,9 @@ class SepaDebit(BasePaymentProvider):
             refund.done()
 
     def payment_refund_supported(self, payment: OrderPayment) -> bool:
+        if not payment.sepaexportorder_set.exists():
+            return False
+
         if not all(payment.info_data.get(key) for key in ("account", "iban", "bic")):
             return False
         try:
