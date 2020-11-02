@@ -24,6 +24,25 @@
             </strong>
         </div>
     {% endif %}
+    {% if request.event %}
+        <div class="alert alert-info">
+            {% trans "Refunds for SEPA debit transactions are grouped with bank transfer refunds." %}
+            <strong>
+                <a href="{% url "plugins:banktransfer:refunds.list" organizer=request.organizer.slug event=request.event.slug %}">
+                    {% trans "Go to refund exports" %}
+                </a>
+            </strong>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+        {% trans "Refunds for SEPA debit transactions are grouped with bank transfer refunds." %}
+        <strong>
+            <a href="{% url "plugins:banktransfer:refunds.list" organizer=request.organizer.slug %}">
+                {% trans "Go to organizer-level refund exports" %}
+            </a>
+        </strong>
+    </div>
+    {% endif %}
 
     {% if num_new > 0 %}
         <form action="" method="post">
