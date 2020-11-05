@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-22 16:13+0200\n"
-"PO-Revision-Date: 2020-10-27 21:00+0000\n"
+"PO-Revision-Date: 2020-11-06 00:00+0000\n"
 "Last-Translator: Jaakko Rinta-Filppula <jaakko@r-f.fi>\n"
 "Language-Team: Finnish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/fi/>\n"
@@ -37,7 +37,7 @@ msgstr "Tilauskoodi"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order date"
-msgstr ""
+msgstr "Tilauksen päivämäärä"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
@@ -285,7 +285,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
 msgid "Export date"
-msgstr ""
+msgstr "Vie päivämäärä"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 msgid "Number of orders"
@@ -303,7 +303,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:67
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:74
 msgid "Orders"
-msgstr ""
+msgstr "Tilaukset"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:70
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -350,7 +350,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
-msgstr ""
+msgstr "Tilaus"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
 msgid "Payment"
