@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.db.models import Count, Sum, Q
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
@@ -191,7 +191,8 @@ class EventDownloadView(EventPermissionRequiredMixin, DownloadView):
     permission = 'can_change_orders'
 
     def get_object(self, *args, **kwargs):
-        return SepaExport.objects.get(
+        return get_object_or_404(
+            SepaExport,
             event=self.request.event,
             pk=self.kwargs.get('id')
         )
@@ -201,7 +202,8 @@ class EventOrdersView(EventPermissionRequiredMixin, OrdersView):
     permission = 'can_change_orders'
 
     def get_object(self, *args, **kwargs):
-        return SepaExport.objects.get(
+        return get_object_or_404(
+            SepaExport,
             event=self.request.event,
             pk=self.kwargs.get('id')
         )
@@ -211,7 +213,8 @@ class OrganizerDownloadView(OrganizerPermissionRequiredMixin, OrganizerDetailVie
     permission = 'can_change_organizer_settings'
 
     def get_object(self, *args, **kwargs):
-        return SepaExport.objects.get(
+        return get_object_or_404(
+            SepaExport,
             organizer=self.request.organizer,
             pk=self.kwargs.get('id')
         )
@@ -221,7 +224,8 @@ class OrganizerOrdersView(OrganizerPermissionRequiredMixin, OrganizerDetailViewM
     permission = 'can_change_organizer_settings'
 
     def get_object(self, *args, **kwargs):
-        return SepaExport.objects.get(
+        return get_object_or_404(
+            SepaExport,
             organizer=self.request.organizer,
             pk=self.kwargs.get('id')
         )
