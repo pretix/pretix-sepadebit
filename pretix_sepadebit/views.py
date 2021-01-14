@@ -84,7 +84,7 @@ class ExportListView(ListView):
 
             config = self._config_for_event(payment.order.event)
             if config not in files:
-                files[config] = SepaDD(dict(config), schema='pain.008.003.02')
+                files[config] = SepaDD(dict(config), schema='pain.008.001.02')
             file = files[config]
             file.add_payment(payment_dict)
             valid_payments[file].append(payment)
