@@ -33,7 +33,7 @@ setup(
     author_email='mail@raphaelmichel.de',
     license='Apache Software License',
 
-    install_requires=['django-localflavor', 'sepaxml>=2.0.0'],
+    install_requires=['django-localflavor', 'sepaxml>=2.4.1'],
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     cmdclass=cmdclass,
