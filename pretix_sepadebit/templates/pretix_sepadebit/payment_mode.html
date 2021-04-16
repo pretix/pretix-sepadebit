@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load static %}
+{% load compress %}
+
+
+{% block custom_header %}
+
+    {% compress css %}
+        <link type="text/x-scss" href="{% static 'pretix_sepadebit/main.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
+{% endblock %}
+
+<div class="payment_mode">
+    {% for group_name, group_choices, group-index in widget.subwidgets.0.optgroups %}
+        {% for selopt in group_choices %}
+            <div class="radio">
+                <label>
+                    <input type="radio" name="{{ widget.subwidgets.0.name }}" value="{{ selopt.value }}"
+                            {% include "django/forms/widgets/attrs.html" with widget=selopt %} />
+                    {{ selopt.label }}
+                </label>
+
+                <div class="options">
+                {% if selopt.value == "relative_payment" %}
+                    {% include widget.subwidgets.1.template_name with widget=widget.subwidgets.1 %}
+                    <span class="help-block"> {% trans "Number of days between the placement of the order and the due date of the direct debit. Depending on your legislation and your bank rules, you might be required to hand in a debit at least 5 days before the due date at your bank and you might even be required to inform the customer at least 14 days beforehand. We recommend configuring at least 7 days." %} </span>
+                {% elif selopt.value == "fixed_payment" %}
+                    {% include widget.subwidgets.2.template_name with widget=widget.subwidgets.2 %}
+                    <span class="help-block"> {% trans "Date when the direct debit is due. This date is common between all orders placed for this event with this payment method. This date must be later than the available until date." %} </span>
+                    {% include widget.subwidgets.3.template_name with widget=widget.subwidgets.3 %}
+                    <span class="help-block"> {% trans "Number of days between the day the direct debit is due and the day your customers who have choosen this payment method will be notified via email." %} </span>
+                    {% include widget.subwidgets.4.template_name with widget=widget.subwidgets.4 %}
+                    <span class="help-block"> {% trans "Number of days between the day the direct debit is due and the day your staff is notified via email to export the debits." %} </span>
+
+                {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>

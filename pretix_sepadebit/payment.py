@@ -1,8 +1,8 @@
+from typing import Union
+
 import logging
 from collections import OrderedDict
 from datetime import timedelta
-from typing import Union
-
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -12,10 +12,13 @@ from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
-from localflavor.generic.validators import IBANValidator, BICValidator
-
+from localflavor.generic.validators import BICValidator, IBANValidator
 from pretix.base.models import OrderPayment, OrderRefund, Quota
-from pretix.base.payment import BasePaymentProvider, PaymentException, PaymentProviderForm
+from pretix.base.payment import (
+    BasePaymentProvider, PaymentException, PaymentProviderForm,
+)
+
+from pretix_sepadebit.mode import PaymentModeField
 
 logger = logging.getLogger(__name__)
 
@@ -104,16 +107,10 @@ class SepaDebit(BasePaymentProvider):
                                  'unique SEPA mandate reference.'),
                      max_length=35 - settings.ENTROPY['order_code'] - 2 - len(self.event.slug)
                  )),
-                ('prenotification_days',
-                 forms.IntegerField(
-                     label=_('Pre-notification time'),
-                     help_text=_('Number of days between the placement of the order and the due date of the direct '
-                                 'debit. Depending on your legislation and your bank rules, you might be required to '
-                                 'hand in a debit at least 5 days before the due date at your bank and you might even '
-                                 'be required to inform the customer at least 14 days beforehand. We recommend '
-                                 'configuring at least 7 days.'),
-                     min_value=1
-                 )),
+                 ('payment_mode',
+                 PaymentModeField(
+                     label=_('Payment mode'),
+                 ))
             ] + list(super().settings_form_fields.items())
         )
         d.move_to_end('_enabled', last=False)
