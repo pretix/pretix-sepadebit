@@ -6,10 +6,9 @@ Updates IBAN→BIC information contained in this module using public sources.
 """
 import csv
 import json
-from collections import defaultdict
-
 import requests
 from bs4 import BeautifulSoup
+from collections import defaultdict
 
 map = {}
 

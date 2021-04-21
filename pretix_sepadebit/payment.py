@@ -1,8 +1,8 @@
-import logging
-from collections import OrderedDict
-from datetime import timedelta, date
 from typing import Union
 
+import logging
+from collections import OrderedDict
+from datetime import date, timedelta
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -12,10 +12,11 @@ from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import BICFormField, IBANFormField
-from localflavor.generic.validators import IBANValidator, BICValidator
-
+from localflavor.generic.validators import BICValidator, IBANValidator
 from pretix.base.models import OrderPayment, OrderRefund, Quota
-from pretix.base.payment import BasePaymentProvider, PaymentException, PaymentProviderForm
+from pretix.base.payment import (
+    BasePaymentProvider, PaymentException, PaymentProviderForm,
+)
 
 logger = logging.getLogger(__name__)
 
