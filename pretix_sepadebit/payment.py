@@ -1,6 +1,6 @@
 import logging
 from collections import OrderedDict
-from datetime import timedelta
+from datetime import timedelta, date
 from typing import Union
 
 from django import forms
@@ -113,6 +113,16 @@ class SepaDebit(BasePaymentProvider):
                                  'be required to inform the customer at least 14 days beforehand. We recommend '
                                  'configuring at least 7 days.'),
                      min_value=1
+                 )),
+                ('earliest_due_date',
+                 forms.DateField(
+                     label=_('Earliest debit due date'),
+                     help_text=_('Earliest date the direct debit can be due.' 'This date is used as the direct debit due date, if the order date'
+                     'plus pre-notification time would result in a due date earlier than this. '),
+                     required=False,
+                     widget=forms.widgets.DateInput(
+                        attrs={'class': 'datepickerfield'}
+                        )
                  )),
             ] + list(super().settings_form_fields.items())
         )
@@ -242,7 +252,14 @@ class SepaDebit(BasePaymentProvider):
 
     def _due_date(self, order=None):
         startdate = order.datetime.date() if order else now().date()
-        return startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
+        relative_due_date = startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
+
+        earliest_due_date = self.settings.get('earliest_due_date', as_type=date)
+
+        if earliest_due_date:
+            return max(relative_due_date, earliest_due_date)
+        else:
+            return relative_due_date
 
     def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
         d = obj.info_data
