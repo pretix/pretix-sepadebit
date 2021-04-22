@@ -3,6 +3,8 @@ import datetime
 import json
 import logging
 import os
+from functools import reduce
+from operator import or_
 from collections import defaultdict
 from django.contrib import messages
 from django.db import transaction
@@ -13,7 +15,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
-from pretix.base.models import Order, OrderPayment
+from pretix.base.models import Order, OrderPayment, Event
 from pretix.control.permissions import (
     EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin,
 )
@@ -248,10 +250,25 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
         ).order_by('-datetime')
 
     def get_unexported(self):
-        return OrderPayment.objects.filter(
-            order__event__organizer=self.request.organizer,
-            provider='sepadebit',
-            state=OrderPayment.PAYMENT_STATE_CONFIRMED,
-            order__testmode=False,
-            sepaexportorder__isnull=True
-        )
+        q_list = []
+        today = datetime.date.today()
+
+        for event in Event.objects.filter(
+            organizer=self.request.organizer
+        ):
+            latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
+
+            q_list.append(Q(
+                order__event=event,
+                provider='sepadebit',
+                state=OrderPayment.PAYMENT_STATE_CONFIRMED,
+                order__testmode=False,
+                sepaexportorder__isnull=True,
+                due__date__range=[today, latest_export_due_date]
+            ))
+
+        return OrderPayment.objects.filter(reduce(or_, q_list))
+
+
+
+
