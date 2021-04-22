@@ -17,6 +17,7 @@ from pretix.base.models import OrderPayment, OrderRefund, Quota
 from pretix.base.payment import (
     BasePaymentProvider, PaymentException, PaymentProviderForm,
 )
+from pretix_sepadebit.models import SepaDueDate
 
 logger = logging.getLogger(__name__)
 
@@ -209,10 +210,15 @@ class SepaDebit(BasePaymentProvider):
                 'iban': request.session['payment_sepa_iban'],
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
-                'date': due_date.strftime("%Y-%m-%d")
             }
+            due = SepaDueDate(date=due_date)
+            due.payment = payment
+            due.save()
+
             payment.confirm(mail_text=self.order_pending_mail_render(payment.order))
         except Quota.QuotaExceededException as e:
+            if due is not None:
+                due.delete()
             raise PaymentException(str(e))
         finally:
             del request.session['payment_sepa_account']
@@ -232,6 +238,7 @@ class SepaDebit(BasePaymentProvider):
             'settings': self.settings,
             'payment_info': payment.info_data,
             'order': payment.order,
+            'payment_due_date': payment.due.date
         }
         return template.render(ctx)
 
