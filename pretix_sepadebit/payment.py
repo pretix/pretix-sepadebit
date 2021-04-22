@@ -119,8 +119,7 @@ class SepaDebit(BasePaymentProvider):
                 ('earliest_due_date',
                  forms.DateField(
                      label=_('Earliest debit due date'),
-                     help_text=_('Earliest date the direct debit can be due.' 'This date is used as the direct debit due date, if the order date'
-                     'plus pre-notification time would result in a due date earlier than this. '),
+                     help_text=_('Earliest date the direct debit can be due. ' 'This date is used as the direct debit due date, if the order date plus pre-notification time would result in a due date earlier than this.'),
                      required=False,
                      widget=forms.widgets.DateInput(
                         attrs={'class': 'datepickerfield'}
