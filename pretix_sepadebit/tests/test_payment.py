@@ -7,7 +7,7 @@ from pretix.base.models import (
     Event, Item, Order, OrderPayment, Organizer, Quota, Team, User,
 )
 
-from pretix_sepadebit.migrations.sepaduedate_datamigrations import (
+from pretix_sepadebit.migrations.sepaduedate import (
     create_sepaduedate_instances, delete_sepaduedate_instances,
 )
 from pretix_sepadebit.models import SepaDueDate
