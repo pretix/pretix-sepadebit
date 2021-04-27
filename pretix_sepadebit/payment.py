@@ -198,7 +198,7 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def execute_payment(self, request: HttpRequest, payment: OrderPayment):
-        due_date = self._due_date()
+        due_date, set_reminder = self._due_date_reminder()
         ref = '%s-%s' % (self.event.slug.upper(), payment.order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
@@ -210,7 +210,9 @@ class SepaDebit(BasePaymentProvider):
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
             }
-            due = SepaDueDate(date=due_date)
+            reminder = SepaDueDate.REMINDER_OUTSTANDING if set_reminder else SepaDueDate.REMINDER_PROVIDED
+
+            due = SepaDueDate(date=due_date, reminder=reminder)
             due.payment = payment
             due.save()
 
@@ -258,15 +260,20 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def _due_date(self, order=None):
+        due_date = self._due_date_reminder(order)
+        return due_date[0]
+
+    def _due_date_reminder(self, order=None):
         startdate = order.datetime.date() if order else now().date()
         relative_due_date = startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
 
         earliest_due_date = self.settings.get('earliest_due_date', as_type=date)
 
         if earliest_due_date:
-            return max(relative_due_date, earliest_due_date)
-        else:
-            return relative_due_date
+            if earliest_due_date > relative_due_date:
+                return earliest_due_date, True
+
+        return relative_due_date, False
 
     def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
         d = obj.info_data

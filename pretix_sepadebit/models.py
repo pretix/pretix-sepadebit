@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _, pgettext_lazy
 
 class SepaExport(models.Model):
     event = models.ForeignKey('pretixbase.Event', related_name='sepa_exports', on_delete=models.CASCADE, null=True, blank=True)
@@ -18,5 +18,18 @@ class SepaExportOrder(models.Model):
 
 
 class SepaDueDate(models.Model):
+    REMINDER_OUTSTANDING = "o"
+    REMINDER_PROVIDED = "p"
+    REMINDER_CHOICE = (
+        (REMINDER_OUTSTANDING, _("outstanding")),
+        (REMINDER_PROVIDED, _("provided")),
+    )
+
     payment = models.OneToOneField('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True, related_name='due')
     date = models.DateField()
+    reminder = models.CharField(
+        max_length=1,
+        choices=REMINDER_CHOICE,
+        verbose_name=_("Reminder"),
+        default=REMINDER_PROVIDED
+    )
