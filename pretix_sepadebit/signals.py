@@ -2,13 +2,24 @@ from django.dispatch import receiver
 from django.urls import resolve, reverse
 from django.utils.translation import gettext_lazy as _
 from pretix.base.shredder import BaseDataShredder
+from django.db.models import Q
+
+from pretix.base.i18n import LazyDate
+from i18nfield.strings import LazyI18nString
+from functools import reduce
+from operator import or_
+from django_scopes import scopes_disabled
+from django.utils.timezone import now
 from pretix.base.signals import (
     register_data_exporters, register_data_shredders,
-    register_payment_providers,
+    register_payment_providers, periodic_task, logentry_display
 )
+from pretix.base.i18n import language
+from datetime import timedelta
 from pretix.control.signals import nav_event, nav_organizer
-
-from .payment import SepaDebit
+from pretix.base.models import Event
+from pretix.base.email import get_email_context
+from .payment import SepaDebit, SepaDueDate
 
 
 @receiver(register_payment_providers, dispatch_uid="payment_sepadebit")
@@ -57,6 +68,62 @@ def control_nav_orga_sepadebit(sender, request=None, **kwargs):
 def register_csv(sender, **kwargs):
     from .exporters import DebitList
     return DebitList
+
+def get_todo_sepa_reminders(date):
+    q_list = []
+
+    for event in Event.objects.all():
+        if event.settings.payment_sepadebit__enabled:
+            prenotification_days = int(event.settings.payment_sepadebit_prenotification_days)
+            q_list.append(Q(
+                reminder=SepaDueDate.REMINDER_OUTSTANDING,
+                payment__provider='sepadebit',
+                date__lte=now().date()+timedelta(days=prenotification_days))
+                )
+
+    if len(q_list)>0:
+        qs = reduce(or_, q_list)
+        return SepaDueDate.objects.filter(qs).select_related('payment')
+    return []
+
+@receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
+def send_payment_reminders(sender, **kwargs):
+    with scopes_disabled():
+        dd = get_todo_sepa_reminders(date=now().date())
+
+        for due_date in dd:
+            order = due_date.payment.order
+            event = order.event
+            subject = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_subject)
+            text = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_text)
+
+            ctx = {
+                'event': event,
+                'order': order,
+                'creditor_id': event.settings.payment_sepadebit_creditor_id,
+                'creditor_name': event.settings.payment_sepadebit_creditor_name,
+                'account': due_date.payment.info_data['account'],
+                'iban': due_date.payment.info_data['iban'],
+                'bic': due_date.payment.info_data['bic'],
+                'reference': due_date.payment.info_data['reference'],
+                'due_date': LazyDate(due_date.date)
+            }
+            with language(order.locale, event.settings.region):
+                due_date.payment.order.send_mail(subject=str(subject), template=text, context=ctx,
+                log_entry_type='pretix_sepadebit.payment_reminder.sent.order.email'
+                )
+                due_date.reminder = SepaDueDate.REMINDER_PROVIDED
+                due_date.save()
+
+
+@receiver(signal=logentry_display, dispatch_uid="payment_sepadebit_send_payment_reminders_logentry")
+def payment_reminder_logentry(sender, logentry, **kwargs):
+    if logentry.action_type !='pretix_sepadebit.payment_reminder.sent.order.email':
+        return
+
+    return _('A reminder for the upcoming direct debit due date has been sent to the customer.')
+
+
 
 
 class PaymentLogsShredder(BaseDataShredder):

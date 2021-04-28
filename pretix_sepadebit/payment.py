@@ -17,10 +17,14 @@ from pretix.base.models import OrderPayment, OrderRefund, Quota
 from pretix.base.payment import (
     BasePaymentProvider, PaymentException, PaymentProviderForm,
 )
+from i18nfield.forms import (
+    I18nFormField, I18nTextarea, I18nTextInput,
+)
 from pretix_sepadebit.models import SepaDueDate
 
 logger = logging.getLogger(__name__)
 
+from pretix.base.settings import settings_hierarkey
 
 class SEPAPaymentProviderForm(PaymentProviderForm):
     def clean(self):
@@ -119,12 +123,31 @@ class SepaDebit(BasePaymentProvider):
                 ('earliest_due_date',
                  forms.DateField(
                      label=_('Earliest debit due date'),
-                     help_text=_('Earliest date the direct debit can be due. ' 'This date is used as the direct debit due date, if the order date plus pre-notification time would result in a due date earlier than this.'),
+                     help_text=_('Earliest date the direct debit can be due. ' 'This date is used as the direct debit due date, if the order date plus pre-notification time would result in a due date earlier than this.'
+                     'Customers with orders using the earliest due date, will receive an email informing them about the upcoming due date pre-notification days beforehand.'),
                      required=False,
                      widget=forms.widgets.DateInput(
                         attrs={'class': 'datepickerfield'}
                         )
                  )),
+                ('mail_payment_reminder_subject',
+                I18nFormField(
+                    label=_("Text"),
+                    help_text=_('The subject of the notification email. '
+                    'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
+                    'This email is only sent if the earliest debit due date option is used.'),
+                    required=False,
+                    widget=I18nTextInput,
+                )),
+                ('mail_payment_reminder_text',
+                I18nFormField(
+                    label=_("Text"),
+                    help_text=_('The body of the notification email. '
+                    'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
+                    'This email is only sent if the earliest debit due date option is used.'),
+                    required=False,
+                    widget=I18nTextarea,
+                ))
             ] + list(super().settings_form_fields.items())
         )
         d.move_to_end('_enabled', last=False)
@@ -152,6 +175,14 @@ class SepaDebit(BasePaymentProvider):
             request.session.get('payment_sepa_iban', '') != '' and
             request.session.get('payment_sepa_bic', '') != ''
         )
+
+    def settings_form_clean(self, cleaned_data):
+        super().settings_form_clean(cleaned_data)
+
+        if cleaned_data['payment_sepadebit_earliest_due_date']:
+            if not (cleaned_data['payment_sepadebit_mail_payment_reminder_subject'] and cleaned_data['payment_sepadebit_mail_payment_reminder_text']):
+                raise ValidationError(_("Due date reminder email fields aren't optional if earliest due date feature is used."))
+
 
     @property
     def payment_form_fields(self):
