@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import now
 from django_scopes import scopes_disabled
 from pretix.base.models import (
-    Event, Item, Order, OrderPayment, Organizer, Quota, Team, User,
+    Event, Item, Order, OrderPayment, Organizer, Quota,
 )
 
 from pretix_sepadebit.migrations.sepaduedate import (
@@ -12,9 +12,6 @@ from pretix_sepadebit.migrations.sepaduedate import (
 )
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit
-from pretix_sepadebit.views import EventExportListView
-
-
 
 
 @pytest.fixture
@@ -36,6 +33,7 @@ def event():
     quota.items.add(item1)
     # OrderPosition.objects.create(order=o1, item=item1, variation=None, price=23)
     return event
+
 
 @pytest.fixture
 def order(event):
@@ -86,22 +84,38 @@ def test_due_date_with_earliest_due_date(event, earliest_due_date, prenotificati
     assert due_date == sepa._due_date(o)
 
 
+def orderpayment(order, date, reminder=None):
+    op_date = date
+    op = OrderPayment(order=order, amount=11, provider='sepadebit')
+    info_data = {'Testdata': 'is not deleted'}
+    if not reminder:
+        info_data['date'] = op_date.strftime("%Y-%m-%d")
+        op.info_data = info_data
+        op.save()
+    else:
+        op.info_data = info_data
+        op.save()
+        due_date = SepaDueDate(date=op_date, reminder=reminder)
+        due_date.payment = op
+        due_date.save()
+    return op
+
+
 @pytest.mark.django_db
 def test_create_sepaduedate_instances(event, order):
     with scopes_disabled():
-        op_date = now().date().strftime("%Y-%m-%d")
-        op = OrderPayment(order=order, amount=11, provider='sepadebit')
-        op.info_data = {'Testdata': 'is not deleted', 'date': op_date}
-        op.save()
+        op_date = now().date()
+        op = orderpayment(order, op_date)
 
         create_sepaduedate_instances(OrderPayment, SepaDueDate)
 
         op.refresh_from_db()
 
-        assert op.due.date.strftime("%Y-%m-%d") == op_date
+        assert op.due.date == op_date
         with pytest.raises(KeyError):
             op.info_data['date']
         assert op.info_data['Testdata'] == 'is not deleted'
+        assert op.due.reminder == 'p'
 
 
 @pytest.mark.django_db
@@ -116,14 +130,8 @@ def test_create_sepaduedate_no_instances(event):
 @pytest.mark.django_db
 def test_delete_sepaduedate_instances(event, order):
     with scopes_disabled():
-
         op_date = now().date()
-        op = OrderPayment(order=order, amount=11, provider='sepadebit')
-        op.info_data = {'Testdata': 'is not deleted'}
-        op.save()
-        due_date = SepaDueDate(date=op_date)
-        due_date.payment = op
-        due_date.save()
+        op = orderpayment(order, date=op_date, reminder=SepaDueDate.REMINDER_OUTSTANDING)
 
         delete_sepaduedate_instances(OrderPayment, SepaDueDate)
 
@@ -133,6 +141,7 @@ def test_delete_sepaduedate_instances(event, order):
             op.due
         assert op.info_data['date'] == op_date.strftime("%Y-%m-%d")
         assert op.info_data['Testdata'] == 'is not deleted'
+        assert op.info_data['reminder'] == 'o'
 
 
 @pytest.mark.django_db
@@ -142,17 +151,3 @@ def test_delete_sepaduedate_no_instances(event):
             delete_sepaduedate_instances(OrderPayment, SepaDueDate)
         except Exception:
             pytest.fail("Shouldn't raise exception if no matching OrderPayment exists.")
-
-
-
-def payment(order, date):
-    op = OrderPayment(order=order, amount=11, provider='sepadebit')
-    op.save()
-    due_date = SepaDueDate(date=date)
-    due_date.payment=op
-    due_date.save()
-    return op
-
-
-
-
