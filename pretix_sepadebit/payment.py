@@ -135,6 +135,7 @@ class SepaDebit(BasePaymentProvider):
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextInput,
+                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
                  )),
                 ('mail_payment_reminder_text',
                  I18nFormField(
@@ -144,6 +145,7 @@ class SepaDebit(BasePaymentProvider):
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextarea,
+                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
                  ))
             ] + list(super().settings_form_fields.items())
         )
