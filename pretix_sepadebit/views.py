@@ -74,7 +74,7 @@ class ExportListView(ListView):
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().date(), (payment.due.date)),
+                "collection_date": max(now().date(), payment.due.date),
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
@@ -266,7 +266,6 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
             ))
 
         return OrderPayment.objects.filter(reduce(or_, q_list))
-
 
 
 
