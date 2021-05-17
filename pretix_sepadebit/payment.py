@@ -249,8 +249,7 @@ class SepaDebit(BasePaymentProvider):
 
             payment.confirm(mail_text=self.order_pending_mail_render(payment.order))
         except Quota.QuotaExceededException as e:
-            if due is not None:
-                due.delete()
+            due.delete()
             raise PaymentException(str(e))
         finally:
             del request.session['payment_sepa_account']
