@@ -16,6 +16,8 @@ from pretix.base.signals import (
     register_data_shredders, register_payment_providers,
 )
 from pretix.control.signals import nav_event, nav_organizer
+from pretix.base.settings import settings_hierarkey
+from django.utils.translation import gettext_noop
 
 from .payment import SepaDebit, SepaDueDate
 
@@ -149,3 +151,29 @@ def register_shredder(sender, **kwargs):
     return [
         PaymentLogsShredder,
     ]
+
+
+settings_hierarkey.add_default(
+    "payment_sepadebit_mail_payment_reminder_subject",
+    LazyI18nString.from_gettext(
+        gettext_noop(
+            "Upcomming direct debit due date"
+        )
+    ), LazyI18nString,
+)
+
+
+settings_hierarkey.add_default(
+    "payment_sepadebit_mail_payment_reminder_text",
+    LazyI18nString.from_gettext(
+        gettext_noop(
+            "Hello,\n\n"
+            "you ordered a ticket for {event}.\n\n"
+            "We will debit your bank account {iban} on or shortly after {due_date}. The payment will appear on your bank statement as {creditor_name} with reference {reference} and creditor identifier {creditor_id}.\n\n"
+            "You can change your order details and view the status of your order at\n"
+            "{url}\n\n"
+            "Best regards,\n"
+            "Your {event} team"
+        )
+    ), LazyI18nString,
+)
