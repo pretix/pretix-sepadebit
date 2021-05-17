@@ -2,7 +2,7 @@ from typing import Union
 
 import logging
 from collections import OrderedDict
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -225,7 +225,7 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def execute_payment(self, request: HttpRequest, payment: OrderPayment):
-        due_date, set_reminder = self._due_date_reminder()
+        due_date, reminded = self._due_date_reminded()
         ref = '%s-%s' % (self.event.slug.upper(), payment.order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
@@ -237,9 +237,11 @@ class SepaDebit(BasePaymentProvider):
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
             }
-            reminder = SepaDueDate.REMINDER_OUTSTANDING if set_reminder else SepaDueDate.REMINDER_PROVIDED
 
-            due = SepaDueDate(date=due_date, reminder=reminder)
+            # add current time to due_date for remind after to take pressure of the cron job
+            due = SepaDueDate(date=due_date,
+                              reminded=reminded,
+                              remind_after=datetime.now().replace(year=due_date.year, month=due_date.month, day=due_date.day))
             due.payment = payment
             due.save()
 
@@ -287,10 +289,10 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def _due_date(self, order=None):
-        due_date = self._due_date_reminder(order)
+        due_date = self._due_date_reminded(order)
         return due_date[0]
 
-    def _due_date_reminder(self, order=None):
+    def _due_date_reminded(self, order=None):
         startdate = order.datetime.date() if order else now().date()
         relative_due_date = startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
 
@@ -298,9 +300,9 @@ class SepaDebit(BasePaymentProvider):
 
         if earliest_due_date:
             if earliest_due_date > relative_due_date:
-                return earliest_due_date, True
+                return earliest_due_date, False
 
-        return relative_due_date, False
+        return relative_due_date, True
 
     def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
         d = obj.info_data

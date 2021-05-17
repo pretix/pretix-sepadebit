@@ -3,7 +3,10 @@
 import django.db.models.deletion
 import json
 from django.db import migrations, models
+from django.utils.timezone import utc
+from datetime import date, datetime, tzinfo
 
+from pytz import timezone
 
 def roll_forwards(apps, schema_editor):
     OrderPayment = apps.get_model('pretixbase', 'OrderPayment')
@@ -32,7 +35,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False)),
                 ('date', models.DateField()),
-                ('reminder',models.CharField(default='p', max_length=1)),
+                ('remind_after', models.DateTimeField()),
+                ('reminded',models.BooleanField(default=False)),
                 ('payment', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='due', to='pretixbase.OrderPayment')),
             ],
         ),
@@ -47,7 +51,12 @@ def create_sepaduedate_instances(OrderPayment, SepaDueDate):
     for op in OrderPayment.objects.filter(provider='sepadebit').filter(info__isnull=False):
         # prevents dependency from the info_data property
         op_info_data = json.loads(op.info)
-        due_date = SepaDueDate(date=op_info_data['date'], reminder=getattr(op_info_data,'reminder', "p") )
+
+        # either use provided remind_after value or date and add a ts to it
+        r_a=getattr(op_info_data,'remind_after', op_info_data['date'])
+        remind_after=utc.localize(datetime.strptime(r_a, '%Y-%m-%d'))
+
+        due_date = SepaDueDate(date=op_info_data['date'], reminded=getattr(op_info_data,'reminded', True), remind_after=remind_after)
         due_date.payment = op
         due_date.save()
         del op_info_data['date']
@@ -58,7 +67,9 @@ def delete_sepaduedate_instances(OrderPayment, SepaDueDate):
     for due in SepaDueDate.objects.filter(payment__isnull=False):
         order_info_data = json.loads(due.payment.info)
         order_info_data['date'] = due.date.strftime("%Y-%m-%d")
-        order_info_data['reminder'] = due.reminder
+        if due.remind_after:
+            order_info_data['remind_after'] = due.remind_after.strftime("%Y-%m-%d-%H-%M-%S")
+        order_info_data['reminded'] = due.reminded
         due.payment.info = json.dumps(order_info_data, sort_keys=True)
         due.payment.save()
         due.delete()

@@ -6,13 +6,14 @@ from django_scopes import scopes_disabled
 from pretix.base.models import (
     Event, Item, Order, OrderPayment, Organizer, Quota,
 )
+import importlib
 
-from pretix_sepadebit.migrations.sepaduedate import (
-    create_sepaduedate_instances, delete_sepaduedate_instances,
-)
+
+
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit
 
+migration =  importlib.import_module('pretix_sepadebit.migrations.0007_sepaduedate')
 
 @pytest.fixture
 def event():
@@ -84,18 +85,21 @@ def test_due_date_with_earliest_due_date(event, earliest_due_date, prenotificati
     assert due_date == sepa._due_date(o)
 
 
-def orderpayment(order, date, reminder=None):
+def orderpayment(order, date, remind_after, reminded=None, old_format=True):
     op_date = date
     op = OrderPayment(order=order, amount=11, provider='sepadebit')
     info_data = {'Testdata': 'is not deleted'}
-    if not reminder:
+
+    if old_format:
         info_data['date'] = op_date.strftime("%Y-%m-%d")
+        info_data['remind_after'] = remind_after.strftime("%Y-%m-%d-%H-%M-%S")
+        info_data['reminded'] =reminded
         op.info_data = info_data
         op.save()
     else:
         op.info_data = info_data
         op.save()
-        due_date = SepaDueDate(date=op_date, reminder=reminder)
+        due_date = SepaDueDate(date=op_date, reminded=reminded, remind_after=remind_after)
         due_date.payment = op
         due_date.save()
     return op
@@ -105,9 +109,10 @@ def orderpayment(order, date, reminder=None):
 def test_create_sepaduedate_instances(event, order):
     with scopes_disabled():
         op_date = now().date()
-        op = orderpayment(order, op_date)
+        remind_after=op_date+timedelta(days=1)
+        op = orderpayment(order, op_date, remind_after=remind_after)
 
-        create_sepaduedate_instances(OrderPayment, SepaDueDate)
+        migration.create_sepaduedate_instances(OrderPayment, SepaDueDate)
 
         op.refresh_from_db()
 
@@ -115,14 +120,15 @@ def test_create_sepaduedate_instances(event, order):
         with pytest.raises(KeyError):
             op.info_data['date']
         assert op.info_data['Testdata'] == 'is not deleted'
-        assert op.due.reminder == 'p'
+        assert op.due.reminded == True
+        assert op.due.remind_after.date() == op.due.date
 
 
 @pytest.mark.django_db
 def test_create_sepaduedate_no_instances(event):
     with scopes_disabled():
         try:
-            create_sepaduedate_instances(OrderPayment, SepaDueDate)
+            migration.create_sepaduedate_instances(OrderPayment, SepaDueDate)
         except Exception:
             pytest.fail("Shouldn't raise exception if no matching OrderPayment exists.")
 
@@ -131,9 +137,10 @@ def test_create_sepaduedate_no_instances(event):
 def test_delete_sepaduedate_instances(event, order):
     with scopes_disabled():
         op_date = now().date()
-        op = orderpayment(order, date=op_date, reminder=SepaDueDate.REMINDER_OUTSTANDING)
+        remind_after=op_date+timedelta(days=1)
+        op = orderpayment(order, date=op_date, reminded=True, remind_after=remind_after, old_format=False)
 
-        delete_sepaduedate_instances(OrderPayment, SepaDueDate)
+        migration.delete_sepaduedate_instances(OrderPayment, SepaDueDate)
 
         op.refresh_from_db()
 
@@ -141,13 +148,14 @@ def test_delete_sepaduedate_instances(event, order):
             op.due
         assert op.info_data['date'] == op_date.strftime("%Y-%m-%d")
         assert op.info_data['Testdata'] == 'is not deleted'
-        assert op.info_data['reminder'] == 'o'
+        assert op.info_data['reminded'] == True
+        assert op.info_data['remind_after'] == remind_after.strftime("%Y-%m-%d-%H-%M-%S")
 
 
 @pytest.mark.django_db
 def test_delete_sepaduedate_no_instances(event):
     with scopes_disabled():
         try:
-            delete_sepaduedate_instances(OrderPayment, SepaDueDate)
+            migration.delete_sepaduedate_instances(OrderPayment, SepaDueDate)
         except Exception:
             pytest.fail("Shouldn't raise exception if no matching OrderPayment exists.")

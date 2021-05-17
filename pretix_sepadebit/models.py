@@ -19,18 +19,8 @@ class SepaExportOrder(models.Model):
 
 
 class SepaDueDate(models.Model):
-    REMINDER_OUTSTANDING = "o"
-    REMINDER_PROVIDED = "p"
-    REMINDER_CHOICE = (
-        (REMINDER_OUTSTANDING, _("outstanding")),
-        (REMINDER_PROVIDED, _("provided")),
-    )
-
     payment = models.OneToOneField('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True, related_name='due')
     date = models.DateField()
-    reminder = models.CharField(
-        max_length=1,
-        choices=REMINDER_CHOICE,
-        verbose_name=_("Reminder"),
-        default=REMINDER_PROVIDED
-    )
+    remind_after = models.DateTimeField()
+    reminded = models.BooleanField(verbose_name=_("Reminder"), default=False)
+
