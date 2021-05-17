@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, datetime, timedelta, timezone
 from django.db.models import Q
 from django.dispatch import receiver
 from django.urls import resolve, reverse
@@ -18,6 +18,8 @@ from pretix.base.signals import (
 from pretix.control.signals import nav_event, nav_organizer
 from pretix.base.settings import settings_hierarkey
 from django.utils.translation import gettext_noop
+from pretix.base.signals import register_mail_placeholders
+from pretix.base.email import SimpleFunctionalMailTextPlaceholder, get_email_context
 
 from .payment import SepaDebit, SepaDueDate
 
@@ -86,6 +88,36 @@ def get_todo_sepa_reminders(date):
         qs = reduce(or_, q_list)
         return SepaDueDate.objects.filter(qs).select_related('payment')
     return []
+@receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
+def register_mail_renderers(sender, **kwargs):
+
+    ph = [SimpleFunctionalMailTextPlaceholder(
+            'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.due.date, sample=date.today()
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'account', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'iban', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + " **** " + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02 **** 2051"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'bic', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('bic'), sample="BYLADEM1001"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'reference',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('reference'),
+            lambda event: f'{event.settings.reference_prefix + "-" if event.settings.reference_prefix else ""}{event.slug.upper()}-XXXXXXX'
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'creditor_id', ['sepadebit_payment', "event"], lambda sepadebit_payment, event: event.settings.creditor_id, sample="DE98ZZZ09999999999"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'creditor_name', ['sepadebit_payment', "event"], lambda sepadebit_payment, event: event.settings.creditor_name, sample="DE98ZZZ09999999999"
+        )]
+
+    return ph
+
 
 
 @receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
@@ -99,17 +131,8 @@ def send_payment_reminders(sender, **kwargs):
             subject = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_subject)
             text = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_text)
 
-            ctx = {
-                'event': event,
-                'order': order,
-                'creditor_id': event.settings.payment_sepadebit_creditor_id,
-                'creditor_name': event.settings.payment_sepadebit_creditor_name,
-                'account': due_date.payment.info_data['account'],
-                'iban': due_date.payment.info_data['iban'],
-                'bic': due_date.payment.info_data['bic'],
-                'reference': due_date.payment.info_data['reference'],
-                'due_date': LazyDate(due_date.date)
-            }
+            ctx = get_email_context(event=event, order=order, sepa_debit_payment=due_date.payment)
+
             with language(order.locale, event.settings.region):
                 due_date.payment.order.send_mail(
                     subject=str(subject),
@@ -177,3 +200,6 @@ settings_hierarkey.add_default(
         )
     ), LazyI18nString,
 )
+
+
+

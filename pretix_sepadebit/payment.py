@@ -18,7 +18,8 @@ from pretix.base.models import OrderPayment, OrderRefund, Quota
 from pretix.base.payment import (
     BasePaymentProvider, PaymentException, PaymentProviderForm,
 )
-
+from pretix.base.forms import PlaceholderValidator
+from pretix.base.email import get_available_placeholders
 from pretix_sepadebit.models import SepaDueDate
 
 logger = logging.getLogger(__name__)
@@ -58,8 +59,25 @@ class SepaDebit(BasePaymentProvider):
     def test_mode_message(self):
         return _('Test mode payments will only be debited if you submit a file created in test mode to your bank.')
 
+
+    def _set_field_placeholders(self, form_dict, fn, base_parameters, extras=[]):
+        phs = [
+            "{%s}" % p
+            for p in sorted(
+                get_available_placeholders(self.event, base_parameters).keys()
+            )
+        ] + extras
+        ht = _("Available placeholders: {list}").format(list=", ".join(phs))
+        if form_dict[fn].help_text:
+            form_dict[fn].help_text += " " + str(ht)
+        else:
+            form_dict[fn].help_text = ht
+        form_dict[fn].validators.append(PlaceholderValidator(phs))
+
     @property
     def settings_form_fields(self):
+
+
         d = OrderedDict(
             [
                 ('ack',
@@ -131,7 +149,7 @@ class SepaDebit(BasePaymentProvider):
                  I18nFormField(
                      label=_("Due date reminder subject"),
                      help_text=_('The subject of the notification email. '
-                                 'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
+                                 #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextInput,
@@ -141,7 +159,7 @@ class SepaDebit(BasePaymentProvider):
                  I18nFormField(
                      label=_("Due date reminder body"),
                      help_text=_('The body of the notification email. '
-                                 'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
+                                 #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextarea,
@@ -150,6 +168,13 @@ class SepaDebit(BasePaymentProvider):
             ] + list(super().settings_form_fields.items())
         )
         d.move_to_end('_enabled', last=False)
+
+        self._set_field_placeholders(
+            d, "mail_payment_reminder_subject", ["event", "order", "sepadebit_payment"], []
+        )
+        self._set_field_placeholders(
+            d, "mail_payment_reminder_text", ["event", "sepadebit_payment", "order"], []
+        )
         return d
 
     def settings_content_render(self, request):
