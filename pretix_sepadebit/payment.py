@@ -122,8 +122,8 @@ class SepaDebit(BasePaymentProvider):
                  forms.DateField(
                      label=_('Earliest debit due date'),
                      help_text=_('Earliest date the direct debit can be due. '
-                                 'This date is used as the direct debit due date, if the order date plus pre-notification time would result in a due date earlier than this.'
-                                 'Customers with orders using the earliest due date, will receive an email informing them about the upcoming due date pre-notification days beforehand.'),
+                                 'This date is used as the direct debit due date if the order date plus pre-notification time would result in a due date earlier than this. '
+                                 'Customers with orders using the earliest due date will receive an email reminding them about the upcoming charge based on the configured pre-notification days.'),
                      required=False,
                      widget=forms.widgets.DateInput(attrs={'class': 'datepickerfield'})
                  )),
@@ -178,7 +178,7 @@ class SepaDebit(BasePaymentProvider):
 
         if cleaned_data['payment_sepadebit_earliest_due_date']:
             if not (cleaned_data['payment_sepadebit_mail_payment_reminder_subject'] and cleaned_data['payment_sepadebit_mail_payment_reminder_text']):
-                raise ValidationError(_("Due date reminder email fields aren't optional if earliest due date feature is used."))
+                raise ValidationError(_("Due date reminder email fields are required if earliest due date feature is used."))
 
     @property
     def payment_form_fields(self):
