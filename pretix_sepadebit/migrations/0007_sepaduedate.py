@@ -2,11 +2,11 @@
 
 import django.db.models.deletion
 import json
+from datetime import date, datetime, tzinfo
 from django.db import migrations, models
 from django.utils.timezone import utc
-from datetime import date, datetime, tzinfo
-
 from pytz import timezone
+
 
 def roll_forwards(apps, schema_editor):
     OrderPayment = apps.get_model('pretixbase', 'OrderPayment')

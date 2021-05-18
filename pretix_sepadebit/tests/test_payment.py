@@ -1,16 +1,14 @@
+import importlib
 import pytest
-from datetime import timedelta, timezone
+from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
+from django.test import RequestFactory
 from django.utils.timezone import now
 from django_scopes import scopes_disabled
-from pretix.base.models import (
-    Event, Item, Order, OrderPayment, Organizer, Quota
-)
-import importlib
 from pretix.base.email import get_email_context
-
-from django.test import RequestFactory, TestCase
-
+from pretix.base.models import (
+    Event, Item, Order, OrderPayment, Organizer, Quota,
+)
 
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit

@@ -1,25 +1,21 @@
-from datetime import date, datetime, timedelta, timezone
-from django.db.models import Q
+from datetime import date, datetime, timezone
 from django.dispatch import receiver
 from django.urls import resolve, reverse
-from django.utils.timezone import now
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext_noop
 from django_scopes import scopes_disabled
-from functools import reduce
 from i18nfield.strings import LazyI18nString
-from operator import or_
-from pretix.base.i18n import LazyDate, language
-from pretix.base.models import Event
+from pretix.base.email import (
+    SimpleFunctionalMailTextPlaceholder, get_email_context,
+)
+from pretix.base.i18n import language
+from pretix.base.settings import settings_hierarkey
 from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
     logentry_display, periodic_task, register_data_exporters,
-    register_data_shredders, register_payment_providers,
+    register_data_shredders, register_mail_placeholders,
+    register_payment_providers,
 )
 from pretix.control.signals import nav_event, nav_organizer
-from pretix.base.settings import settings_hierarkey
-from django.utils.translation import gettext_noop
-from pretix.base.signals import register_mail_placeholders
-from pretix.base.email import SimpleFunctionalMailTextPlaceholder, get_email_context
 
 from .payment import SepaDebit, SepaDueDate
 
@@ -72,12 +68,11 @@ def register_csv(sender, **kwargs):
     return DebitList
 
 
-
 @receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
 def register_mail_renderers(sender, **kwargs):
 
     ph = [SimpleFunctionalMailTextPlaceholder(
-            'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.due.date, sample=date.today()
+          'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.due.date, sample=date.today()
         ),
         SimpleFunctionalMailTextPlaceholder(
             'account', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"

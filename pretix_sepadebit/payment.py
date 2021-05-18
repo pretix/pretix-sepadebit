@@ -14,12 +14,13 @@ from django.utils.translation import gettext_lazy as _
 from i18nfield.forms import I18nFormField, I18nTextarea, I18nTextInput
 from localflavor.generic.forms import BICFormField, IBANFormField
 from localflavor.generic.validators import BICValidator, IBANValidator
+from pretix.base.email import get_available_placeholders
+from pretix.base.forms import PlaceholderValidator
 from pretix.base.models import OrderPayment, OrderRefund, Quota
 from pretix.base.payment import (
     BasePaymentProvider, PaymentException, PaymentProviderForm,
 )
-from pretix.base.forms import PlaceholderValidator
-from pretix.base.email import get_available_placeholders
+
 from pretix_sepadebit.models import SepaDueDate
 
 logger = logging.getLogger(__name__)
