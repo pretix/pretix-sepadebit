@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import now
 from django_scopes import scopes_disabled
 from pretix.base.models import (
-    Event, Item, Order, OrderPayment, Organizer, Quota,
+    Event, Item, Order, OrderPayment, Organizer, Quota
 )
 import importlib
 from pretix.base.email import get_email_context
@@ -12,8 +12,7 @@ from pretix.base.email import get_email_context
 
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit
-
-import pretix_sepadebit
+from pretix_sepadebit.signals import send_payment_reminders
 
 migration =  importlib.import_module('pretix_sepadebit.migrations.0007_sepaduedate')
 
@@ -33,6 +32,7 @@ def event():
     event.settings.set('payment_sepadebit__enabled', True)
 
     event.enable_plugin("pretix_sepadebit")
+    event.save()
 
     quota = Quota.objects.create(name="Test", size=2, event=event)
     item1 = Item.objects.create(event=event, name="Ticket", default_price=23)
@@ -54,14 +54,10 @@ def order(event):
         return o
 
 
-@pytest.fixture
-def payment(order):
-    return orderpayment(order, now(), now(), False, old_format=False)
-
 
 def orderpayment(order, date, remind_after, reminded=None, old_format=True):
     op_date = date
-    op = OrderPayment(order=order, amount=11, provider='sepadebit')
+    op = OrderPayment(order=order, amount=11, provider='sepadebit', state=OrderPayment.PAYMENT_STATE_CONFIRMED)
     info_data = {'testdata': 'is not deleted',
                  'account': 'Testaccount',
                  'iban': 'DE02120300000000202051',
@@ -81,7 +77,6 @@ def orderpayment(order, date, remind_after, reminded=None, old_format=True):
         due_date.payment = op
         due_date.save()
     return op
-
 
 
 @pytest.mark.parametrize(
@@ -192,3 +187,49 @@ def test_mail_context(event, order):
         assert ctx['reference'] == "TESTREF-123"
         assert ctx['creditor_id'] == event.settings.sepadebit_payment__creditor_id
         assert ctx['creditor_name']==event.settings.sepadebit_payment__creditor_name
+
+
+@pytest.fixture
+def mail_setup(event):
+    with scopes_disabled():
+        ts = now()
+
+        os = [Order.objects.create(
+            event=event,
+            status=Order.STATUS_PAID,
+            datetime=ts, expires=ts + timedelta(days=10),
+            total=i,
+        ) for i in range(10)]
+
+        ps = []
+        for index, o in enumerate(os):
+            due_date = ts - timedelta(days=5) + timedelta(days=index)
+            remind_after = ts - timedelta(days=5) + timedelta(days=index)
+            ps.append(orderpayment(o, due_date, remind_after, reminded=False, old_format=False))
+
+    return event, os, ps
+
+
+@pytest.mark.django_db
+def test_send_payment_reminders(mail_setup):
+    send_payment_reminders(None)
+
+    dues = SepaDueDate.objects.all()
+
+    send_reminders = [d.reminded for d in dues]
+    assert sum(send_reminders) == 6
+
+@pytest.mark.django_db
+def test_send_payment_reminders_deactivated(mail_setup):
+
+    event, os, ps = mail_setup
+    event.disable_plugin('pretix_sepadebit')
+    event.save()
+
+    send_payment_reminders(None)
+
+    dues = SepaDueDate.objects.all()
+
+    send_reminders = [d.reminded for d in dues]
+    assert sum(send_reminders) == 0
+

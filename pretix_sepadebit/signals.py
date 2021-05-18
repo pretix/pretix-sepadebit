@@ -72,22 +72,7 @@ def register_csv(sender, **kwargs):
     return DebitList
 
 
-def get_todo_sepa_reminders(date):
-    q_list = []
 
-    for event in Event.objects.all():
-        if event.settings.payment_sepadebit__enabled:
-            prenotification_days = int(event.settings.payment_sepadebit_prenotification_days)
-            q_list.append(Q(
-                reminder=SepaDueDate.REMINDER_OUTSTANDING,
-                payment__provider='sepadebit',
-                date__lte=now().date() + timedelta(days=prenotification_days))
-            )
-
-    if len(q_list) > 0:
-        qs = reduce(or_, q_list)
-        return SepaDueDate.objects.filter(qs).select_related('payment')
-    return []
 @receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
 def register_mail_renderers(sender, **kwargs):
 
@@ -123,7 +108,7 @@ def register_mail_renderers(sender, **kwargs):
 @receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
 def send_payment_reminders(sender, **kwargs):
     with scopes_disabled():
-        dd = get_todo_sepa_reminders(date=now().date())
+        dd = SepaDueDate.objects.filter(reminded=False).filter(remind_after__lt=datetime.now(timezone.utc)).filter(payment__order__event__plugins__contains='pretix_sepadebit').select_related('payment').select_related('payment__order').prefetch_related('payment__order__event')
 
         for due_date in dd:
             order = due_date.payment.order
@@ -140,7 +125,7 @@ def send_payment_reminders(sender, **kwargs):
                     context=ctx,
                     log_entry_type='pretix_sepadebit.payment_reminder.sent.order.email'
                 )
-                due_date.reminder = SepaDueDate.REMINDER_PROVIDED
+                due_date.reminded = True
                 due_date.save()
 
 
