@@ -9,10 +9,13 @@ from pretix.base.models import (
 import importlib
 from pretix.base.email import get_email_context
 
+from django.test import RequestFactory, TestCase
+
 
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit
 from pretix_sepadebit.signals import send_payment_reminders
+from pretix_sepadebit.views import EventExportListView, OrganizerExportListView
 
 migration =  importlib.import_module('pretix_sepadebit.migrations.0007_sepaduedate')
 
@@ -233,3 +236,46 @@ def test_send_payment_reminders_deactivated(mail_setup):
     send_reminders = [d.reminded for d in dues]
     assert sum(send_reminders) == 0
 
+
+@pytest.mark.django_db
+def test_event_get_unexported(mail_setup):
+    """This test gets a list of all unexported entries
+        - 5 are in the past and should be exported
+        - 1 is due today
+        - 2 are due in the next days
+        - 2 aren't part of the export window which is defined by the prenotification days parameter
+    """
+    with scopes_disabled():
+        event, os, ps = mail_setup
+        event.settings.payment_sepadebit_prenotification_days = 2
+        event.save()
+
+        request = RequestFactory().get('/')
+        request.event = event
+        view = EventExportListView()
+        view.setup(request)
+
+        ue = view.get_unexported()
+        assert len(ue) == 8
+
+@pytest.mark.django_db
+def test_organizer_get_unexported(mail_setup):
+    """This test gets a list of all unexported entries
+        - 5 are in the past and should be exported
+        - 1 is due today
+        - 2 are due in the next days
+        - 2 aren't part of the export window which is defined by the prenotification days parameter
+    """
+    with scopes_disabled():
+        event, os, ps = mail_setup
+        event.settings.payment_sepadebit_prenotification_days = 2
+        event.save()
+        organizer = event.organizer
+
+        request = RequestFactory().get('/')
+        request.organizer = organizer
+        view = OrganizerExportListView()
+        view.setup(request)
+
+        ue = view.get_unexported()
+        assert len(ue) == 8

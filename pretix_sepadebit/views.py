@@ -188,7 +188,7 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=self.request.event.testmode,
             sepaexportorder__isnull=True,
-            due__date__range=[today, latest_export_due_date]
+            due__date__lte=latest_export_due_date
         )
 
 
@@ -262,7 +262,7 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
                 state=OrderPayment.PAYMENT_STATE_CONFIRMED,
                 order__testmode=False,
                 sepaexportorder__isnull=True,
-                due__date__range=[today, latest_export_due_date]
+                due__date__lte=latest_export_due_date
             ))
 
         return OrderPayment.objects.filter(reduce(or_, q_list))
