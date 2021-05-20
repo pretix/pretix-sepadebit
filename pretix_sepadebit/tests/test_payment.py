@@ -220,20 +220,6 @@ def test_send_payment_reminders(mail_setup):
     send_reminders = [d.reminded for d in dues]
     assert sum(send_reminders) == 6
 
-@pytest.mark.django_db
-def test_send_payment_reminders_deactivated(mail_setup):
-
-    event, os, ps = mail_setup
-    event.disable_plugin('pretix_sepadebit')
-    event.save()
-
-    send_payment_reminders(None)
-
-    dues = SepaDueDate.objects.all()
-
-    send_reminders = [d.reminded for d in dues]
-    assert sum(send_reminders) == 0
-
 
 @pytest.mark.django_db
 def test_event_get_unexported(mail_setup):

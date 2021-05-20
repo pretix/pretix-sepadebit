@@ -1,4 +1,5 @@
-from datetime import date, datetime, timezone
+from datetime import date
+from django.utils.timezone import now
 from django.dispatch import receiver
 from django.urls import resolve, reverse
 from django.utils.translation import gettext_lazy as _, gettext_noop
@@ -16,7 +17,7 @@ from pretix.base.signals import (
     register_payment_providers,
 )
 from pretix.control.signals import nav_event, nav_organizer
-
+from pretix.base.models.orders import OrderPayment
 from .payment import SepaDebit, SepaDueDate
 
 
