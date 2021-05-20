@@ -127,12 +127,12 @@ def test_create_sepaduedate_instances(event, order):
 
         op.refresh_from_db()
 
-        assert op.due.date == op_date
+        assert op.sepadebit_due.date == op_date
         with pytest.raises(KeyError):
             op.info_data['date']
         assert op.info_data['testdata'] == 'is not deleted'
-        assert op.due.reminded == True
-        assert op.due.remind_after.date() == op.due.date
+        assert op.sepadebit_due.reminded == True
+        assert op.sepadebit_due.remind_after.date() == op.sepadebit_due.date
 
 
 @pytest.mark.django_db
@@ -156,7 +156,7 @@ def test_delete_sepaduedate_instances(event, order):
         op.refresh_from_db()
 
         with pytest.raises(ObjectDoesNotExist):
-            op.due
+            op.sepadebit_due
         assert op.info_data['date'] == op_date.strftime("%Y-%m-%d")
         assert op.info_data['testdata'] == 'is not deleted'
         assert op.info_data['reminded'] == True

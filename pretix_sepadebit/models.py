@@ -19,7 +19,7 @@ class SepaExportOrder(models.Model):
 
 
 class SepaDueDate(models.Model):
-    payment = models.OneToOneField('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True, related_name='due')
+    payment = models.OneToOneField('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True, related_name='sepadebit_due')
     date = models.DateField()
     remind_after = models.DateTimeField()
     reminded = models.BooleanField(verbose_name=_("Reminder"), default=False)

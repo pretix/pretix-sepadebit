@@ -58,7 +58,7 @@ class ExportListView(ListView):
 
         valid_payments = defaultdict(list)
         files = {}
-        for payment in self.get_unexported().select_related('order', 'order__event', 'due'):
+        for payment in self.get_unexported().select_related('order', 'order__event', 'sepadebit_due'):
             if not payment.info_data:
                 # Should not happen
                 # TODO: Notify user
@@ -74,7 +74,7 @@ class ExportListView(ListView):
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().date(), payment.due.date),
+                "collection_date": max(now().date(), payment.sepadebit_due.date),
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
@@ -188,7 +188,7 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=self.request.event.testmode,
             sepaexportorder__isnull=True,
-            due__date__lte=latest_export_due_date
+            sepadebit_due__date__lte=latest_export_due_date
         )
 
 
@@ -262,7 +262,7 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
                 state=OrderPayment.PAYMENT_STATE_CONFIRMED,
                 order__testmode=False,
                 sepaexportorder__isnull=True,
-                due__date__lte=latest_export_due_date
+                sepadebit_due__date__lte=latest_export_due_date
             ))
 
         return OrderPayment.objects.filter(reduce(or_, q_list))

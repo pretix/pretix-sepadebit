@@ -72,7 +72,7 @@ def register_csv(sender, **kwargs):
 def register_mail_renderers(sender, **kwargs):
 
     ph = [SimpleFunctionalMailTextPlaceholder(
-          'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.due.date, sample=date.today()
+          'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
         ),
         SimpleFunctionalMailTextPlaceholder(
             'account', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"
