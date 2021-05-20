@@ -182,9 +182,9 @@ def test_mail_context(event, order):
         ctx=get_email_context(event=event, order=order, sepadebit_payment=op)
 
         assert ctx['due_date'] == op_date
-        assert ctx['account'] == "Testaccount"
+        assert ctx['account_holder'] == "Testaccount"
         assert ctx['bic'] == "BYLADEM1001"
-        assert ctx['iban'] == "DE02 **** 2051"
+        assert ctx['iban'] == "DE02xxxx2051"
         assert ctx['reference'] == "TESTREF-123"
         assert ctx['creditor_id'] == event.settings.sepadebit_payment__creditor_id
         assert ctx['creditor_name']==event.settings.sepadebit_payment__creditor_name

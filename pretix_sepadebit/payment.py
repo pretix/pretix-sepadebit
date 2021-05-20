@@ -146,9 +146,9 @@ class SepaDebit(BasePaymentProvider):
                      required=False,
                      widget=forms.widgets.DateInput(attrs={'class': 'datepickerfield'})
                  )),
-                ('mail_payment_reminder_subject',
+                ('pre_notification_mail_subject',
                  I18nFormField(
-                     label=_("Due date reminder subject"),
+                     label=_("Pre-notification mail subject"),
                      help_text=_('The subject of the notification email. '
                                  #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),
@@ -156,9 +156,9 @@ class SepaDebit(BasePaymentProvider):
                      widget=I18nTextInput,
                      widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
                  )),
-                ('mail_payment_reminder_text',
+                ('pre_notification_mail_body',
                  I18nFormField(
-                     label=_("Due date reminder body"),
+                     label=_("Pre-notification mail body"),
                      help_text=_('The body of the notification email. '
                                  #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),

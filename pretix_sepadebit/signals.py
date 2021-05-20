@@ -75,10 +75,10 @@ def register_mail_renderers(sender, **kwargs):
           'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'account', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"
+            'account_holder', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'iban', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + " **** " + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02 **** 2051"
+            'iban', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + "xxxx" + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02xxxx2051"
         ),
         SimpleFunctionalMailTextPlaceholder(
             'bic', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('bic'), sample="BYLADEM1001"
@@ -112,8 +112,8 @@ def send_payment_reminders(sender, **kwargs):
         for due_date in dd:
             order = due_date.payment.order
             event = order.event
-            subject = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_subject)
-            text = LazyI18nString(event.settings.payment_sepadebit_mail_payment_reminder_text)
+            subject = event.settings.payment_sepadebit_pre_notification_mail_subject
+            text = event.settings.payment_sepadebit_pre_notification_mail_body
 
             ctx = get_email_context(event=event, order=order, sepa_debit_payment=due_date.payment)
 
