@@ -31,6 +31,7 @@ def event():
     # testing creditor id from https://www.bundesbank.de/en/tasks/payment-systems/services/sepa/creditor-identifier/creditor-identifier-626704
     event.settings.set('payment_sepadebit_creditor_id', 'DE98ZZZ09999999999')
     event.settings.set('payment_sepadebit__enabled', True)
+    event.currency="€"
 
     event.enable_plugin("pretix_sepadebit")
     event.save()
@@ -186,6 +187,8 @@ def test_mail_context(event, order):
         assert ctx['bic'] == "BYLADEM1001"
         assert ctx['iban'] == "DE02xxxx2051"
         assert ctx['reference'] == "TESTREF-123"
+        assert ctx['debit_amount'] == "11.00"
+        assert ctx['debit_amount_with_currency'] == "€11.00"
         assert ctx['creditor_id'] == event.settings.sepadebit_payment__creditor_id
         assert ctx['creditor_name']==event.settings.sepadebit_payment__creditor_name
 

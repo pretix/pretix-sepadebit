@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 from django.utils.timezone import now
 from django.dispatch import receiver
 from django.urls import resolve, reverse
@@ -18,6 +19,7 @@ from pretix.base.signals import (
 )
 from pretix.control.signals import nav_event, nav_organizer
 from pretix.base.models.orders import OrderPayment
+from pretix.base.templatetags.money import money_filter
 from .payment import SepaDebit, SepaDueDate
 
 
@@ -73,16 +75,37 @@ def register_csv(sender, **kwargs):
 def register_mail_renderers(sender, **kwargs):
 
     ph = [SimpleFunctionalMailTextPlaceholder(
-          'due_date', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
+          'due_date',
+          ['sepadebit_payment'],
+          lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'account_holder', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "), sample="Max Mustermann"
+            'account_holder',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "),
+            sample="Max Mustermann"
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'iban', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + "xxxx" + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02xxxx2051"
+            'debit_amount',
+            ['sepadebit_payment', 'event'],
+            lambda sepadebit_payment, event: money_filter(sepadebit_payment.amount, event.currency, hide_currency=True),
+            lambda event: money_filter(Decimal('12.00'), event.currency, hide_currency=True)
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'bic', ['sepadebit_payment'], lambda sepadebit_payment: sepadebit_payment.info_data.get('bic'), sample="BYLADEM1001"
+            'debit_amount_with_currency',
+            ['sepadebit_payment', 'event'],
+            lambda sepadebit_payment, event: money_filter(sepadebit_payment.amount, event.currency, hide_currency=False),
+            lambda event: money_filter(Decimal('12.00'), event.currency, hide_currency=False)
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'iban',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + "xxxx" + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02xxxx2051"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'bic',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('bic'), sample="BYLADEM1001"
         ),
         SimpleFunctionalMailTextPlaceholder(
             'reference',
@@ -91,13 +114,20 @@ def register_mail_renderers(sender, **kwargs):
             lambda event: f'{event.settings.reference_prefix + "-" if event.settings.reference_prefix else ""}{event.slug.upper()}-XXXXXXX'
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'creditor_id', ['sepadebit_payment', "event"], lambda sepadebit_payment, event: event.settings.creditor_id, sample="DE98ZZZ09999999999"
+            'creditor_id',
+            ['sepadebit_payment', "event"],
+            lambda sepadebit_payment, event: event.settings.creditor_id, sample="DE98ZZZ09999999999"
         ),
         SimpleFunctionalMailTextPlaceholder(
-            'creditor_name', ['sepadebit_payment', "event"], lambda sepadebit_payment, event: event.settings.creditor_name, sample="DE98ZZZ09999999999"
+            'creditor_name',
+            ['sepadebit_payment', "event"],
+            lambda sepadebit_payment,
+            event: event.settings.creditor_name,
+            sample="DE98ZZZ09999999999"
         )]
 
     return ph
+
 
 
 
@@ -165,7 +195,7 @@ settings_hierarkey.add_default(
     "payment_sepadebit_mail_payment_reminder_subject",
     LazyI18nString.from_gettext(
         gettext_noop(
-            "Upcomming direct debit due date"
+            "Upcomming debit of {debit_amount_with_currency}"
         )
     ), LazyI18nString,
 )
