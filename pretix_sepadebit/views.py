@@ -252,20 +252,29 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
         today = datetime.date.today()
 
         for event in Event.objects.filter(
-            organizer=self.request.organizer
+            organizer=self.request.organizer,
+            plugins__contains='pretix_sepadebit'
         ):
-            latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
+            try:
+                latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
 
-            q_list.append(Q(
-                order__event=event,
-                provider='sepadebit',
-                state=OrderPayment.PAYMENT_STATE_CONFIRMED,
-                order__testmode=False,
-                sepaexportorder__isnull=True,
-                sepadebit_due__date__lte=latest_export_due_date
-            ))
+                q_list.append(Q(
+                    order__event=event,
+                    sepadebit_due__date__lte=latest_export_due_date
+                ))
+            except:
+                pass
 
-        return OrderPayment.objects.filter(reduce(or_, q_list))
+        preselection =  OrderPayment.objects.filter(
+            provider='sepadebit',
+            state=OrderPayment.PAYMENT_STATE_CONFIRMED,
+            order__testmode=False,
+            sepaexportorder__isnull=True,
+        )
 
+        if q_list:
+            return preselection.filter(reduce(or_, q_list))
+        else:
+            return OrderPayment.objects.none()
 
 

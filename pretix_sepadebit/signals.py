@@ -15,7 +15,7 @@ from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
     logentry_display, periodic_task, register_data_exporters,
     register_data_shredders, register_mail_placeholders,
-    register_payment_providers,
+    register_payment_providers, event_live_issues
 )
 from pretix.control.signals import nav_event, nav_organizer
 from pretix.base.models.orders import OrderPayment
@@ -27,6 +27,10 @@ from .payment import SepaDebit, SepaDueDate
 def register_payment_provider(sender, **kwargs):
     return SepaDebit
 
+@receiver(event_live_issues, dispatch_uid="payment_sepadebit_event_live")
+def event_live_issues_sepadebit(sender, **kwargs):
+    if sender.settings.sepadebit_payment__prenotification_days is None:
+        return _("Pre-notification time setting of SEPA Payment isn't set.")
 
 @receiver(nav_event, dispatch_uid="payment_sepadebit_nav")
 def control_nav_import(sender, request=None, **kwargs):
