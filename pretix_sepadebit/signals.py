@@ -197,7 +197,7 @@ def register_shredder(sender, **kwargs):
 
 
 settings_hierarkey.add_default(
-    "payment_sepadebit_mail_payment_reminder_subject",
+    "payment_sepadebit_pre_notification_mail_subject",
     LazyI18nString.from_gettext(
         gettext_noop(
             "Upcomming debit of {debit_amount_with_currency}"
@@ -207,7 +207,7 @@ settings_hierarkey.add_default(
 
 
 settings_hierarkey.add_default(
-    "payment_sepadebit_mail_payment_reminder_text",
+    "payment_sepadebit_pre_notification_mail_body",
     LazyI18nString.from_gettext(
         gettext_noop(
             "Hello,\n\n"
