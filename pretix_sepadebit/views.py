@@ -257,13 +257,14 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
         ):
             try:
                 latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
+            except TypeError:
+                next
 
                 q_list.append(Q(
                     order__event=event,
                     sepadebit_due__date__lte=latest_export_due_date
                 ))
-            except:
-                pass
+
 
         preselection =  OrderPayment.objects.filter(
             provider='sepadebit',
