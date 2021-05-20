@@ -29,8 +29,9 @@ def register_payment_provider(sender, **kwargs):
 
 @receiver(event_live_issues, dispatch_uid="payment_sepadebit_event_live")
 def event_live_issues_sepadebit(sender, **kwargs):
-    if sender.settings.sepadebit_payment__prenotification_days is None:
-        return _("Pre-notification time setting of SEPA Payment isn't set.")
+    if sender.settings.sepadebit_payment__enabled:
+        if sender.settings.sepadebit_payment__prenotification_days is None:
+            return _("Pre-notification time setting of SEPA Payment isn't set.")
 
 @receiver(nav_event, dispatch_uid="payment_sepadebit_nav")
 def control_nav_import(sender, request=None, **kwargs):
