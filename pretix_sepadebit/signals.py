@@ -103,7 +103,11 @@ def register_mail_renderers(sender, **kwargs):
 @receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
 def send_payment_reminders(sender, **kwargs):
     with scopes_disabled():
-        dd = SepaDueDate.objects.filter(reminded=False).filter(remind_after__lt=datetime.now(timezone.utc)).filter(payment__order__event__plugins__contains='pretix_sepadebit').select_related('payment').select_related('payment__order').prefetch_related('payment__order__event')
+        dd = SepaDueDate.objects.filter(
+            reminded=False,
+            remind_after__lt=now(),
+            payment__state=OrderPayment.PAYMENT_STATE_CONFIRMED
+        ).select_related('payment', 'payment__order').prefetch_related('payment__order__event')
 
         for due_date in dd:
             order = due_date.payment.order
@@ -180,6 +184,5 @@ settings_hierarkey.add_default(
         )
     ), LazyI18nString,
 )
-
 
 
