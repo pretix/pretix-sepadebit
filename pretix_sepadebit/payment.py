@@ -205,7 +205,7 @@ class SepaDebit(BasePaymentProvider):
         super().settings_form_clean(cleaned_data)
 
         if cleaned_data.get('payment_sepadebit_earliest_due_date'):
-            if not (cleaned_data.get('payment_sepadebit_mail_payment_reminder_subject') and cleaned_data.get('payment_sepadebit_mail_payment_reminder_text')):
+            if not (cleaned_data.get('payment_sepadebit_pre_notification_mail_subject') and cleaned_data.get('payment_sepadebit_pre_notification_mail_body')):
                 raise ValidationError(_("Due date reminder email fields are required if earliest due date feature is used."))
 
     @property
