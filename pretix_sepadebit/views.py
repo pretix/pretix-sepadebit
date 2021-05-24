@@ -74,7 +74,7 @@ class ExportListView(ListView):
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().date(), payment.sepadebit_due.date),
+                "collection_date": max(now().astimezone(self.request.event.timezone).date(), payment.sepadebit_due.date),
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
@@ -179,7 +179,7 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
         ).order_by('-datetime')
 
     def get_unexported(self):
-        today = datetime.date.today()
+        today = now().astimezone(self.request.event.timezone).date()
         latest_export_due_date = today + datetime.timedelta(days=int(self.request.event.settings.payment_sepadebit_prenotification_days))
 
         return OrderPayment.objects.filter(
@@ -249,7 +249,7 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
 
     def get_unexported(self):
         q_list = []
-        today = datetime.date.today()
+        today = now().astimezone(self.request.organizer.timezone).today()
 
         for event in Event.objects.filter(
             organizer=self.request.organizer,
