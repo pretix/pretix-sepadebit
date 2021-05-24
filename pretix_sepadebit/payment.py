@@ -172,7 +172,7 @@ class SepaDebit(BasePaymentProvider):
             d, "pre_notification_mail_subject", ["event", "order", "sepadebit_payment"], []
         )
         self._set_field_placeholders(
-            d, "pre_notification_mail_body", ["event", "sepadebit_payment", "order"], []
+            d, "pre_notification_mail_body", ["event", "order", "sepadebit_payment"], []
         )
         return d
 
