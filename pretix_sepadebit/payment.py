@@ -150,7 +150,6 @@ class SepaDebit(BasePaymentProvider):
                  I18nFormField(
                      label=_("Pre-notification mail subject"),
                      help_text=_('The subject of the notification email. '
-                                 #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextInput,
@@ -160,7 +159,6 @@ class SepaDebit(BasePaymentProvider):
                  I18nFormField(
                      label=_("Pre-notification mail body"),
                      help_text=_('The body of the notification email. '
-                                 #'You can use the tags {creditor_id}, {creditor_name}, {account}, {iban}, {bic}, {reference} and {due_date}. '
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextarea,
