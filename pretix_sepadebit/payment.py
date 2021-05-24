@@ -265,11 +265,14 @@ class SepaDebit(BasePaymentProvider):
             }
 
             # add current time to due_date for remind after to take pressure of the cron job
-            due = SepaDueDate(date=due_date,
-                              reminded=reminded,
-                              remind_after=datetime.now().replace(year=due_date.year, month=due_date.month, day=due_date.day))
-            due.payment = payment
-            due.save()
+            due = SepaDueDate.objects.update_or_create(
+                payment=payment,
+                defaults={
+                    'date': due_date,
+                    'reminded': reminded,
+                    'remind_after': now().astimezone(self.event.timezone).replace(year=due_date.year, month=due_date.month, day=due_date.day)
+                }
+            )[0]
 
             payment.confirm(mail_text=self.order_pending_mail_render(payment.order))
         except Quota.QuotaExceededException as e:
