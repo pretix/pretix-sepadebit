@@ -265,7 +265,6 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
                     sepadebit_due__date__lte=latest_export_due_date
                 ))
 
-
         preselection =  OrderPayment.objects.filter(
             provider='sepadebit',
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,

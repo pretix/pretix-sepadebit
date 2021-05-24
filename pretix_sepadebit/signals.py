@@ -136,8 +136,6 @@ def register_mail_renderers(sender, **kwargs):
     return ph
 
 
-
-
 @receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
 def send_payment_reminders(sender, **kwargs):
     with scopes_disabled():

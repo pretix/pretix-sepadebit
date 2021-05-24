@@ -63,6 +63,7 @@ def create_sepaduedate_instances(OrderPayment, SepaDueDate):
         op.info = json.dumps(op_info_data, sort_keys=True)
         op.save()
 
+
 def delete_sepaduedate_instances(OrderPayment, SepaDueDate):
     for due in SepaDueDate.objects.filter(payment__isnull=False):
         order_info_data = json.loads(due.payment.info)
