@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-22 16:13+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-12-15 21:00+0000\n"
+"Last-Translator: albert <albert.serra.monner@gmail.com>\n"
+"Language-Team: Catalan <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -151,12 +154,12 @@ msgstr ""
 #: pretix_sepadebit/payment.py:148
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:149
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:151
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -260,7 +263,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:15
 msgid "In test mode, your exports will only contain test mode orders."
-msgstr ""
+msgstr "En mode de prova, les exportacions només contindran comandes de prova."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:19
 msgid ""
@@ -270,11 +273,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:22
 msgid "Go to organizer-level exports"
-msgstr ""
+msgstr "Anar a les exportacions de nivell organitzador"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
 msgid "Create new export file"
-msgstr ""
+msgstr "Crear un nou fitxer d'exportació"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:36
 msgid "Exported XML files"
@@ -282,11 +285,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
 msgid "Export date"
-msgstr ""
+msgstr "Data d'exportació"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 msgid "Number of orders"
-msgstr ""
+msgstr "Número de comandes"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:43
 msgid "Total amount"
@@ -311,7 +314,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:85
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Encara no s'han creat exportacions."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -374,7 +377,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:79
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Tiquet per l'acte {event}-{code}"
 
 #: pretix_sepadebit/views.py:111
 msgid ""
@@ -395,4 +398,4 @@ msgstr ""
 
 #: pretix_sepadebit/views.py:127
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "No s'han trobat comandes vàlides."

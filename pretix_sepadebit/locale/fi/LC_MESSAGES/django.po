@@ -8,17 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-22 16:13+0200\n"
-"PO-Revision-Date: 2021-03-01 23:24+0000\n"
-"Last-Translator: lapor-kris <kristijan.tkalec@posteo.si>\n"
-"Language-Team: Slovenian <https://translate.pretix.eu/projects/pretix/"
-"pretix-plugin-sepadebit/sl/>\n"
-"Language: sl\n"
+"PO-Revision-Date: 2021-01-07 03:00+0000\n"
+"Last-Translator: Jaakko Rinta-Filppula <jaakko@r-f.fi>\n"
+"Language-Team: Finnish <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/fi/>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 4.4.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -34,15 +33,15 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order code"
-msgstr ""
+msgstr "Tilauskoodi"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Order date"
-msgstr ""
+msgstr "Tilauksen päivämäärä"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
-msgstr ""
+msgstr "Laskut"
 
 #: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
@@ -286,7 +285,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
 msgid "Export date"
-msgstr ""
+msgstr "Vie päivämäärä"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:42
 msgid "Number of orders"
@@ -304,7 +303,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:67
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:74
 msgid "Orders"
-msgstr ""
+msgstr "Tilaukset"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:70
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -315,7 +314,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:85
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Vientejä ei ole vielä tehty."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -351,11 +350,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
-msgstr ""
+msgstr "Tilaus"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
 msgid "Payment"
-msgstr "Plačilo"
+msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:34
 msgid "Mandate date"
@@ -378,7 +377,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:79
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Tapahtumalippu {event}-{code}"
 
 #: pretix_sepadebit/views.py:111
 msgid ""

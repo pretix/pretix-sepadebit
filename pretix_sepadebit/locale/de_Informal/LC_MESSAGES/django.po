@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-22 16:13+0200\n"
-"PO-Revision-Date: 2020-02-08 13:01+0000\n"
+"PO-Revision-Date: 2021-01-27 18:02+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German (informal) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/de_Informal/>\n"
@@ -54,6 +54,8 @@ msgid ""
 "banking details. According to our data, the correct BIC would be "
 "{correctbic}."
 msgstr ""
+"Die BIC {bic} passt nicht zur IBAN, bitte überprüfe deine Kontodaten. Laut "
+"unserer Liste wäre die korrekte BIC {correctbic}."
 
 #: pretix_sepadebit/payment.py:48 pretix_sepadebit/signals.py:26
 #: pretix_sepadebit/signals.py:46

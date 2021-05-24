@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-22 16:13+0200\n"
-"PO-Revision-Date: 2020-08-05 06:00+0000\n"
+"PO-Revision-Date: 2020-10-26 06:00+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/nl/>\n"
@@ -331,11 +331,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:22
 msgid "Go to organizer-level exports"
-msgstr "Ga naar exporteren op organisator-niveau"
+msgstr "Ga naar export op organisator-niveau"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
 msgid "Create new export file"
-msgstr "Maak nieuw exportbestand"
+msgstr "Nieuw exportbestand aanmaken"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:36
 msgid "Exported XML files"
