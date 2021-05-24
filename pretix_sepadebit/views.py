@@ -260,10 +260,10 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
             except TypeError:
                 next
 
-                q_list.append(Q(
-                    order__event=event,
-                    sepadebit_due__date__lte=latest_export_due_date
-                ))
+            q_list.append(Q(
+                order__event=event,
+                sepadebit_due__date__lte=latest_export_due_date
+            ))
 
         preselection =  OrderPayment.objects.filter(
             provider='sepadebit',
