@@ -79,10 +79,11 @@ def register_csv(sender, **kwargs):
 @receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
 def register_mail_renderers(sender, **kwargs):
 
-    ph = [SimpleFunctionalMailTextPlaceholder(
-          'due_date',
-          ['sepadebit_payment'],
-          lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
+    ph = [
+        SimpleFunctionalMailTextPlaceholder(
+            'due_date',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
         ),
         SimpleFunctionalMailTextPlaceholder(
             'account_holder',
@@ -129,7 +130,8 @@ def register_mail_renderers(sender, **kwargs):
             lambda sepadebit_payment,
             event: event.settings.creditor_name,
             sample="DE98ZZZ09999999999"
-        )]
+        )
+    ]
 
     return ph
 
