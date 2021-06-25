@@ -315,7 +315,7 @@ class SepaDebit(BasePaymentProvider):
             'settings': self.settings,
             'payment_info': payment.info_data,
             'order': payment.order,
-            'payment_due_date': payment.sepadebit_due.date
+            'payment_due_date': payment.sepadebit_due.date if hasattr(payment, 'sepadebit_due') else None
         }
         return template.render(ctx)
 
