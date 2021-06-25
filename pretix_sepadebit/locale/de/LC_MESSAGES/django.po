@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: 2021-01-27 18:02+0000\n"
+"PO-Revision-Date: 2021-06-25 11:22+0200\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -52,6 +52,8 @@ msgid ""
 "Direct debit is not allowed for this IBAN, please get in touch with the "
 "event organizer or choose a different payment method."
 msgstr ""
+"SEPA-Lastschrift ist für diese IBAN nicht möglich, bitte nimm Kontakt mit "
+"dem Veranstalter auf oder wähle eine andere Zahlungsart."
 
 #: pretix_sepadebit/payment.py:56
 #, python-brace-format
@@ -81,7 +83,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:82
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr ""
+msgstr "Verfügbare Platzhalter: {list}"
 
 #: pretix_sepadebit/payment.py:97
 msgid ""
@@ -153,7 +155,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:152
 msgid "IBAN blocklist"
-msgstr ""
+msgstr "IBAN-Blockliste"
 
 #: pretix_sepadebit/payment.py:155
 msgid ""
@@ -162,10 +164,14 @@ msgid ""
 "specific person. You can also list country codessuch as \"GB\" if you never "
 "want to accept IBANs from a specific country."
 msgstr ""
+"Eine IBAN oder ein IBAN-Präfix pro Zeile. Das System wird diese IBANs nicht "
+"erlauben. Nützlich z.B. für bereits öfter ausgefallene Zahlungen. Es können "
+"auch ganze Ländercodes wie z.B. \"GB\" blockiert werden, wenn keine IBANs "
+"aus diesem Land akzeptiert werden sollen."
 
 #: pretix_sepadebit/payment.py:161
 msgid "Earliest debit due date"
-msgstr ""
+msgstr "Frühstes Einzugsdatum"
 
 #: pretix_sepadebit/payment.py:162
 msgid ""
