@@ -1,25 +1,26 @@
+import datetime
+import logging
 import os
 from collections import defaultdict
-
-import json
-import logging
-
-import dateutil
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Count, Sum, Q
+from django.db.models import Count, Q, Sum
 from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
-from pretix.base.models import Order, OrderPayment
-from pretix.control.permissions import EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin
-from pretix_sepadebit.models import SepaExport, SepaExportOrder
+from functools import reduce
+from operator import or_
+from pretix.base.models import Event, Order, OrderPayment
+from pretix.control.permissions import (
+    EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin,
+)
+from pretix.control.views.organizer import OrganizerDetailViewMixin
 from sepaxml import SepaDD, validation
 
-from pretix.control.views.organizer import OrganizerDetailViewMixin
+from pretix_sepadebit.models import SepaExport, SepaExportOrder
 
 logger = logging.getLogger(__name__)
 
@@ -57,7 +58,7 @@ class ExportListView(ListView):
 
         valid_payments = defaultdict(list)
         files = {}
-        for payment in self.get_unexported().select_related('order', 'order__event'):
+        for payment in self.get_unexported().select_related('order', 'order__event', 'sepadebit_due'):
             if not payment.info_data:
                 # Should not happen
                 # TODO: Notify user
@@ -73,7 +74,7 @@ class ExportListView(ListView):
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().date(), dateutil.parser.parse(payment.info_data['date']).date()),
+                "collection_date": max(now().astimezone(self.request.event.timezone).date(), payment.sepadebit_due.date),
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
@@ -178,12 +179,16 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
         ).order_by('-datetime')
 
     def get_unexported(self):
+        today = now().astimezone(self.request.event.timezone).date()
+        latest_export_due_date = today + datetime.timedelta(days=int(self.request.event.settings.payment_sepadebit_prenotification_days))
+
         return OrderPayment.objects.filter(
             order__event=self.request.event,
             provider='sepadebit',
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=self.request.event.testmode,
-            sepaexportorder__isnull=True
+            sepaexportorder__isnull=True,
+            sepadebit_due__date__lte=latest_export_due_date
         )
 
 
@@ -243,10 +248,33 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
         ).order_by('-datetime')
 
     def get_unexported(self):
-        return OrderPayment.objects.filter(
-            order__event__organizer=self.request.organizer,
+        q_list = []
+        today = now().astimezone(self.request.organizer.timezone).today()
+
+        for event in Event.objects.filter(
+            organizer=self.request.organizer,
+            plugins__contains='pretix_sepadebit'
+        ):
+            try:
+                latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
+            except TypeError:
+                next
+
+            q_list.append(Q(
+                order__event=event,
+                sepadebit_due__date__lte=latest_export_due_date
+            ))
+
+        preselection =  OrderPayment.objects.filter(
             provider='sepadebit',
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=False,
-            sepaexportorder__isnull=True
+            sepaexportorder__isnull=True,
         )
+
+        if q_list:
+            return preselection.filter(reduce(or_, q_list))
+        else:
+            return OrderPayment.objects.none()
+
+

@@ -1,20 +1,37 @@
+from datetime import date
+from decimal import Decimal
+from django.utils.timezone import now
 from django.dispatch import receiver
 from django.urls import resolve, reverse
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext_noop
+from django_scopes import scopes_disabled
+from i18nfield.strings import LazyI18nString
+from pretix.base.email import (
+    SimpleFunctionalMailTextPlaceholder, get_email_context,
+)
+from pretix.base.i18n import language
+from pretix.base.settings import settings_hierarkey
 from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
-    register_data_exporters, register_data_shredders,
-    register_payment_providers,
+    logentry_display, periodic_task, register_data_exporters,
+    register_data_shredders, register_mail_placeholders,
+    register_payment_providers, event_live_issues
 )
 from pretix.control.signals import nav_event, nav_organizer
-
-from .payment import SepaDebit
+from pretix.base.models.orders import OrderPayment
+from pretix.base.templatetags.money import money_filter
+from .payment import SepaDebit, SepaDueDate
 
 
 @receiver(register_payment_providers, dispatch_uid="payment_sepadebit")
 def register_payment_provider(sender, **kwargs):
     return SepaDebit
 
+@receiver(event_live_issues, dispatch_uid="payment_sepadebit_event_live")
+def event_live_issues_sepadebit(sender, **kwargs):
+    if sender.settings.sepadebit_payment__enabled:
+        if sender.settings.sepadebit_payment__prenotification_days is None:
+            return _("Pre-notification time setting of SEPA Payment isn't set.")
 
 @receiver(nav_event, dispatch_uid="payment_sepadebit_nav")
 def control_nav_import(sender, request=None, **kwargs):
@@ -59,6 +76,102 @@ def register_csv(sender, **kwargs):
     return DebitList
 
 
+@receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
+def register_mail_renderers(sender, **kwargs):
+
+    ph = [
+        SimpleFunctionalMailTextPlaceholder(
+            'due_date',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date, sample=date.today()
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'account_holder',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('account', " "),
+            sample="Max Mustermann"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'debit_amount',
+            ['sepadebit_payment', 'event'],
+            lambda sepadebit_payment, event: money_filter(sepadebit_payment.amount, event.currency, hide_currency=True),
+            lambda event: money_filter(Decimal('12.00'), event.currency, hide_currency=True)
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'debit_amount_with_currency',
+            ['sepadebit_payment', 'event'],
+            lambda sepadebit_payment, event: money_filter(sepadebit_payment.amount, event.currency, hide_currency=False),
+            lambda event: money_filter(Decimal('12.00'), event.currency, hide_currency=False)
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'iban',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('iban')[0:4] + "xxxx" + sepadebit_payment.info_data.get('iban')[-4:], sample="DE02xxxx2051"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'bic',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('bic'), sample="BYLADEM1001"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'reference',
+            ['sepadebit_payment'],
+            lambda sepadebit_payment: sepadebit_payment.info_data.get('reference'),
+            lambda event: f'{event.settings.reference_prefix + "-" if event.settings.reference_prefix else ""}{event.slug.upper()}-XXXXXXX'
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'creditor_id',
+            ['sepadebit_payment', "event"],
+            lambda sepadebit_payment, event: event.settings.creditor_id, sample="DE98ZZZ09999999999"
+        ),
+        SimpleFunctionalMailTextPlaceholder(
+            'creditor_name',
+            ['sepadebit_payment', "event"],
+            lambda sepadebit_payment,
+            event: event.settings.creditor_name,
+            sample="DE98ZZZ09999999999"
+        )
+    ]
+
+    return ph
+
+
+@receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
+def send_payment_reminders(sender, **kwargs):
+    with scopes_disabled():
+        dd = SepaDueDate.objects.filter(
+            reminded=False,
+            remind_after__lt=now(),
+            payment__state=OrderPayment.PAYMENT_STATE_CONFIRMED
+        ).select_related('payment', 'payment__order').prefetch_related('payment__order__event')
+
+        for due_date in dd:
+            order = due_date.payment.order
+            event = order.event
+            subject = event.settings.payment_sepadebit_pre_notification_mail_subject
+            text = event.settings.payment_sepadebit_pre_notification_mail_body
+
+            ctx = get_email_context(event=event, order=order, sepa_debit_payment=due_date.payment)
+
+            with language(order.locale, event.settings.region):
+                due_date.payment.order.send_mail(
+                    subject=str(subject),
+                    template=text,
+                    context=ctx,
+                    log_entry_type='pretix_sepadebit.payment_reminder.sent.order.email'
+                )
+                due_date.reminded = True
+                due_date.save()
+
+
+@receiver(signal=logentry_display, dispatch_uid="payment_sepadebit_send_payment_reminders_logentry")
+def payment_reminder_logentry(sender, logentry, **kwargs):
+    if logentry.action_type != 'pretix_sepadebit.payment_reminder.sent.order.email':
+        return
+
+    return _('A reminder for the upcoming direct debit due date has been sent to the customer.')
+
+
 class PaymentLogsShredder(BaseDataShredder):
     verbose_name = _('SEPA debit history')
     identifier = 'sepadebit_history'
@@ -81,3 +194,31 @@ def register_shredder(sender, **kwargs):
     return [
         PaymentLogsShredder,
     ]
+
+
+settings_hierarkey.add_default(
+    "payment_sepadebit_pre_notification_mail_subject",
+    LazyI18nString.from_gettext(
+        gettext_noop(
+            "Upcomming debit of {debit_amount_with_currency}"
+        )
+    ), LazyI18nString,
+)
+
+
+settings_hierarkey.add_default(
+    "payment_sepadebit_pre_notification_mail_body",
+    LazyI18nString.from_gettext(
+        gettext_noop(
+            "Hello,\n\n"
+            "you ordered a ticket for {event}.\n\n"
+            "We will debit your bank account {iban} on or shortly after {due_date}. The payment will appear on your bank statement as {creditor_name} with reference {reference} and creditor identifier {creditor_id}.\n\n"
+            "You can change your order details and view the status of your order at\n"
+            "{url}\n\n"
+            "Best regards,\n"
+            "Your {event} team"
+        )
+    ), LazyI18nString,
+)
+
+

@@ -1,8 +1,8 @@
-import logging
-from collections import OrderedDict
-from datetime import timedelta
 from typing import Union
 
+import logging
+from collections import OrderedDict
+from datetime import date, datetime, timedelta
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -11,11 +11,17 @@ from django.http import HttpRequest
 from django.template.loader import get_template
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from i18nfield.forms import I18nFormField, I18nTextarea, I18nTextInput
 from localflavor.generic.forms import BICFormField, IBANFormField
-from localflavor.generic.validators import IBANValidator, BICValidator
-
+from localflavor.generic.validators import BICValidator, IBANValidator
+from pretix.base.email import get_available_placeholders
+from pretix.base.forms import PlaceholderValidator
 from pretix.base.models import OrderPayment, OrderRefund, Quota
-from pretix.base.payment import BasePaymentProvider, PaymentException, PaymentProviderForm
+from pretix.base.payment import (
+    BasePaymentProvider, PaymentException, PaymentProviderForm,
+)
+
+from pretix_sepadebit.models import SepaDueDate
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +60,25 @@ class SepaDebit(BasePaymentProvider):
     def test_mode_message(self):
         return _('Test mode payments will only be debited if you submit a file created in test mode to your bank.')
 
+
+    def _set_field_placeholders(self, form_dict, fn, base_parameters, extras=[]):
+        phs = [
+            "{%s}" % p
+            for p in sorted(
+                get_available_placeholders(self.event, base_parameters).keys()
+            )
+        ] + extras
+        ht = _("Available placeholders: {list}").format(list=", ".join(phs))
+        if form_dict[fn].help_text:
+            form_dict[fn].help_text += " " + str(ht)
+        else:
+            form_dict[fn].help_text = ht
+        form_dict[fn].validators.append(PlaceholderValidator(phs))
+
     @property
     def settings_form_fields(self):
+
+
         d = OrderedDict(
             [
                 ('ack',
@@ -114,9 +137,43 @@ class SepaDebit(BasePaymentProvider):
                                  'configuring at least 7 days.'),
                      min_value=1
                  )),
+                ('earliest_due_date',
+                 forms.DateField(
+                     label=_('Earliest debit due date'),
+                     help_text=_('Earliest date the direct debit can be due. '
+                                 'This date is used as the direct debit due date if the order date plus pre-notification time would result in a due date earlier than this. '
+                                 'Customers with orders using the earliest due date will receive an email reminding them about the upcoming charge based on the configured pre-notification days.'),
+                     required=False,
+                     widget=forms.widgets.DateInput(attrs={'class': 'datepickerfield'})
+                 )),
+                ('pre_notification_mail_subject',
+                 I18nFormField(
+                     label=_("Pre-notification mail subject"),
+                     help_text=_('The subject of the notification email. '
+                                 'This email is only sent if the earliest debit due date option is used.'),
+                     required=False,
+                     widget=I18nTextInput,
+                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
+                 )),
+                ('pre_notification_mail_body',
+                 I18nFormField(
+                     label=_("Pre-notification mail body"),
+                     help_text=_('The body of the notification email. '
+                                 'This email is only sent if the earliest debit due date option is used.'),
+                     required=False,
+                     widget=I18nTextarea,
+                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
+                 ))
             ] + list(super().settings_form_fields.items())
         )
         d.move_to_end('_enabled', last=False)
+
+        self._set_field_placeholders(
+            d, "pre_notification_mail_subject", ["event", "order", "sepadebit_payment"], []
+        )
+        self._set_field_placeholders(
+            d, "pre_notification_mail_body", ["event", "order", "sepadebit_payment"], []
+        )
         return d
 
     def settings_content_render(self, request):
@@ -141,6 +198,13 @@ class SepaDebit(BasePaymentProvider):
             request.session.get('payment_sepa_iban', '') != '' and
             request.session.get('payment_sepa_bic', '') != ''
         )
+
+    def settings_form_clean(self, cleaned_data):
+        super().settings_form_clean(cleaned_data)
+
+        if cleaned_data.get('payment_sepadebit_earliest_due_date'):
+            if not (cleaned_data.get('payment_sepadebit_pre_notification_mail_subject') and cleaned_data.get('payment_sepadebit_pre_notification_mail_body')):
+                raise ValidationError(_("Due date reminder email fields are required if earliest due date feature is used."))
 
     @property
     def payment_form_fields(self):
@@ -187,7 +251,7 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def execute_payment(self, request: HttpRequest, payment: OrderPayment):
-        due_date = self._due_date()
+        due_date, reminded = self._due_date_reminded()
         ref = '%s-%s' % (self.event.slug.upper(), payment.order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
@@ -198,10 +262,21 @@ class SepaDebit(BasePaymentProvider):
                 'iban': request.session['payment_sepa_iban'],
                 'bic': request.session['payment_sepa_bic'],
                 'reference': ref,
-                'date': due_date.strftime("%Y-%m-%d")
             }
+
+            # add current time to due_date for remind after to take pressure of the cron job
+            due = SepaDueDate.objects.update_or_create(
+                payment=payment,
+                defaults={
+                    'date': due_date,
+                    'reminded': reminded,
+                    'remind_after': now().astimezone(self.event.timezone).replace(year=due_date.year, month=due_date.month, day=due_date.day)
+                }
+            )[0]
+
             payment.confirm(mail_text=self.order_pending_mail_render(payment.order))
         except Quota.QuotaExceededException as e:
+            due.delete()
             raise PaymentException(str(e))
         finally:
             del request.session['payment_sepa_account']
@@ -221,6 +296,7 @@ class SepaDebit(BasePaymentProvider):
             'settings': self.settings,
             'payment_info': payment.info_data,
             'order': payment.order,
+            'payment_due_date': payment.sepadebit_due.date
         }
         return template.render(ctx)
 
@@ -241,8 +317,20 @@ class SepaDebit(BasePaymentProvider):
         return template.render(ctx)
 
     def _due_date(self, order=None):
+        due_date = self._due_date_reminded(order)
+        return due_date[0]
+
+    def _due_date_reminded(self, order=None):
         startdate = order.datetime.date() if order else now().date()
-        return startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
+        relative_due_date = startdate + timedelta(days=self.settings.get('prenotification_days', as_type=int))
+
+        earliest_due_date = self.settings.get('earliest_due_date', as_type=date)
+
+        if earliest_due_date:
+            if earliest_due_date > relative_due_date:
+                return earliest_due_date, False
+
+        return relative_due_date, True
 
     def shred_payment_info(self, obj: Union[OrderPayment, OrderRefund]):
         d = obj.info_data

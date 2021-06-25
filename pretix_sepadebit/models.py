@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class SepaExport(models.Model):
@@ -15,3 +16,11 @@ class SepaExportOrder(models.Model):
     order = models.ForeignKey('pretixbase.Order', on_delete=models.CASCADE)
     payment = models.ForeignKey('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+class SepaDueDate(models.Model):
+    payment = models.OneToOneField('pretixbase.OrderPayment', on_delete=models.CASCADE, null=True, related_name='sepadebit_due')
+    date = models.DateField()
+    remind_after = models.DateTimeField()
+    reminded = models.BooleanField(default=False)
+
