@@ -26,6 +26,17 @@ from pretix_sepadebit.models import SepaDueDate
 logger = logging.getLogger(__name__)
 
 
+class NotBlocklisted:
+    def __init__(self, pp):
+        self.pp = pp
+
+    def __call__(self, value):
+        if any(value.replace(' ', '').startswith(b) for b in (self.pp.settings.iban_blocklist or '').splitlines() if b):
+            raise ValidationError(_('Direct debit is not allowed for this IBAN, please get in touch with the event organizer or '
+                                    'choose a different payment method.'))
+        return value
+
+
 class SEPAPaymentProviderForm(PaymentProviderForm):
     def clean(self):
         from .bicdata import DATA
@@ -137,6 +148,14 @@ class SepaDebit(BasePaymentProvider):
                                  'configuring at least 7 days.'),
                      min_value=1
                  )),
+                ('iban_blocklist', forms.CharField(
+                    label=_('IBAN blocklist'),
+                    required=False,
+                    widget=forms.Textarea,
+                    help_text=_('Put one IBAN or IBAN prefix per line. The system will not allow any of these IBANs. Useful e.g. '
+                                'if you had lots of failed payments already from a specific person. You can also list country codes'
+                                'such as "GB" if you never want to accept IBANs from a specific country.')
+                )),
                 ('earliest_due_date',
                  forms.DateField(
                      label=_('Earliest debit due date'),
@@ -210,7 +229,7 @@ class SepaDebit(BasePaymentProvider):
     def payment_form_fields(self):
         return OrderedDict([
             ('account', forms.CharField(label=_('Account holder'))),
-            ('iban', IBANFormField(label=_('IBAN'))),
+            ('iban', IBANFormField(label=_('IBAN'), validators=[NotBlocklisted(self)])),
             ('bic', BICFormField(label=_('BIC'))),
             ('mandate', forms.BooleanField(
                 label=_('I hereby grant the SEPA direct debit mandate for this order (see below)'))),
