@@ -19,7 +19,7 @@ def fwd(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretixbase', '0061_auto_20170521_0942'),
+        ('pretixbase', '0051_auto_20170206_2027_squashed_0057_auto_20170501_2116'),
         ('pretix_sepadebit', '0001_initial'),
     ]
 
