@@ -74,7 +74,7 @@ class ExportListView(ListView):
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().astimezone(self.request.event.timezone).date(), payment.sepadebit_due.date),
+                "collection_date": max(now().astimezone(payment.order.event.timezone).date(), payment.sepadebit_due.date),
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
@@ -265,7 +265,7 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
                 sepadebit_due__date__lte=latest_export_due_date
             ))
 
-        preselection =  OrderPayment.objects.filter(
+        preselection = OrderPayment.objects.filter(
             provider='sepadebit',
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=False,
@@ -276,5 +276,3 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
             return preselection.filter(reduce(or_, q_list))
         else:
             return OrderPayment.objects.none()
-
-
