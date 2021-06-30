@@ -180,7 +180,7 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
 
     def get_unexported(self):
         today = now().astimezone(self.request.event.timezone).date()
-        latest_export_due_date = today + datetime.timedelta(days=int(self.request.event.settings.payment_sepadebit_prenotification_days))
+        latest_export_due_date = today + datetime.timedelta(days=int(self.request.event.settings.payment_sepadebit_prenotification_days or 0))
 
         return OrderPayment.objects.filter(
             order__event=self.request.event,
@@ -256,7 +256,7 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
             plugins__contains='pretix_sepadebit'
         ):
             try:
-                latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days))
+                latest_export_due_date = today + datetime.timedelta(days=int(event.settings.payment_sepadebit_prenotification_days or 0))
             except (TypeError, ValueError):
                 continue
 
