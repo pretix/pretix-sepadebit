@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: 2020-10-26 06:00+0000\n"
+"PO-Revision-Date: 2021-08-03 20:00+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
-"Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/nl/>\n"
+"Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.6\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -54,6 +54,8 @@ msgid ""
 "Direct debit is not allowed for this IBAN, please get in touch with the "
 "event organizer or choose a different payment method."
 msgstr ""
+"SEPA-incasso's zijn niet toegestaan voor dit IBAN. Neem contact op met de "
+"organisator van het evenement of kies een andere betalingsmethode."
 
 #: pretix_sepadebit/payment.py:56
 #, python-brace-format
@@ -84,7 +86,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:82
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr ""
+msgstr "Beschikbare plaatsaanduidingen: {list}"
 
 #: pretix_sepadebit/payment.py:97
 msgid ""
@@ -157,7 +159,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:152
 msgid "IBAN blocklist"
-msgstr ""
+msgstr "IBAN-blokkeerlijst"
 
 #: pretix_sepadebit/payment.py:155
 msgid ""
@@ -166,10 +168,15 @@ msgid ""
 "specific person. You can also list country codessuch as \"GB\" if you never "
 "want to accept IBANs from a specific country."
 msgstr ""
+"Voer hier één IBAN of IBAN-voorvoegsel per regel in. Het systeem zal IBANs "
+"op deze lijst of IBANs beginnend met een voorvoegsel op deze lijst weigeren. "
+"Deze optie kan handig zijn als u al een groot aantal mislukte betalingen van "
+"een bepaalde persoon hebt gehad. U kunt hier ook landcodes zoals \"GB\" "
+"invoeren als u nooit IBANs van een bepaald land wilt accepteren."
 
 #: pretix_sepadebit/payment.py:161
 msgid "Earliest debit due date"
-msgstr ""
+msgstr "Eerste incassodatum"
 
 #: pretix_sepadebit/payment.py:162
 msgid ""
@@ -179,30 +186,36 @@ msgid ""
 "date will receive an email reminding them about the upcoming charge based on "
 "the configured pre-notification days."
 msgstr ""
+"De eerste datum waarop automatische incasso's mogen worden uitgevoerd. Deze "
+"datum zal worden gebruikt als de datum om het incasso uit te voeren als de "
+"bestellingsdatum plus de meldingstijd in een eerdere datum zouden "
+"resulteren. Klanten die op deze datum een incasso zullen krijgen ontvangen "
+"vooraf een herinneringsmail over de afschrijving volgens de ingestelde "
+"notificatietijd."
 
 #: pretix_sepadebit/payment.py:170
-#, fuzzy
-#| msgid "Pre-notification time"
 msgid "Pre-notification mail subject"
-msgstr "Vooraanmeldingstijd"
+msgstr "Onderwerp vooraankondigingsmail"
 
 #: pretix_sepadebit/payment.py:171
 msgid ""
 "The subject of the notification email. This email is only sent if the "
 "earliest debit due date option is used."
 msgstr ""
+"Het onderwerp van de e-mail. Deze e-mail zal alleen worden verstuurd als de "
+"eerste incassodatum is ingesteld."
 
 #: pretix_sepadebit/payment.py:179
-#, fuzzy
-#| msgid "Pre-notification time"
 msgid "Pre-notification mail body"
-msgstr "Vooraanmeldingstijd"
+msgstr "Inhoud vooraankondigingsmail"
 
 #: pretix_sepadebit/payment.py:180
 msgid ""
 "The body of the notification email. This email is only sent if the earliest "
 "debit due date option is used."
 msgstr ""
+"De inhoud van de vooraankondigingsmail. Deze e-mail zal alleen worden "
+"verstuurd als de eerste incassodatum is ingesteld."
 
 #: pretix_sepadebit/payment.py:200
 msgid ""
@@ -238,6 +251,8 @@ msgid ""
 "Due date reminder email fields are required if earliest due date feature is "
 "used."
 msgstr ""
+"Het is verplicht om een vooraankondigingsmail in te stellen als de eerste "
+"incassodatum is ingesteld."
 
 #: pretix_sepadebit/payment.py:231
 msgid "Account holder"
@@ -261,13 +276,15 @@ msgstr ""
 
 #: pretix_sepadebit/signals.py:34
 msgid "Pre-notification time setting of SEPA Payment isn't set."
-msgstr ""
+msgstr "De vooraankondigingstijd voor SEPA-betalingen is niet ingesteld."
 
 #: pretix_sepadebit/signals.py:172
 msgid ""
 "A reminder for the upcoming direct debit due date has been sent to the "
 "customer."
 msgstr ""
+"Een herinnering van een aankomende automatische incasso is naar de klant "
+"verstuurd."
 
 #: pretix_sepadebit/signals.py:176
 msgid "SEPA debit history"
@@ -284,7 +301,7 @@ msgstr ""
 #: pretix_sepadebit/signals.py:203
 #, python-brace-format
 msgid "Upcomming debit of {debit_amount_with_currency}"
-msgstr ""
+msgstr "Automatische afschrijving van {debit_amount_with_currency}"
 
 #: pretix_sepadebit/signals.py:213
 #, python-brace-format
@@ -303,6 +320,21 @@ msgid ""
 "Best regards,\n"
 "Your {event} team"
 msgstr ""
+"Hallo,\n"
+"\n"
+"U heeft een ticket besteld voor {event}.\n"
+"\n"
+"We zullen het te betalen bedrag automatisch van uw bankrekening {iban} "
+"afschrijven op of kort na {due_date}. De betaling zal op uw afschrift "
+"verschijnen als {creditor_name} met het kenmerk {reference} en incassant-ID "
+"{creditor_id}.\n"
+"\n"
+"U kunt de status van uw bestelling inzien en de details van uw bestelling "
+"wijzigen op:\n"
+"{url}\n"
+"\n"
+"Met vriendelijke groet,\n"
+"Het {event}-team"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -437,18 +469,16 @@ msgstr "Ga naar export op organisator-niveau"
 msgid ""
 "Refunds for SEPA debit transactions are grouped with bank transfer refunds."
 msgstr ""
+"Terugbetalingen voor SEPA-incasso's worden ingevoegd bij de terugbetalingen "
+"voor handmatige bankoverschrijvingen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
-#, fuzzy
-#| msgid "Go to organizer-level exports"
 msgid "Go to refund exports"
-msgstr "Ga naar export op organisator-niveau"
+msgstr "Ga naar exporteren terugbetalingen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
-#, fuzzy
-#| msgid "Go to organizer-level exports"
 msgid "Go to organizer-level refund exports"
-msgstr "Ga naar export op organisator-niveau"
+msgstr "Ga naar exporteren terugbetalingen op organisatorniveau"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:51
 msgid "Create new export file"
