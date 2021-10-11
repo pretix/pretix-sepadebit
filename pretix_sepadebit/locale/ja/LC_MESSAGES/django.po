@@ -1,0 +1,507 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-25 11:11+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pretix_sepadebit/__init__.py:10
+msgid "SEPA Direct debit"
+msgstr ""
+
+#: pretix_sepadebit/__init__.py:13
+msgid "This plugin adds SEPA direct debit support to pretix"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:12
+msgid "List of SEPA debits (CSV)"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:20
+msgid "Order code"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:20
+msgid "Order date"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:20
+msgid "Invoices"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:20
+msgid "SEPA export date"
+msgstr ""
+
+#: pretix_sepadebit/exporters.py:20
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
+msgid "Payment amount"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:35
+msgid ""
+"Direct debit is not allowed for this IBAN, please get in touch with the "
+"event organizer or choose a different payment method."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:56
+#, python-brace-format
+msgid ""
+"The BIC number {bic} does not match the IBAN. Please double, check your "
+"banking details. According to our data, the correct BIC would be "
+"{correctbic}."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:66 pretix_sepadebit/signals.py:43
+#: pretix_sepadebit/signals.py:63
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:5
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:7
+msgid "SEPA debit"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:72
+msgid ""
+"Test mode payments will only be debited if you submit a file created in test "
+"mode to your bank."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:82
+#, python-brace-format
+msgid "Available placeholders: {list}"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:97
+msgid ""
+"I have understood that I need to regularly create SEPA XML export files and "
+"transfer them to my bank in order to have my bank collect the customer "
+"payments."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:103
+msgid "Creditor name"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:108
+msgid "Creditor IBAN"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:112
+msgid "Creditor BIC"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:116
+msgid "Creditor ID"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:121
+msgid "This must be a valid SEPA creditor ID."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:128
+msgid "Mandate reference prefix"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:132
+msgid ""
+"This may only contain letters, numbers, and the following special "
+"characters: ' , . : + - / ( ) ?"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:137
+msgid ""
+"We will use this string and append the event slug and the order code to "
+"build a unique SEPA mandate reference."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:143
+msgid "Pre-notification time"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:144
+msgid ""
+"Number of days between the placement of the order and the due date of the "
+"direct debit. Depending on your legislation and your bank rules, you might "
+"be required to hand in a debit at least 5 days before the due date at your "
+"bank and you might even be required to inform the customer at least 14 days "
+"beforehand. We recommend configuring at least 7 days."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:152
+msgid "IBAN blocklist"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:155
+msgid ""
+"Put one IBAN or IBAN prefix per line. The system will not allow any of these "
+"IBANs. Useful e.g. if you had lots of failed payments already from a "
+"specific person. You can also list country codessuch as \"GB\" if you never "
+"want to accept IBANs from a specific country."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:161
+msgid "Earliest debit due date"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:162
+msgid ""
+"Earliest date the direct debit can be due. This date is used as the direct "
+"debit due date if the order date plus pre-notification time would result in "
+"a due date earlier than this. Customers with orders using the earliest due "
+"date will receive an email reminding them about the upcoming charge based on "
+"the configured pre-notification days."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:170
+msgid "Pre-notification mail subject"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:171
+msgid ""
+"The subject of the notification email. This email is only sent if the "
+"earliest debit due date option is used."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:179
+msgid "Pre-notification mail body"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:180
+msgid ""
+"The body of the notification email. This email is only sent if the earliest "
+"debit due date option is used."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:200
+msgid ""
+"If you activate this payment method, SEPA direct debit mandates will be "
+"collected via an online form. Depending on your legislation, it might be "
+"necessary to collect them on paper (currently not supported) to exclude the "
+"risk of charge backs. SEPA debit payments will be immediately marked as paid "
+"in the shop, so please mark it as unpaid and contact the user if any charge "
+"backs occur or the charge fails due to insufficient funds."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:208
+#, python-brace-format
+msgid ""
+"The placeholder <code>{payment_info}</code> is not present in your "
+"configured email template for order payment notifications. This is legally "
+"required as it includes the mandate reference and the due date."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:226
+msgid ""
+"Due date reminder email fields are required if earliest due date feature is "
+"used."
+msgstr ""
+
+#: pretix_sepadebit/payment.py:231
+msgid "Account holder"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:232
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
+msgid "IBAN"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:233
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
+msgid "BIC"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:235
+msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
+msgstr ""
+
+#: pretix_sepadebit/signals.py:34
+msgid "Pre-notification time setting of SEPA Payment isn't set."
+msgstr ""
+
+#: pretix_sepadebit/signals.py:172
+msgid ""
+"A reminder for the upcoming direct debit due date has been sent to the "
+"customer."
+msgstr ""
+
+#: pretix_sepadebit/signals.py:176
+msgid "SEPA debit history"
+msgstr ""
+
+#: pretix_sepadebit/signals.py:178
+msgid ""
+"This will remove previously exported SEPA XML files containing banking "
+"information."
+msgstr ""
+
+#: pretix_sepadebit/signals.py:203
+#, python-brace-format
+msgid "Upcomming debit of {debit_amount_with_currency}"
+msgstr ""
+
+#: pretix_sepadebit/signals.py:213
+#, python-brace-format
+msgid ""
+"Hello,\n"
+"\n"
+"you ordered a ticket for {event}.\n"
+"\n"
+"We will debit your bank account {iban} on or shortly after {due_date}. The "
+"payment will appear on your bank statement as {creditor_name} with reference "
+"{reference} and creditor identifier {creditor_id}.\n"
+"\n"
+"You can change your order details and view the status of your order at\n"
+"{url}\n"
+"\n"
+"Best regards,\n"
+"Your {event} team"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
+#, python-format
+msgid ""
+"We will debit the total amount displayed above from your bank account "
+"<strong>%(iban)s</strong>. You hereby agree that the amount will be "
+"withdrawn from your bank account <strong>on or shortly after %(date)s</"
+"strong>."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
+#, python-format
+msgid ""
+"By submitting this mandate form, you authorise (A) the Creditor <strong>"
+"%(creditor)s</strong> to send instructions to your bank to debit your "
+"account and (B) your bank to debit your account in accordance with the "
+"instructions from the Creditor."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
+msgid ""
+"As part of your rights, you are entitled to a refund from your bank under "
+"the terms and conditions of your agreement with your bank. A refund must be "
+"claimed within 8 weeks starting from the date on which your account was "
+"debited. Your rights are explained in a statement that you can obtain from "
+"your bank."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
+#, python-format
+msgid ""
+"The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
+"sent to you via email after your order has been submitted."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
+#, python-format
+msgid ""
+"You hereby agree that the amount will be withdrawn from your bank account "
+"<strong>on or shortly after %(date)s</strong>."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
+#, python-format
+msgid ""
+"This order has been paid via SEPA debit. It was part of the export file "
+"exported at %(date)s."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
+msgid "View export file"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
+msgid ""
+"This shall be paid via SEPA debit, but has not yet been included in any SEPA "
+"file export."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
+msgid ""
+"This order has been planned to be paid via SEPA debit but has been marked as "
+"unpaid again (or could never be marked as paid)."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
+msgid "Account name"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
+msgid "Mandate reference"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
+msgid "Due date"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:9
+#, python-format
+msgid ""
+"<strong>%(num_new)s</strong> SEPA debit orders have been placed and are not "
+"yet exported as Sepa XML."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:15
+msgid "In test mode, your exports will only contain test mode orders."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:19
+msgid ""
+"If you want, you can now also create SEPA debit files for multiple events "
+"combined."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:22
+msgid "Go to organizer-level exports"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:29
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:38
+msgid ""
+"Refunds for SEPA debit transactions are grouped with bank transfer refunds."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
+msgid "Go to refund exports"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
+msgid "Go to organizer-level refund exports"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:51
+msgid "Create new export file"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:55
+msgid "Exported XML files"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:60
+msgid "Export date"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:61
+msgid "Number of orders"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:62
+msgid "Total amount"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:72
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
+msgid "TEST MODE"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:86
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:93
+msgid "Orders"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:89
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:96
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:11
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:15
+msgid "Download XML"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/export.html:104
+msgid "No exports have been created yet."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
+#, python-format
+msgid ""
+"We will debit the total amount of this order from your bank account by "
+"direct debit on or shortly after %(date)s."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
+#, python-format
+msgid ""
+"This payment will appear on your bank statement as %(creditor_name)s with "
+"mandate reference %(reference)s and creditor ID %(id)s."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
+msgid "SEPA export"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:8
+#, python-format
+msgid "SEPA export: %(date)s"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:22
+msgid "Included orders"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
+#, python-format
+msgid "Total amount: %(total)s %(currency)s"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
+msgid "Order"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
+msgid "Payment"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:34
+msgid "Mandate date"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:35
+msgid "Associated invoices"
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/orders.html:70
+msgid "No orders have been part of this export."
+msgstr ""
+
+#: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
+msgid ""
+"The SEPA direct debit failed to be completed. Please contact the organizer "
+"of the event as soon as possible!"
+msgstr ""
+
+#: pretix_sepadebit/views.py:80
+#, python-brace-format
+msgid "Event ticket {event}-{code}"
+msgstr ""
+
+#: pretix_sepadebit/views.py:112
+msgid ""
+"The generated file did not validate for the following reasons. Please "
+"contact pretix support for more information.\n"
+"{}"
+msgstr ""
+
+#: pretix_sepadebit/views.py:123
+msgid ""
+"Multiple new export files have been created, since your events have "
+"differing SEPA settings. Please make sure to process all of them!"
+msgstr ""
+
+#: pretix_sepadebit/views.py:126
+msgid "A new export file has been created."
+msgstr ""
+
+#: pretix_sepadebit/views.py:128
+msgid "No valid orders have been found."
+msgstr ""
