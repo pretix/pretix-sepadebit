@@ -151,7 +151,7 @@ def send_payment_reminders(sender, **kwargs):
             subject = event.settings.payment_sepadebit_pre_notification_mail_subject
             text = event.settings.payment_sepadebit_pre_notification_mail_body
 
-            ctx = get_email_context(event=event, order=order, sepa_debit_payment=due_date.payment)
+            ctx = get_email_context(event=event, order=order, sepadebit_payment=due_date.payment)
 
             with language(order.locale, event.settings.region):
                 due_date.payment.order.send_mail(
