@@ -9,10 +9,11 @@ from pretix.base.email import get_email_context
 from pretix.base.models import (
     Event, Item, Order, OrderPayment, Organizer, Quota,
 )
+from unittest import mock
 
 from pretix_sepadebit.models import SepaDueDate
 from pretix_sepadebit.payment import SepaDebit
-from pretix_sepadebit.signals import send_payment_reminders
+from pretix_sepadebit.signals import mail_placeholders, send_payment_reminders
 from pretix_sepadebit.views import EventExportListView, OrganizerExportListView
 
 migration =  importlib.import_module('pretix_sepadebit.migrations.0007_sepaduedate')
@@ -222,6 +223,14 @@ def test_send_payment_reminders(mail_setup):
 
     send_reminders = [d.reminded for d in dues]
     assert sum(send_reminders) == 6
+
+
+@pytest.mark.parametrize("placeholder", mail_placeholders)
+@pytest.mark.django_db
+def test_call_mail_context(mail_setup, placeholder):
+    with mock.patch.object(placeholder, "_func") as mock_render:
+        send_payment_reminders(None)
+        assert mock_render.called
 
 
 @pytest.mark.django_db
