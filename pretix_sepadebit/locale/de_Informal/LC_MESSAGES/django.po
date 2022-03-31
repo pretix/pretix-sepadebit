@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: 2021-06-25 11:22+0200\n"
+"PO-Revision-Date: 2022-03-31 20:01+0000\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German (informal) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/de_Informal/>\n"
-"Language: de\n"
+"Language: de_Informal\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -181,30 +181,36 @@ msgid ""
 "date will receive an email reminding them about the upcoming charge based on "
 "the configured pre-notification days."
 msgstr ""
+"Frühester Termin, zu dem der Einzug fällig sein kann. Dieser Termin wird als "
+"Fälligkeitsdatum verwendet werden, wenn das Bestelldatum plus die "
+"Vorabinformationszeit in einem früheren Datum resultieren würde. Kunden mit "
+"Bestellungen, die zu diesem Datum fällig werden, erhalten eine E-Mail mit "
+"einer Erinnerung an die fällig werdende Zahlung basierend auf der "
+"konfigurierten Vorabinformationszeit."
 
 #: pretix_sepadebit/payment.py:170
-#, fuzzy
-#| msgid "Pre-notification time"
 msgid "Pre-notification mail subject"
-msgstr "Vorabinformationszeit"
+msgstr "Vorabinformation E-Mail-Betreff"
 
 #: pretix_sepadebit/payment.py:171
 msgid ""
 "The subject of the notification email. This email is only sent if the "
 "earliest debit due date option is used."
 msgstr ""
+"Der Betreff der Erinnerungs-E-Mail. Die E-Mail wird nur verschickt wenn das "
+"Früheste Einzugsdatum verwendet wird."
 
 #: pretix_sepadebit/payment.py:179
-#, fuzzy
-#| msgid "Pre-notification time"
 msgid "Pre-notification mail body"
-msgstr "Vorabinformationszeit"
+msgstr "Vorabinformation E-Mail-Text"
 
 #: pretix_sepadebit/payment.py:180
 msgid ""
 "The body of the notification email. This email is only sent if the earliest "
 "debit due date option is used."
 msgstr ""
+"Der Text der Erinnerungs-E-Mail. Die E-Mail wird nur verschickt wenn das "
+"Früheste Einzugsdatum verwendet wird."
 
 #: pretix_sepadebit/payment.py:200
 msgid ""
@@ -240,6 +246,8 @@ msgid ""
 "Due date reminder email fields are required if earliest due date feature is "
 "used."
 msgstr ""
+"Die Felder für die E-Mail-Inhalte der Vorabinformation sind verpflichtend "
+"auszufüllen, wenn das früheste Einzugsdatum verwendet wird."
 
 #: pretix_sepadebit/payment.py:231
 msgid "Account holder"
@@ -263,13 +271,15 @@ msgstr ""
 
 #: pretix_sepadebit/signals.py:34
 msgid "Pre-notification time setting of SEPA Payment isn't set."
-msgstr ""
+msgstr "Die Vorabinformationszeit der SEPA-Zahlung ist nicht eingestellt."
 
 #: pretix_sepadebit/signals.py:172
 msgid ""
 "A reminder for the upcoming direct debit due date has been sent to the "
 "customer."
 msgstr ""
+"Eine Erinnerung an den fällig werdenden Zahlungseinzug wurde an den Kunden "
+"verschickt."
 
 #: pretix_sepadebit/signals.py:176
 msgid "SEPA debit history"
@@ -284,7 +294,7 @@ msgstr "Dies entfernt exportierte SEPA-XML-Dateien mit Bankdaten vom Server."
 #: pretix_sepadebit/signals.py:203
 #, python-brace-format
 msgid "Upcomming debit of {debit_amount_with_currency}"
-msgstr ""
+msgstr "Anstehender Einzug von {debit_amount_with_currency}"
 
 #: pretix_sepadebit/signals.py:213
 #, python-brace-format
@@ -303,6 +313,19 @@ msgid ""
 "Best regards,\n"
 "Your {event} team"
 msgstr ""
+"Hallo,\n"
+"\n"
+"du hast ein Ticket für {event} bestellt.\n"
+"\n"
+"Wir werden am oder kurz nach dem {due_date} dein Bankkonto {iban} belasten. "
+"Die Zahlung wird auf deinem Kontoauszug als {creditor_name} mit der "
+"Mandatsreferenz {reference} und der Gläubiger-ID {creditor_id} auftauchen.\n"
+"\n"
+"Du kannst deine Bestellung unter folgender Adresse einsehen und ändern:\n"
+"{url}\n"
+"\n"
+"Viele Grüße\n"
+"Das {event}-Team"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -436,18 +459,16 @@ msgstr "Zu den Exporten auf Veranstalter-Ebene"
 msgid ""
 "Refunds for SEPA debit transactions are grouped with bank transfer refunds."
 msgstr ""
+"Erstattungen für SEPA-Lastschriften werden mit Banküberweisungs-Erstattungen "
+"zusammen gruppiert."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:32
-#, fuzzy
-#| msgid "Go to organizer-level exports"
 msgid "Go to refund exports"
-msgstr "Zu den Exporten auf Veranstalter-Ebene"
+msgstr "Zu den Erstattungs-Exporten"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:41
-#, fuzzy
-#| msgid "Go to organizer-level exports"
 msgid "Go to organizer-level refund exports"
-msgstr "Zu den Exporten auf Veranstalter-Ebene"
+msgstr "Zu den Erstattungs-Exporten auf Veranstalter-Ebene"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:51
 msgid "Create new export file"
