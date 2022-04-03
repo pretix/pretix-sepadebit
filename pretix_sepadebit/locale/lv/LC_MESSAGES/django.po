@@ -8,13 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-04-04 02:00+0000\n"
+"Last-Translator: Liga V <lerning_by_dreaming@gmx.de>\n"
+"Language-Team: Latvian <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
+"19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: pretix_sepadebit/__init__.py:10
 msgid "SEPA Direct debit"
@@ -30,11 +34,11 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:20
 msgid "Order code"
-msgstr ""
+msgstr "Pasūtījuma kods"
 
 #: pretix_sepadebit/exporters.py:20
 msgid "Order date"
-msgstr ""
+msgstr "Pasūtījuma datums"
 
 #: pretix_sepadebit/exporters.py:20
 msgid "Invoices"
@@ -47,7 +51,7 @@ msgstr ""
 #: pretix_sepadebit/exporters.py:20
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
-msgstr ""
+msgstr "Maksājuma summa"
 
 #: pretix_sepadebit/payment.py:35
 msgid ""
@@ -213,12 +217,12 @@ msgstr ""
 #: pretix_sepadebit/payment.py:232
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:233
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:235
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -395,7 +399,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:61
 msgid "Number of orders"
-msgstr ""
+msgstr "Pasūtījumu skaits"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:62
 msgid "Total amount"
