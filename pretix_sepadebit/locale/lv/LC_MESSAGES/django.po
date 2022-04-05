@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: 2022-04-04 02:00+0000\n"
+"PO-Revision-Date: 2022-04-06 03:00+0000\n"
 "Last-Translator: Liga V <lerning_by_dreaming@gmx.de>\n"
 "Language-Team: Latvian <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/lv/>\n"
@@ -212,7 +212,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:231
 msgid "Account holder"
-msgstr ""
+msgstr "Konta īpašnieks"
 
 #: pretix_sepadebit/payment.py:232
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
@@ -395,7 +395,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:60
 msgid "Export date"
-msgstr ""
+msgstr "Exporta datums"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:61
 msgid "Number of orders"
