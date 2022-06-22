@@ -2,7 +2,7 @@ from typing import Union
 
 import logging
 from collections import OrderedDict
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -53,7 +53,8 @@ class SEPAPaymentProviderForm(PaymentProviderForm):
                         input_bic += 'XXX'
                     if correct_bic != input_bic:
                         raise ValidationError(
-                            _('The BIC number {bic} does not match the IBAN. Please double, check your banking details. According to our data, the correct BIC would be {correctbic}.').format(
+                            _('The BIC number {bic} does not match the IBAN. Please double, check your banking '
+                              'details. According to our data, the correct BIC would be {correctbic}.').format(
                                 bic=input_bic, correctbic=correct_bic
                             )
                         )
@@ -71,7 +72,6 @@ class SepaDebit(BasePaymentProvider):
     def test_mode_message(self):
         return _('Test mode payments will only be debited if you submit a file created in test mode to your bank.')
 
-
     def _set_field_placeholders(self, form_dict, fn, base_parameters, extras=[]):
         phs = [
             "{%s}" % p
@@ -88,8 +88,6 @@ class SepaDebit(BasePaymentProvider):
 
     @property
     def settings_form_fields(self):
-
-
         d = OrderedDict(
             [
                 ('ack',
@@ -152,16 +150,22 @@ class SepaDebit(BasePaymentProvider):
                     label=_('IBAN blocklist'),
                     required=False,
                     widget=forms.Textarea,
-                    help_text=_('Put one IBAN or IBAN prefix per line. The system will not allow any of these IBANs. Useful e.g. '
-                                'if you had lots of failed payments already from a specific person. You can also list country codes'
-                                'such as "GB" if you never want to accept IBANs from a specific country.')
+                    help_text='{}<div class="alert alert-legal">{}</div>'.format(
+                        _('Put one IBAN or IBAN prefix per line. The system will not allow any of these IBANs.  Useful '
+                          'e.g. if you had lots of failed payments already from a specific person. You can also list '
+                          'country codes such as "GB" if you never want to accept IBANs from a specific country.'),
+                        _('Adding whole countries to your blocklist is considered SEPA discrimination, illegal in '
+                          'most countries and can be cause for hefty fines from government watchdogs.')
+                    )
                 )),
                 ('earliest_due_date',
                  forms.DateField(
                      label=_('Earliest debit due date'),
                      help_text=_('Earliest date the direct debit can be due. '
-                                 'This date is used as the direct debit due date if the order date plus pre-notification time would result in a due date earlier than this. '
-                                 'Customers with orders using the earliest due date will receive an email reminding them about the upcoming charge based on the configured pre-notification days.'),
+                                 'This date is used as the direct debit due date if the order date plus '
+                                 'pre-notification time would result in a due date earlier than this. Customers with '
+                                 'orders using the earliest due date will receive an email reminding them about the '
+                                 'upcoming charge based on the configured pre-notification days.'),
                      required=False,
                      widget=forms.widgets.DateInput(attrs={'class': 'datepickerfield'})
                  )),
@@ -172,7 +176,11 @@ class SepaDebit(BasePaymentProvider):
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextInput,
-                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
+                     widget_kwargs={
+                         'attrs': {
+                             'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'
+                         }
+                     },
                  )),
                 ('pre_notification_mail_body',
                  I18nFormField(
@@ -181,7 +189,11 @@ class SepaDebit(BasePaymentProvider):
                                  'This email is only sent if the earliest debit due date option is used.'),
                      required=False,
                      widget=I18nTextarea,
-                     widget_kwargs={ 'attrs': {'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'} },
+                     widget_kwargs={
+                         'attrs': {
+                             'data-display-dependency': '#id_payment_sepadebit_earliest_due_date'
+                         }
+                     },
                  ))
             ] + list(super().settings_form_fields.items())
         )
@@ -213,9 +225,9 @@ class SepaDebit(BasePaymentProvider):
 
     def payment_is_valid_session(self, request):
         return (
-            request.session.get('payment_sepa_account', '') != '' and
-            request.session.get('payment_sepa_iban', '') != '' and
-            request.session.get('payment_sepa_bic', '') != ''
+            request.session.get('payment_sepa_account', '') != ''
+            and request.session.get('payment_sepa_iban', '') != ''
+            and request.session.get('payment_sepa_bic', '') != ''
         )
 
     def settings_form_clean(self, cleaned_data):
