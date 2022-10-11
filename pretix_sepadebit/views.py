@@ -53,6 +53,21 @@ class ExportListView(ListView):
             )
         return self._event_cache[event]
 
+    def _bank_date(self, dt: datetime.date):
+        known_holidays = (
+            # Based on TARGET2 and Bundesbank list, but omitting variable days like easter because the
+            # calculation is cumbersome and it's not that bad if we miss some as banks tend to auto-correct
+            (1, 1),
+            (5, 1),
+            (12, 24),
+            (12, 25),
+            (12, 26),
+            (12, 31),
+        )
+        while dt.weekday() in (5, 6) or (dt.month, dt.day) in known_holidays:
+            dt = dt + datetime.timedelta(days=1)
+        return dt
+
     def post(self, request, *args, **kwargs):
         self._event_cache = {}
 
@@ -68,13 +83,14 @@ class ExportListView(ListView):
                 payment.order.save()
                 continue
 
+            collection_date = self._bank_date(max(now().astimezone(payment.order.event.timezone).date(), payment.sepadebit_due.date))
             payment_dict = {
                 "name": payment.info_data['account'],
                 "IBAN": payment.info_data['iban'],
                 "BIC": payment.info_data['bic'],
                 "amount": int(payment.amount * 100),
                 "type": "OOFF",
-                "collection_date": max(now().astimezone(payment.order.event.timezone).date(), payment.sepadebit_due.date),
+                "collection_date": collection_date,
                 "mandate_id": payment.info_data['reference'],
                 "mandate_date": (payment.order.datetime if payment.migrated else payment.created).date(),
                 "description": _('Event ticket {event}-{code}').format(
