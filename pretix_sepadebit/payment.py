@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.http import HttpRequest
 from django.template.loader import get_template
+from django.utils.formats import date_format
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from i18nfield.forms import I18nFormField, I18nTextarea, I18nTextInput
@@ -403,3 +404,20 @@ class SepaDebit(BasePaymentProvider):
 
     def payment_partial_refund_supported(self, payment: OrderPayment) -> bool:
         return self.payment_refund_supported(payment)
+
+    def render_invoice_text(self, order, payment: OrderPayment) -> str:
+        ref = '%s-%s' % (self.event.slug.upper(), order.code)
+        if self.settings.reference_prefix:
+            ref = self.settings.reference_prefix + "-" + ref
+        t = _("We will debit the total amount of this order from your bank account by "
+              "direct debit on or shortly after %(date)s.") % {
+            'date': date_format(self._due_date(order), 'SHORT_DATE_FORMAT')
+        }
+        t += " "
+        t += _("This payment will appear on your bank statement as %(creditor_name)s with "
+               "mandate reference %(reference)s and creditor ID %(id)s.") % {
+            'reference': ref,
+            'id': self.settings.creditor_id,
+            'creditor_name': self.settings.creditor_name,
+        }
+        return t
