@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-25 11:11+0200\n"
-"PO-Revision-Date: 2022-11-06 05:00+0000\n"
+"PO-Revision-Date: 2022-11-07 04:00+0000\n"
 "Last-Translator: Maciej Szymczak <maciej+github@szymczak.at>\n"
 "Language-Team: Polish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/pl/>\n"
@@ -217,12 +217,12 @@ msgstr ""
 #: pretix_sepadebit/payment.py:232
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "Numer IBAN"
 
 #: pretix_sepadebit/payment.py:233
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "Numer BIC (SWIFT)"
 
 #: pretix_sepadebit/payment.py:235
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -289,9 +289,13 @@ msgid ""
 "account and (B) your bank to debit your account in accordance with the "
 "instructions from the Creditor."
 msgstr ""
+"Wypełniając ten formularz zgadzasz się na a) przesłanie przez "
+"<strong>%(creditor)s</strong> żądania do Twojego banku z prośbą o obciążenie "
+"rachunku oraz b) zrealizowanie tej prośby przez swój bank."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
+#, fuzzy
 msgid ""
 "As part of your rights, you are entitled to a refund from your bank under "
 "the terms and conditions of your agreement with your bank. A refund must be "
@@ -299,6 +303,10 @@ msgid ""
 "debited. Your rights are explained in a statement that you can obtain from "
 "your bank."
 msgstr ""
+"Zgodnie z prawem masz prawdopodobnie osiem tygodni na zgłoszenie "
+"ewentualnych roszczeń do obciążeń swojego rachunku bankowego. Zanim "
+"podejmiesz jakiekolwiek akcje - zapoznaj się z regulaminem świadczenia usług "
+"swojego Banku."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
