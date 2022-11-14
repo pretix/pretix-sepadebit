@@ -2,9 +2,12 @@ import datetime
 import logging
 import os
 from collections import defaultdict
+from decimal import Decimal
+
 from django.contrib import messages
 from django.db import transaction
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, Q, Sum, Subquery, OuterRef
+from django.db.models.functions import Coalesce
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
@@ -13,7 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, ListView
 from functools import reduce
 from operator import or_
-from pretix.base.models import Event, Order, OrderPayment
+from pretix.base.models import Event, Order, OrderPayment, OrderRefund
 from pretix.control.permissions import (
     EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin,
 )
@@ -84,11 +87,12 @@ class ExportListView(ListView):
                 continue
 
             collection_date = self._bank_date(max(now().astimezone(payment.order.event.timezone).date(), payment.sepadebit_due.date))
+            remaining_amount = payment.amount - payment.refund_amount
             payment_dict = {
                 "name": payment.info_data['account'],
                 "IBAN": payment.info_data['iban'],
                 "BIC": payment.info_data['bic'],
-                "amount": int(payment.amount * 100),
+                "amount": int(remaining_amount * 100),
                 "type": "OOFF",
                 "collection_date": collection_date,
                 "mandate_id": payment.info_data['reference'],
@@ -104,7 +108,6 @@ class ExportListView(ListView):
                 key = (config, collection_date)
             else:
                 key = config
-            print(key)
 
             if key not in files:
                 files[key] = SepaDD(dict(config), schema='pain.008.001.02')
@@ -139,7 +142,7 @@ class ExportListView(ListView):
                         exp.currency = f._config['currency']
                         exp.save()
                         SepaExportOrder.objects.bulk_create([
-                            SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments[f]
+                            SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount - p.refund_amount) for p in valid_payments[f]
                         ])
             if len(files) > 1:
                 messages.warning(request, _('Multiple new export files have been created. Please make sure to process all of them!'))
@@ -210,6 +213,14 @@ class EventExportListView(EventPermissionRequiredMixin, ExportListView):
             order__testmode=self.request.event.testmode,
             sepaexportorder__isnull=True,
             sepadebit_due__date__lte=latest_export_due_date
+        ).annotate(
+            refund_amount=Coalesce(
+                Subquery(OrderRefund.objects.filter(
+                    payment=OuterRef('pk'),
+                    state=OrderRefund.REFUND_STATE_DONE,
+                ).order_by().values('payment').annotate(s=Sum('amount')).values('s')),
+                Decimal('0.00'),
+            ),
         )
 
 
@@ -291,6 +302,14 @@ class OrganizerExportListView(OrganizerPermissionRequiredMixin, OrganizerDetailV
             state=OrderPayment.PAYMENT_STATE_CONFIRMED,
             order__testmode=False,
             sepaexportorder__isnull=True,
+        ).annotate(
+            refund_amount=Coalesce(
+                Subquery(OrderRefund.objects.filter(
+                    payment=OuterRef('pk'),
+                    state=OrderRefund.REFUND_STATE_DONE,
+                ).order_by().values('payment').annotate(s=Sum('amount')).values('s')),
+                Decimal('0.00'),
+            ),
         )
 
         if q_list:
