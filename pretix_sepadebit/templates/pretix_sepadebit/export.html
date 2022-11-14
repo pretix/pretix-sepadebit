@@ -5,11 +5,6 @@
 {% block title %}{% trans "SEPA debit" %}{% endblock %}
 {% block content %}
     <h1>{% trans "SEPA debit" %}</h1>
-    <p>
-        {% blocktrans trimmed %}
-            <strong>{{ num_new }}</strong> SEPA debit orders have been placed and are not yet exported as Sepa XML.
-        {% endblocktrans %}
-    </p>
     {% if request.event.testmode %}
         <div class="alert alert-warning">
             {% trans "In test mode, your exports will only contain test mode orders." %}
@@ -44,14 +39,36 @@
     </div>
     {% endif %}
 
-    {% if num_new > 0 %}
-        <form action="" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary">
-                {% trans "Create new export file" %}
-            </button>
-        </form>
-    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans "Create new export file" %}</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                {% blocktrans trimmed %}
+                    <strong>{{ num_new }}</strong> SEPA debit orders have been placed and are not yet exported as Sepa XML.
+                {% endblocktrans %}
+            </p>
+            {% if num_new > 0 %}
+                <form action="" method="post" class="form-inline">
+                    {% csrf_token %}
+                    {% if num_new > 1 %}
+                        <p>
+                            <label class="checkbox">
+                                <input type="checkbox" name="split-by-collection-date" value="on">
+                                {% trans "Create multiple files if the debits have different collection dates (required for some banks)" %}
+                            </label>
+                        </p>
+                    {% endif %}
+                    <p>
+                        <button class="btn btn-primary btn-lg">
+                            {% trans "Create new export file" %}
+                        </button>
+                    </p>
+                </form>
+            {% endif %}
+        </div>
+    </div>
     <h2>{% trans "Exported XML files" %}</h2>
     <div class="table-responsive">
         <table class="table table-hover">

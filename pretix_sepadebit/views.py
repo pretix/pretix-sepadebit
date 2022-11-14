@@ -100,15 +100,21 @@ class ExportListView(ListView):
             }
 
             config = self._config_for_event(payment.order.event)
-            if config not in files:
-                files[config] = SepaDD(dict(config), schema='pain.008.001.02')
-            file = files[config]
+            if request.POST.get("split-by-collection-date") == "on":
+                key = (config, collection_date)
+            else:
+                key = config
+            print(key)
+
+            if key not in files:
+                files[key] = SepaDD(dict(config), schema='pain.008.001.02')
+            file = files[key]
             file.add_payment(payment_dict)
             valid_payments[file].append(payment)
 
         if valid_payments:
             with transaction.atomic():
-                for k, f in list(files.items()):
+                for key, f in list(files.items()):
                     if hasattr(request, 'event'):
                         exp = SepaExport(event=request.event, xmldata='')
                         exp.testmode = request.event.testmode
@@ -128,7 +134,7 @@ class ExportListView(ListView):
                         messages.error(request, _('The generated file did not validate for the following reasons. '
                                                   'Please contact pretix support for more information.\n{}').format(
                             "\n".join(errs)))
-                        del files[k]
+                        del files[key]
                     else:
                         exp.currency = f._config['currency']
                         exp.save()
@@ -136,8 +142,7 @@ class ExportListView(ListView):
                             SepaExportOrder(order=p.order, payment=p, export=exp, amount=p.amount) for p in valid_payments[f]
                         ])
             if len(files) > 1:
-                messages.warning(request, _('Multiple new export files have been created, since your events '
-                                            'have differing SEPA settings. Please make sure to process all of them!'))
+                messages.warning(request, _('Multiple new export files have been created. Please make sure to process all of them!'))
             elif len(files) > 0:
                 messages.success(request, _('A new export file has been created.'))
         else:
