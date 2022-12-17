@@ -3,6 +3,7 @@ from distutils.command.build import build
 
 from django.core import management
 from setuptools import find_packages, setup
+from pretix_sepadebit import __version__
 
 try:
     with open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf-8') as f:
@@ -24,7 +25,7 @@ cmdclass = {
 
 setup(
     name='pretix-sepadebit',
-    version='2.1.0',
+    version=__version__,
     description='This plugin adds SEPA direct debit support to pretix',
     long_description=long_description,
     url='https://github.com/pretix/pretix-sepadebit',
