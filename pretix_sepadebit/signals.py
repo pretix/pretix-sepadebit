@@ -28,11 +28,13 @@ from .payment import SepaDebit, SepaDueDate
 def register_payment_provider(sender, **kwargs):
     return SepaDebit
 
+
 @receiver(event_live_issues, dispatch_uid="payment_sepadebit_event_live")
 def event_live_issues_sepadebit(sender, **kwargs):
-    if sender.settings.sepadebit_payment__enabled:
-        if sender.settings.sepadebit_payment__prenotification_days is None:
+    if sender.settings.payment_sepadebit__enabled:
+        if sender.settings.payment_sepadebit_prenotification_days is None:
             return _("Pre-notification time setting of SEPA Payment isn't set.")
+
 
 @receiver(nav_event, dispatch_uid="payment_sepadebit_nav")
 def control_nav_import(sender, request=None, **kwargs):
@@ -123,18 +125,18 @@ ReferencePlaceholder = SimpleFunctionalMailTextPlaceholder(
     "reference",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("reference"),
-    lambda event: f'{event.settings.reference_prefix + "-" if event.settings.reference_prefix else ""}{event.slug.upper()}-XXXXXXX',
+    lambda event: f'{event.settings.payment_sepadebit_reference_prefix + "-" if event.settings.payment_sepadebit_reference_prefix else ""}{event.slug.upper()}-XXXXXXX',
 )
 CreditorIdPlaceholder = SimpleFunctionalMailTextPlaceholder(
     "creditor_id",
     ["sepadebit_payment", "event"],
-    lambda sepadebit_payment, event: event.settings.creditor_id,
+    lambda sepadebit_payment, event: event.settings.payment_sepadebit_creditor_id,
     sample="DE98ZZZ09999999999",
 )
 CreditorNamePlaceholder = SimpleFunctionalMailTextPlaceholder(
     "creditor_name",
     ["sepadebit_payment", "event"],
-    lambda sepadebit_payment, event: event.settings.creditor_name,
+    lambda sepadebit_payment, event: event.settings.payment_sepadebit_creditor_name,
     sample="DE98ZZZ09999999999",
 )
 
