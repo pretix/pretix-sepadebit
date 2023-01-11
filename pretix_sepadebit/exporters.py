@@ -1,7 +1,7 @@
 import csv
 import io
 import pytz
-from django.utils.translation import gettext as _, gettext_lazy
+from django.utils.translation import gettext as _, gettext_lazy, pgettext_lazy
 from pretix.base.exporter import BaseExporter
 
 from pretix_sepadebit.models import SepaExportOrder
@@ -10,6 +10,9 @@ from pretix_sepadebit.models import SepaExportOrder
 class DebitList(BaseExporter):
     identifier = 'debitlistcsv'
     verbose_name = gettext_lazy('List of SEPA debits (CSV)')
+    category = pgettext_lazy('export_category', 'Order data')
+    description = gettext_lazy('Download a spreadsheet of all SEPA debits that have been generated and exported by the '
+                               'system.')
 
     def render(self, form_data: dict):
         output = io.StringIO()
