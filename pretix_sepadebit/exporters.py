@@ -9,10 +9,11 @@ from pretix_sepadebit.models import SepaExportOrder
 
 class DebitList(BaseExporter):
     identifier = 'debitlistcsv'
-    verbose_name = gettext_lazy('List of SEPA debits (CSV)')
+    verbose_name = gettext_lazy('List of previous SEPA debits (CSV)')
     category = pgettext_lazy('export_category', 'Order data')
-    description = gettext_lazy('Download a spreadsheet of all SEPA debits that have been generated and exported by the '
-                               'system.')
+    description = gettext_lazy('Download a spreadsheet of all SEPA debits that have previously been generated and '
+                               'exported by the system. To create a new export, use the "SEPA debit" section in '
+                               'the main menu.')
 
     def render(self, form_data: dict):
         output = io.StringIO()
