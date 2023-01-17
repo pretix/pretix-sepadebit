@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-11 13:40+0100\n"
+"POT-Creation-Date: 2023-01-17 15:16+0100\n"
 "PO-Revision-Date: 2021-01-07 03:00+0000\n"
 "Last-Translator: Jaakko Rinta-Filppula <jaakko@r-f.fi>\n"
 "Language-Team: Finnish <https://translate.pretix.eu/projects/pretix/pretix-"
@@ -28,7 +28,7 @@ msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr ""
 
 #: pretix_sepadebit/exporters.py:12
-msgid "List of SEPA debits (CSV)"
+msgid "List of previous SEPA debits (CSV)"
 msgstr ""
 
 #: pretix_sepadebit/exporters.py:13
@@ -40,27 +40,28 @@ msgstr "Tilauksen päivämäärä"
 
 #: pretix_sepadebit/exporters.py:14
 msgid ""
-"Download a spreadsheet of all SEPA debits that have been generated and "
-"exported by the system."
+"Download a spreadsheet of all SEPA debits that have previously been "
+"generated and exported by the system. To create a new export, use the \"SEPA "
+"debit\" section in the main menu."
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Order code"
 msgstr "Tilauskoodi"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Order date"
 msgstr "Tilauksen päivämäärä"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
 msgstr "Laskut"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
 msgstr ""
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
 msgstr ""

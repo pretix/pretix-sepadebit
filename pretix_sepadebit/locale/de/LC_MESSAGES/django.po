@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-11 13:40+0100\n"
-"PO-Revision-Date: 2023-01-11 13:42+0100\n"
+"POT-Creation-Date: 2023-01-17 15:16+0100\n"
+"PO-Revision-Date: 2023-01-17 15:18+0100\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/de/>\n"
@@ -23,8 +23,8 @@ msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr "Diese Erweiterung fügt Unterstützung für SEPA-Bankeinzug hinzu."
 
 #: pretix_sepadebit/exporters.py:12
-msgid "List of SEPA debits (CSV)"
-msgstr "SEPA-Bankeinzug-Liste (CSV)"
+msgid "List of previous SEPA debits (CSV)"
+msgstr "Liste vorheriger SEPA-Bankeinzüge (CSV)"
 
 #: pretix_sepadebit/exporters.py:13
 msgctxt "export_category"
@@ -33,29 +33,31 @@ msgstr "Bestelldaten"
 
 #: pretix_sepadebit/exporters.py:14
 msgid ""
-"Download a spreadsheet of all SEPA debits that have been generated and "
-"exported by the system."
+"Download a spreadsheet of all SEPA debits that have previously been "
+"generated and exported by the system. To create a new export, use the \"SEPA "
+"debit\" section in the main menu."
 msgstr ""
-"Tabelle (Excel oder CSV) mit allen SEPA-Lastschriften, die generiert und "
-"exportiert wurden."
+"Tabelle (Excel oder CSV) mit allen SEPA-Lastschriften, die in der "
+"Vergangenheit generiert und exportiert wurden. Um einen neuen SEPA-Export zu "
+"erstellen, gehe in den Abschnitt \"SEPA-Lastschrift\" im Hauptmenü."
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Order code"
 msgstr "Bestellnummer"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Order date"
 msgstr "Bestelldatum"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "Invoices"
 msgstr "Rechnungen"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 msgid "SEPA export date"
 msgstr "SEPA-Exportdatum"
 
-#: pretix_sepadebit/exporters.py:23
+#: pretix_sepadebit/exporters.py:24
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
 msgstr "Zahlbetrag"
