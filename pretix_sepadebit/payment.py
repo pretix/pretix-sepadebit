@@ -17,7 +17,7 @@ from localflavor.generic.forms import BICFormField, IBANFormField
 from localflavor.generic.validators import BICValidator, IBANValidator
 from pretix.base.email import get_available_placeholders
 from pretix.base.forms import PlaceholderValidator
-from pretix.base.models import OrderPayment, OrderRefund, Quota
+from pretix.base.models import OrderPayment, OrderRefund, Quota, Order
 from pretix.base.payment import (
     BasePaymentProvider, PaymentException, PaymentProviderForm,
 )
@@ -404,6 +404,10 @@ class SepaDebit(BasePaymentProvider):
 
     def payment_partial_refund_supported(self, payment: OrderPayment) -> bool:
         return self.payment_refund_supported(payment)
+
+    def render_invoice_stamp(self, order: Order, payment: OrderPayment) -> str:
+        if order.status == Order.STATUS_PAID:
+            return _('will be debited')
 
     def render_invoice_text(self, order, payment: OrderPayment) -> str:
         ref = '%s-%s' % (self.event.slug.upper(), order.code)
