@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 15:16+0100\n"
+"POT-Creation-Date: 2023-02-07 11:16+0100\n"
 "PO-Revision-Date: 2021-08-05 04:00+0000\n"
 "Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
 "Language-Team: Dutch (informal) <https://translate.pretix.eu/projects/pretix/"
@@ -308,7 +308,11 @@ msgstr ""
 "Hierbij geef ik toestemming voor de SEPA-incassomachtiging voor deze "
 "bestelling (zie onder)"
 
-#: pretix_sepadebit/payment.py:412
+#: pretix_sepadebit/payment.py:410
+msgid "will be debited"
+msgstr ""
+
+#: pretix_sepadebit/payment.py:416
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
 msgid ""
@@ -318,7 +322,7 @@ msgstr ""
 "We zullen het totaalbedrag van deze bestelling op of kort na %(date)s van je "
 "bankrekening afschrijven via automatische incasso."
 
-#: pretix_sepadebit/payment.py:417
+#: pretix_sepadebit/payment.py:421
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
 #, python-format
 msgid ""
