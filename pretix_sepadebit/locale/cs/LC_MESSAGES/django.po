@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-07 11:16+0100\n"
-"PO-Revision-Date: 2023-03-17 22:00+0000\n"
+"PO-Revision-Date: 2023-03-19 18:00+0000\n"
 "Last-Translator: Michael <michael.happl@gmx.at>\n"
 "Language-Team: Czech <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/cs/>\n"
@@ -230,17 +230,17 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:244
 msgid "Account holder"
-msgstr ""
+msgstr "Majitel účtu"
 
 #: pretix_sepadebit/payment.py:245
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:246
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:248
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
