@@ -16,7 +16,7 @@ from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
     event_live_issues, logentry_display, periodic_task,
     register_data_exporters, register_data_shredders,
-    register_mail_placeholders, register_payment_providers,
+    register_mail_placeholders, register_payment_providers, register_multievent_data_exporters,
 )
 from pretix.base.templatetags.money import money_filter
 from pretix.control.signals import nav_event, nav_organizer
@@ -75,6 +75,12 @@ def control_nav_orga_sepadebit(sender, request=None, **kwargs):
 
 @receiver(register_data_exporters, dispatch_uid="payment_sepadebit_export_csv")
 def register_csv(sender, **kwargs):
+    from .exporters import DebitList
+    return DebitList
+
+
+@receiver(register_multievent_data_exporters, dispatch_uid="payment_multievent_sepadebit_export_csv")
+def register_csv_multievent(sender, **kwargs):
     from .exporters import DebitList
     return DebitList
 

@@ -23,8 +23,8 @@ msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr "Diese Erweiterung fügt Unterstützung für SEPA-Bankeinzug hinzu."
 
 #: pretix_sepadebit/exporters.py:12
-msgid "List of previous SEPA debits (CSV)"
-msgstr "Liste vorheriger SEPA-Bankeinzüge (CSV)"
+msgid "List of previous SEPA debits"
+msgstr "Liste vorheriger SEPA-Bankeinzüge"
 
 #: pretix_sepadebit/exporters.py:13
 msgctxt "export_category"
