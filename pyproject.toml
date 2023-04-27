@@ -1,0 +1,45 @@
+[project]
+name = "pretix-sepadebit"
+dynamic = ["version"]
+description = "This plugin adds SEPA direct debit support to pretix"
+readme = "README.rst"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+keywords = ["pretix"]
+authors = [
+    {name = "pretix team", email = "support@pretix.eu"},
+]
+maintainers = [
+    {name = "pretix team", email = "support@pretix.eu"},
+]
+
+dependencies = [
+    "django-localflavor",
+    "sepaxml>=2.4.1",
+]
+
+[project.entry-points."pretix.plugin"]
+pretix_sepadebit = "pretix_sepadebit:PretixPluginMeta"
+
+[project.entry-points."distutils.commands"]
+build = "pretix_plugin_build.build:CustomBuild"
+
+[build-system]
+requires = [
+    "setuptools",
+    "pretix-plugin-build",
+]
+
+[project.urls]
+homepage = "https://pretix.eu"
+repository = "https://github.com/pretix/pretix-sepadebit.git"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "pretix_sepadebit.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["pretix*"]
+namespaces = false
