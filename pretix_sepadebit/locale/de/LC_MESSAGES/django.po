@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-07 11:16+0100\n"
-"PO-Revision-Date: 2023-02-07 11:16+0100\n"
-"Last-Translator: Raphael Michel <michel@rami.io>\n"
-"Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/de/>\n"
+"PO-Revision-Date: 2023-05-16 20:00+0000\n"
+"Last-Translator: Moritz Lerch <dev@moritz-lerch.de>\n"
+"Language-Team: German <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:244
 msgid "Account holder"
-msgstr "Kontoinhaber"
+msgstr "Kontoinhaber*in"
 
 #: pretix_sepadebit/payment.py:245
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
@@ -468,7 +468,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
-msgstr "Kontoinhaber"
+msgstr "Kontoinhaber*in"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
