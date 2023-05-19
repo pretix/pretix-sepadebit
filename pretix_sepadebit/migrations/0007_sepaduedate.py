@@ -2,10 +2,8 @@
 
 import django.db.models.deletion
 import json
-from datetime import date, datetime, tzinfo
+from datetime import datetime, timezone
 from django.db import migrations, models
-from django.utils.timezone import utc
-from pytz import timezone
 
 
 def roll_forwards(apps, schema_editor):
@@ -54,7 +52,7 @@ def create_sepaduedate_instances(OrderPayment, SepaDueDate):
 
         # either use provided remind_after value or date and add a ts to it
         r_a=getattr(op_info_data,'remind_after', op_info_data['date'])
-        remind_after=utc.localize(datetime.strptime(r_a, '%Y-%m-%d'))
+        remind_after=timezone.utc.localize(datetime.strptime(r_a, '%Y-%m-%d'))
 
         due_date = SepaDueDate(date=op_info_data['date'], reminded=getattr(op_info_data,'reminded', True), remind_after=remind_after)
         due_date.payment = op
