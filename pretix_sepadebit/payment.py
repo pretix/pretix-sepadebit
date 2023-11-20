@@ -52,7 +52,11 @@ class SEPAPaymentProviderForm(PaymentProviderForm):
                     input_bic = d.get('bic', '')
                     if len(input_bic) < len(correct_bic):
                         input_bic += 'XXX'
-                    if correct_bic != input_bic:
+                    bic_match = (
+                        correct_bic == input_bic or
+                        (correct_bic.startswith('COBADE') and input_bic.startswith('COBADE'))  # https://github.com/pretix/pretix-sepadebit/issues/34
+                    )
+                    if not bic_match:
                         raise ValidationError(
                             _('The BIC number {bic} does not match the IBAN. Please double, check your banking '
                               'details. According to our data, the correct BIC would be {correctbic}.').format(
