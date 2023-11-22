@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-07 11:16+0100\n"
-"PO-Revision-Date: 2023-11-08 19:00+0000\n"
+"PO-Revision-Date: 2023-11-23 05:00+0000\n"
 "Last-Translator: c0de-bender <code-bender@mailbox.org>\n"
 "Language-Team: Polish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/pl/>\n"
@@ -448,8 +448,9 @@ msgid "Exported XML files"
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
+#, fuzzy
 msgid "Export date"
-msgstr ""
+msgstr "Data wygaśnięcia"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
@@ -477,8 +478,9 @@ msgid "Download XML"
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
+#, fuzzy
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Ten produkt może być anulowany"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
@@ -547,5 +549,6 @@ msgid "A new export file has been created."
 msgstr ""
 
 #: pretix_sepadebit/views.py:152
+#, fuzzy
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "Ten produkt może być anulowany"
