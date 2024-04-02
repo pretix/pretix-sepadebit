@@ -44,25 +44,17 @@ class SEPAPaymentProviderForm(PaymentProviderForm):
 
         d = super().clean()
 
+        # lookup BIC
         if d.get('iban'):
             iban_without_checksum = d['iban'][0:2] + 'XX' + d['iban'][4:]
             for k in range(6, 15):
                 if iban_without_checksum[:k] in DATA:
-                    correct_bic = DATA[iban_without_checksum[:k]]
-                    input_bic = d.get('bic', '')
-                    if len(input_bic) < len(correct_bic):
-                        input_bic += 'XXX'
-                    bic_match = (
-                        correct_bic == input_bic or
-                        (correct_bic.startswith('COBADE') and input_bic.startswith('COBADE'))  # https://github.com/pretix/pretix-sepadebit/issues/34
+                    d['bic'] = DATA[iban_without_checksum[:k]]
+                else:
+                    raise ValidationError(
+                        _('There is no BIC number associated with this IBAN. Please double, check your banking '
+                          'details.')
                     )
-                    if not bic_match:
-                        raise ValidationError(
-                            _('The BIC number {bic} does not match the IBAN. Please double, check your banking '
-                              'details. According to our data, the correct BIC would be {correctbic}.').format(
-                                bic=input_bic, correctbic=correct_bic
-                            )
-                        )
 
         return d
 
@@ -247,7 +239,7 @@ class SepaDebit(BasePaymentProvider):
         return OrderedDict([
             ('account', forms.CharField(label=_('Account holder'))),
             ('iban', IBANFormField(label=_('IBAN'), validators=[NotBlocklisted(self)])),
-            ('bic', BICFormField(label=_('BIC'))),
+            # ('bic', BICFormField(label=_('BIC'), required=False)), # no indication if optional, so we'd better remove the field, since it is no longer required
             ('mandate', forms.BooleanField(
                 label=_('I hereby grant the SEPA direct debit mandate for this order (see below)'))),
         ])
@@ -282,6 +274,7 @@ class SepaDebit(BasePaymentProvider):
             'event': self.event,
             'settings': self.settings,
             'iban': request.session['payment_sepa_iban'],
+            'bic': request.session['payment_sepa_bic'],
             'date': self._due_date()
         }
         return template.render(ctx)
