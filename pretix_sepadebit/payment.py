@@ -46,17 +46,20 @@ class SEPAPaymentProviderForm(PaymentProviderForm):
 
         # lookup BIC
         if d.get('iban'):
+            bic_found = False
             iban_without_checksum = d['iban'][0:2] + 'XX' + d['iban'][4:]
             for k in range(6, 15):
                 if iban_without_checksum[:k] in DATA:
                     d['bic'] = DATA[iban_without_checksum[:k]]
-                else:
-                    raise ValidationError(
-                        _('There is no BIC number associated with this IBAN. Please double, check your banking '
-                          'details.')
-                    )
+                    bic_found = True
 
-        return d
+        if bic_found:
+            return d
+        else:
+            raise ValidationError(
+                _('There is no BIC number associated with this IBAN. Please double, check your banking '
+                  'details.')
+            )
 
 
 class SepaDebit(BasePaymentProvider):
