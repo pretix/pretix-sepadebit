@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2023-05-16 20:00+0000\n"
-"Last-Translator: Moritz Lerch <dev@moritz-lerch.de>\n"
-"Language-Team: German <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/de/>\n"
+"PO-Revision-Date: 2024-05-07 09:53+0000\n"
+"Last-Translator: Raphael Michel <michel@rami.io>\n"
+"Language-Team: German <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.4.3\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -48,13 +48,11 @@ msgstr "Exportdatum"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Kurzname der Veranstaltung"
 
 #: pretix_sepadebit/exporters.py:39
-#, fuzzy
-#| msgid "Account name"
 msgid "Event name"
-msgstr "Kontoinhaber*in"
+msgstr "Veranstaltungstitel"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -314,16 +312,13 @@ msgid "will be debited"
 msgstr "wird eingezogen"
 
 #: pretix_sepadebit/payment.py:421
-#, fuzzy, python-format
-#| msgid ""
-#| "We will debit the total amount of this order from your bank account by "
-#| "direct debit on or shortly after %(date)s."
+#, python-format
 msgid ""
 "We will debit the total amount of this order from your bank account "
 "%(account)s by direct debit on or shortly after %(date)s."
 msgstr ""
 "Wir werden den vollen Bestellbetrag am oder kurz nach dem %(date)s von Ihrem "
-"Bankkonto einziehen."
+"Bankkonto %(account)s einziehen."
 
 #: pretix_sepadebit/payment.py:427
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
