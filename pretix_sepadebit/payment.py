@@ -417,7 +417,7 @@ class SepaDebit(BasePaymentProvider):
         ref = '%s-%s' % (self.event.slug.upper(), order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
-        iban_redacted = 'XXXX ' + payment.info_data['iban'][-4:]
+        iban_redacted = 'XXXX ' + payment.info_data.get('iban', '')[-4:]
         t = _("We will debit the total amount of this order from your bank account %(account)s by "
               "direct debit on or shortly after %(date)s.") % {
             'date': date_format(self._due_date(order), 'SHORT_DATE_FORMAT'),
