@@ -7,15 +7,15 @@ from django.db import migrations, models
 
 
 def roll_forwards(apps, schema_editor):
-    OrderPayment = apps.get_model('pretixbase', 'OrderPayment')
-    SepaDueDate = apps.get_model('pretix_sepadebit', 'SepaDueDate')
+    OrderPayment = apps.get_model("pretixbase", "OrderPayment")
+    SepaDueDate = apps.get_model("pretix_sepadebit", "SepaDueDate")
 
     create_sepaduedate_instances(OrderPayment, SepaDueDate)
 
 
 def roll_backwards(apps, schema_editor):
-    OrderPayment = apps.get_model('pretixbase', 'OrderPayment')
-    SepaDueDate = apps.get_model('pretix_sepadebit', 'SepaDueDate')
+    OrderPayment = apps.get_model("pretixbase", "OrderPayment")
+    SepaDueDate = apps.get_model("pretix_sepadebit", "SepaDueDate")
 
     delete_sepaduedate_instances(OrderPayment, SepaDueDate)
 
@@ -23,19 +23,32 @@ def roll_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretixbase', '0181_team_can_checkin_orders'),
-        ('pretix_sepadebit', '0006_sepaexport_currency'),
+        ("pretixbase", "0181_team_can_checkin_orders"),
+        ("pretix_sepadebit", "0006_sepaexport_currency"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SepaDueDate',
+            name="SepaDueDate",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False)),
-                ('date', models.DateField()),
-                ('remind_after', models.DateTimeField()),
-                ('reminded',models.BooleanField(default=False)),
-                ('payment', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='due', to='pretixbase.OrderPayment')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True, primary_key=True, serialize=False
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("remind_after", models.DateTimeField()),
+                ("reminded", models.BooleanField(default=False)),
+                (
+                    "payment",
+                    models.OneToOneField(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="due",
+                        to="pretixbase.OrderPayment",
+                    ),
+                ),
             ],
         ),
         migrations.RunPython(
@@ -46,18 +59,24 @@ class Migration(migrations.Migration):
 
 
 def create_sepaduedate_instances(OrderPayment, SepaDueDate):
-    for op in OrderPayment.objects.filter(provider='sepadebit').filter(info__isnull=False):
+    for op in OrderPayment.objects.filter(provider="sepadebit").filter(
+        info__isnull=False
+    ):
         # prevents dependency from the info_data property
         op_info_data = json.loads(op.info)
 
         # either use provided remind_after value or date and add a ts to it
-        r_a=getattr(op_info_data,'remind_after', op_info_data['date'])
-        remind_after=timezone.utc.localize(datetime.strptime(r_a, '%Y-%m-%d'))
+        r_a = getattr(op_info_data, "remind_after", op_info_data["date"])
+        remind_after = timezone.utc.localize(datetime.strptime(r_a, "%Y-%m-%d"))
 
-        due_date = SepaDueDate(date=op_info_data['date'], reminded=getattr(op_info_data,'reminded', True), remind_after=remind_after)
+        due_date = SepaDueDate(
+            date=op_info_data["date"],
+            reminded=getattr(op_info_data, "reminded", True),
+            remind_after=remind_after,
+        )
         due_date.payment = op
         due_date.save()
-        del op_info_data['date']
+        del op_info_data["date"]
         op.info = json.dumps(op_info_data, sort_keys=True)
         op.save()
 
@@ -65,10 +84,12 @@ def create_sepaduedate_instances(OrderPayment, SepaDueDate):
 def delete_sepaduedate_instances(OrderPayment, SepaDueDate):
     for due in SepaDueDate.objects.filter(payment__isnull=False):
         order_info_data = json.loads(due.payment.info)
-        order_info_data['date'] = due.date.strftime("%Y-%m-%d")
+        order_info_data["date"] = due.date.strftime("%Y-%m-%d")
         if due.remind_after:
-            order_info_data['remind_after'] = due.remind_after.strftime("%Y-%m-%d-%H-%M-%S")
-        order_info_data['reminded'] = due.reminded
+            order_info_data["remind_after"] = due.remind_after.strftime(
+                "%Y-%m-%d-%H-%M-%S"
+            )
+        order_info_data["reminded"] = due.reminded
         due.payment.info = json.dumps(order_info_data, sort_keys=True)
         due.payment.save()
         due.delete()

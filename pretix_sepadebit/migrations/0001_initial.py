@@ -11,18 +11,38 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('pretixbase', '0051_auto_20170206_2027_squashed_0057_auto_20170501_2116'),
+        ("pretixbase", "0051_auto_20170206_2027_squashed_0057_auto_20170501_2116"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SepaExport',
+            name="SepaExport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('xmldata', models.TextField()),
-                ('datetime', models.DateTimeField(auto_now_add=True)),
-                ('event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sepa_exports', to='pretixbase.Event')),
-                ('orders', models.ManyToManyField(related_name='sepa_exports', to='pretixbase.Order')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("xmldata", models.TextField()),
+                ("datetime", models.DateTimeField(auto_now_add=True)),
+                (
+                    "event",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="sepa_exports",
+                        to="pretixbase.Event",
+                    ),
+                ),
+                (
+                    "orders",
+                    models.ManyToManyField(
+                        related_name="sepa_exports", to="pretixbase.Order"
+                    ),
+                ),
             ],
         ),
     ]

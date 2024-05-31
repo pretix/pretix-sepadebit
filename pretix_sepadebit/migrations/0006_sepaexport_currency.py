@@ -6,8 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretix_sepadebit', '0005_auto_20190429_0811'),
+        ("pretix_sepadebit", "0005_auto_20190429_0811"),
     ]
 
-    operations = [
-    ]
+    operations = []

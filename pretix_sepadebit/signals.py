@@ -16,7 +16,8 @@ from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
     event_live_issues, logentry_display, periodic_task,
     register_data_exporters, register_data_shredders,
-    register_mail_placeholders, register_payment_providers, register_multievent_data_exporters,
+    register_mail_placeholders, register_multievent_data_exporters,
+    register_payment_providers,
 )
 from pretix.base.templatetags.money import money_filter
 from pretix.control.signals import nav_event, nav_organizer
@@ -39,17 +40,24 @@ def event_live_issues_sepadebit(sender, **kwargs):
 @receiver(nav_event, dispatch_uid="payment_sepadebit_nav")
 def control_nav_import(sender, request=None, **kwargs):
     url = resolve(request.path_info)
-    if not request.user.has_event_permission(request.organizer, request.event, 'can_change_orders', request=request):
+    if not request.user.has_event_permission(
+        request.organizer, request.event, "can_change_orders", request=request
+    ):
         return []
     return [
         {
-            'label': _('SEPA debit'),
-            'url': reverse('plugins:pretix_sepadebit:export', kwargs={
-                'event': request.event.slug,
-                'organizer': request.event.organizer.slug,
-            }),
-            'active': (url.namespace == 'plugins:pretix_sepadebit' and url.url_name == 'export'),
-            'icon': 'bank',
+            "label": _("SEPA debit"),
+            "url": reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "event": request.event.slug,
+                    "organizer": request.event.organizer.slug,
+                },
+            ),
+            "active": (
+                url.namespace == "plugins:pretix_sepadebit" and url.url_name == "export"
+            ),
+            "icon": "bank",
         }
     ]
 
@@ -57,18 +65,25 @@ def control_nav_import(sender, request=None, **kwargs):
 @receiver(nav_organizer, dispatch_uid="payment_sepadebit_organav")
 def control_nav_orga_sepadebit(sender, request=None, **kwargs):
     url = resolve(request.path_info)
-    if not request.user.has_organizer_permission(request.organizer, 'can_change_organizer_settings', request=request):
+    if not request.user.has_organizer_permission(
+        request.organizer, "can_change_organizer_settings", request=request
+    ):
         return []
-    if not request.organizer.events.filter(plugins__icontains='pretix_sepadebit'):
+    if not request.organizer.events.filter(plugins__icontains="pretix_sepadebit"):
         return []
     return [
         {
-            'label': _('SEPA debit'),
-            'url': reverse('plugins:pretix_sepadebit:export', kwargs={
-                'organizer': request.organizer.slug,
-            }),
-            'active': (url.namespace == 'plugins:pretix_sepadebit' and url.url_name == 'export'),
-            'icon': 'bank',
+            "label": _("SEPA debit"),
+            "url": reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "organizer": request.organizer.slug,
+                },
+            ),
+            "active": (
+                url.namespace == "plugins:pretix_sepadebit" and url.url_name == "export"
+            ),
+            "icon": "bank",
         }
     ]
 
@@ -76,12 +91,17 @@ def control_nav_orga_sepadebit(sender, request=None, **kwargs):
 @receiver(register_data_exporters, dispatch_uid="payment_sepadebit_export_csv")
 def register_csv(sender, **kwargs):
     from .exporters import DebitList
+
     return DebitList
 
 
-@receiver(register_multievent_data_exporters, dispatch_uid="payment_multievent_sepadebit_export_csv")
+@receiver(
+    register_multievent_data_exporters,
+    dispatch_uid="payment_multievent_sepadebit_export_csv",
+)
 def register_csv_multievent(sender, **kwargs):
     from .exporters import DebitList
+
     return DebitList
 
 
@@ -131,7 +151,7 @@ ReferencePlaceholder = SimpleFunctionalMailTextPlaceholder(
     "reference",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("reference"),
-    lambda event: f'{event.settings.payment_sepadebit_reference_prefix + "-" if event.settings.payment_sepadebit_reference_prefix else ""}{event.slug.upper()}-XXXXXXX',
+    lambda event: f'{event.settings.payment_sepadebit_reference_prefix + "-" if event.settings.payment_sepadebit_reference_prefix else ""}{event.slug.upper()}-XXXXXXX',  # noqa
 )
 CreditorIdPlaceholder = SimpleFunctionalMailTextPlaceholder(
     "creditor_id",
@@ -168,11 +188,15 @@ def register_mail_renderers(sender, **kwargs):
 @receiver(signal=periodic_task, dispatch_uid="payment_sepadebit_send_payment_reminders")
 def send_payment_reminders(sender, **kwargs):
     with scopes_disabled():
-        dd = SepaDueDate.objects.filter(
-            reminded=False,
-            remind_after__lt=now(),
-            payment__state=OrderPayment.PAYMENT_STATE_CONFIRMED
-        ).select_related('payment', 'payment__order').prefetch_related('payment__order__event')
+        dd = (
+            SepaDueDate.objects.filter(
+                reminded=False,
+                remind_after__lt=now(),
+                payment__state=OrderPayment.PAYMENT_STATE_CONFIRMED,
+            )
+            .select_related("payment", "payment__order")
+            .prefetch_related("payment__order__event")
+        )
 
         for due_date in dd:
             order = due_date.payment.order
@@ -180,38 +204,49 @@ def send_payment_reminders(sender, **kwargs):
             subject = event.settings.payment_sepadebit_pre_notification_mail_subject
             text = event.settings.payment_sepadebit_pre_notification_mail_body
 
-            ctx = get_email_context(event=event, order=order, sepadebit_payment=due_date.payment)
+            ctx = get_email_context(
+                event=event, order=order, sepadebit_payment=due_date.payment
+            )
 
             with language(order.locale, event.settings.region):
                 due_date.payment.order.send_mail(
                     subject=str(subject),
                     template=text,
                     context=ctx,
-                    log_entry_type='pretix_sepadebit.payment_reminder.sent.order.email'
+                    log_entry_type="pretix_sepadebit.payment_reminder.sent.order.email",
                 )
                 due_date.reminded = True
                 due_date.save()
 
 
-@receiver(signal=logentry_display, dispatch_uid="payment_sepadebit_send_payment_reminders_logentry")
+@receiver(
+    signal=logentry_display,
+    dispatch_uid="payment_sepadebit_send_payment_reminders_logentry",
+)
 def payment_reminder_logentry(sender, logentry, **kwargs):
-    if logentry.action_type != 'pretix_sepadebit.payment_reminder.sent.order.email':
+    if logentry.action_type != "pretix_sepadebit.payment_reminder.sent.order.email":
         return
 
-    return _('A reminder for the upcoming direct debit due date has been sent to the customer.')
+    return _(
+        "A reminder for the upcoming direct debit due date has been sent to the customer."
+    )
 
 
 class PaymentLogsShredder(BaseDataShredder):
-    verbose_name = _('SEPA debit history')
-    identifier = 'sepadebit_history'
-    description = _('This will remove previously exported SEPA XML files containing banking information.')
+    verbose_name = _("SEPA debit history")
+    identifier = "sepadebit_history"
+    description = _(
+        "This will remove previously exported SEPA XML files containing banking information."
+    )
 
     def generate_files(self):
         for f in self.event.sepa_exports.all():
             yield (
-                'sepadebit/{}-{}.xml'.format(self.event.slug.upper(), f.datetime.strftime('%Y-%m-%d-%H-%M-%S')),
-                'text/plain',
-                f.xmldata
+                "sepadebit/{}-{}.xml".format(
+                    self.event.slug.upper(), f.datetime.strftime("%Y-%m-%d-%H-%M-%S")
+                ),
+                "text/plain",
+                f.xmldata,
             )
 
     def shred_data(self):
@@ -228,10 +263,9 @@ def register_shredder(sender, **kwargs):
 settings_hierarkey.add_default(
     "payment_sepadebit_pre_notification_mail_subject",
     LazyI18nString.from_gettext(
-        gettext_noop(
-            "Upcomming debit of {debit_amount_with_currency}"
-        )
-    ), LazyI18nString,
+        gettext_noop("Upcomming debit of {debit_amount_with_currency}")
+    ),
+    LazyI18nString,
 )
 
 
@@ -241,13 +275,15 @@ settings_hierarkey.add_default(
         gettext_noop(
             "Hello,\n\n"
             "you ordered a ticket for {event}.\n\n"
-            "We will debit your bank account {iban} on or shortly after {due_date}. The payment will appear on your bank statement as {creditor_name} with reference {reference} and creditor identifier {creditor_id}.\n\n"
+            "We will debit your bank account {iban} on or shortly after {due_date}. The payment will appear on your "
+            "bank statement as {creditor_name} with reference {reference} and creditor identifier {creditor_id}.\n\n"
             "You can change your order details and view the status of your order at\n"
             "{url}\n\n"
             "Best regards,\n"
             "Your {event} team"
         )
-    ), LazyI18nString,
+    ),
+    LazyI18nString,
 )
 
 

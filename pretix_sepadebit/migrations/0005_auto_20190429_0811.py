@@ -7,24 +7,36 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretixbase', '0118_auto_20190423_0839'),
-        ('pretix_sepadebit', '0004_sepaexport_testmode'),
+        ("pretixbase", "0118_auto_20190423_0839"),
+        ("pretix_sepadebit", "0004_sepaexport_testmode"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sepaexport',
-            name='organizer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='sepa_exports', to='pretixbase.Organizer'),
+            model_name="sepaexport",
+            name="organizer",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="sepa_exports",
+                to="pretixbase.Organizer",
+            ),
         ),
         migrations.AlterField(
-            model_name='sepaexport',
-            name='event',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='sepa_exports', to='pretixbase.Event'),
+            model_name="sepaexport",
+            name="event",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="sepa_exports",
+                to="pretixbase.Event",
+            ),
         ),
         migrations.AddField(
-            model_name='sepaexport',
-            name='currency',
+            model_name="sepaexport",
+            name="currency",
             field=models.CharField(blank=True, max_length=9),
         ),
     ]

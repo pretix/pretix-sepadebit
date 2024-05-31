@@ -9,8 +9,8 @@ from django.db import migrations, models
 def fwd(apps, schema_editor):
     # We can't import the Person model directly as it may be a newer
     # version than this migration expects. We use the historical version.
-    SepaExport = apps.get_model('pretix_sepadebit', 'SepaExport')
-    SepaExportOrder = apps.get_model('pretix_sepadebit', 'SepaExportOrder')
+    SepaExport = apps.get_model("pretix_sepadebit", "SepaExport")
+    SepaExportOrder = apps.get_model("pretix_sepadebit", "SepaExportOrder")
     for se in SepaExport.objects.all():
         for o in se.orders.all():
             SepaExportOrder.objects.create(export=se, order=o, amount=o.total)
@@ -19,31 +19,44 @@ def fwd(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretixbase', '0051_auto_20170206_2027_squashed_0057_auto_20170501_2116'),
-        ('pretix_sepadebit', '0001_initial'),
+        ("pretixbase", "0051_auto_20170206_2027_squashed_0057_auto_20170501_2116"),
+        ("pretix_sepadebit", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SepaExportOrder',
+            name="SepaExportOrder",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("amount", models.DecimalField(decimal_places=2, max_digits=10)),
             ],
         ),
         migrations.AddField(
-            model_name='sepaexportorder',
-            name='export',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pretix_sepadebit.SepaExport'),
+            model_name="sepaexportorder",
+            name="export",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="pretix_sepadebit.SepaExport",
+            ),
         ),
         migrations.AddField(
-            model_name='sepaexportorder',
-            name='order',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pretixbase.Order'),
+            model_name="sepaexportorder",
+            name="order",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="pretixbase.Order"
+            ),
         ),
         migrations.RunPython(fwd, migrations.RunPython.noop),
         migrations.RemoveField(
-            model_name='sepaexport',
-            name='orders',
+            model_name="sepaexport",
+            name="orders",
         ),
     ]

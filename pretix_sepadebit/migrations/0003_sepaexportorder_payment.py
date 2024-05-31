@@ -7,24 +7,28 @@ from django.db import migrations, models
 
 
 def match_orders(apps, schema_editor):
-    OrderPayment = apps.get_model('pretixbase', 'OrderPayment')
+    OrderPayment = apps.get_model("pretixbase", "OrderPayment")
 
-    for op in OrderPayment.objects.filter(provider='sepadebit'):
+    for op in OrderPayment.objects.filter(provider="sepadebit"):
         op.order.sepaexportorder_set.update(payment=op)
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretixbase', '0097_auto_20180722_0804'),
-        ('pretix_sepadebit', '0002_auto_20170530_1527'),
+        ("pretixbase", "0097_auto_20180722_0804"),
+        ("pretix_sepadebit", "0002_auto_20170530_1527"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sepaexportorder',
-            name='payment',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='pretixbase.OrderPayment'),
+            model_name="sepaexportorder",
+            name="payment",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="pretixbase.OrderPayment",
+            ),
         ),
         migrations.RunPython(
             match_orders,

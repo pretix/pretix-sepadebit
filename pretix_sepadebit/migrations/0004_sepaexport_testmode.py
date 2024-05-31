@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pretix_sepadebit', '0003_sepaexportorder_payment'),
+        ("pretix_sepadebit", "0003_sepaexportorder_payment"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sepaexport',
-            name='testmode',
+            model_name="sepaexport",
+            name="testmode",
             field=models.BooleanField(default=False),
         ),
     ]
