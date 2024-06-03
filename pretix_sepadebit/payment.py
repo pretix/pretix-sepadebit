@@ -32,8 +32,13 @@ class NotBlocklisted:
         self.pp = pp
 
     def __call__(self, value):
+        def _compare(iban, prefix):  # Compare IBAN with pretix ignoring the check digits
+            iban = iban[:2] + "XX" + iban[4:]
+            prefix = prefix[:2] + "XX" + prefix[4:]
+            return iban.startswith(prefix)
+
         if any(
-            value.replace(" ", "").startswith(b)
+            _compare(value.replace(" ", ""), b)
             for b in (self.pp.settings.iban_blocklist or "").splitlines()
             if b
         ):
@@ -198,7 +203,9 @@ class SepaDebit(BasePaymentProvider):
                             _(
                                 "Put one IBAN or IBAN prefix per line. The system will not allow any of these IBANs.  Useful "
                                 "e.g. if you had lots of failed payments already from a specific person. You can also list "
-                                'country codes such as "GB" if you never want to accept IBANs from a specific country.'
+                                'country codes such as "GB" if you never want to accept IBANs from a specific country. '
+                                "The check digits will be ignored for comparison, so you can e.g. ban DE0012345 to ban "
+                                "all German IBANs with the bank identifier starting with 12345."
                             ),
                             _(
                                 "Adding whole countries to your blocklist is considered SEPA discrimination, illegal in "
