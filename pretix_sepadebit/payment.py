@@ -33,8 +33,8 @@ class NotBlocklisted:
 
     def __call__(self, value):
         def _compare(iban, prefix):  # Compare IBAN with pretix ignoring the check digits
-            iban = iban[:2] + "XX" + iban[4:]
-            prefix = prefix[:2] + "XX" + prefix[4:]
+            iban = iban[:2] + iban[4:]
+            prefix = prefix[:2] + prefix[4:]
             return iban.startswith(prefix)
 
         if any(
