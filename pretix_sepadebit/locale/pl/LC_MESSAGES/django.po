@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2023-11-23 05:00+0000\n"
-"Last-Translator: c0de-bender <code-bender@mailbox.org>\n"
-"Language-Team: Polish <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/pl/>\n"
+"PO-Revision-Date: 2024-06-22 20:00+0000\n"
+"Last-Translator: Anarion Dunedain <anarion80@gmail.com>\n"
+"Language-Team: Polish <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1.1\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -486,9 +486,8 @@ msgid "Download XML"
 msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
-#, fuzzy
 msgid "No exports have been created yet."
-msgstr "Ten produkt może być anulowany"
+msgstr "Nie utworzono jeszcze żadnych eksportów."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -564,6 +563,5 @@ msgid "A new export file has been created."
 msgstr ""
 
 #: pretix_sepadebit/views.py:152
-#, fuzzy
 msgid "No valid orders have been found."
-msgstr "Ten produkt może być anulowany"
+msgstr "Nie znaleziono ważnych zamówień."
