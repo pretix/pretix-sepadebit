@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-06-22 20:00+0000\n"
+"PO-Revision-Date: 2024-06-26 17:00+0000\n"
 "Last-Translator: Anarion Dunedain <anarion80@gmail.com>\n"
 "Language-Team: Polish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/pl/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.1\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -413,6 +413,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
 msgstr ""
+"W trybie testowym eksport będzie zawierał tylko zamówienia w trybie testowym."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:14
 msgid ""
@@ -422,7 +423,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
-msgstr ""
+msgstr "Przejdź do eksportu na poziomie organizatora"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
@@ -441,7 +442,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:65
 msgid "Create new export file"
-msgstr ""
+msgstr "Utwórz nowy plik eksportu"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:48
 #, python-format
@@ -462,7 +463,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
-msgstr ""
+msgstr "Liczba zamówień"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:79
 msgid "Total amount"
