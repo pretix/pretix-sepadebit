@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-06-26 17:00+0000\n"
+"PO-Revision-Date: 2024-06-27 15:00+0000\n"
 "Last-Translator: Anarion Dunedain <anarion80@gmail.com>\n"
 "Language-Team: Polish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/pl/>\n"
@@ -46,9 +46,8 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:28
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
-#, fuzzy
 msgid "Export date"
-msgstr "Data wygaśnięcia"
+msgstr "Data eksportu"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
@@ -60,7 +59,7 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
-msgstr ""
+msgstr "Kod zamówienia"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order date"
