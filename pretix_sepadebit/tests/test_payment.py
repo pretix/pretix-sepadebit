@@ -30,7 +30,7 @@ def event():
         date_from=now(),
         plugins="pretix.plugins.sepadebit",
     )
-    event.settings.set("payment_sepadebit_creditor_name", "1.00")
+    event.settings.set("payment_sepadebit_creditor_name", "Acme Corp")
     event.settings.set("payment_sepadebit_creditor_iban", "DE13495179316396679327")
     event.settings.set("payment_sepadebit_creditor_bic", "THISISNOBIC")
     # testing creditor id from https://www.bundesbank.de/en/tasks/payment-systems/services/sepa/creditor-identifier/creditor-identifier-626704
@@ -49,6 +49,7 @@ def event():
 
 
 @pytest.fixture
+@scopes_disabled()
 def order(event):
     with scopes_disabled():
         o = Order.objects.create(
@@ -56,6 +57,7 @@ def order(event):
             status=Order.STATUS_PENDING,
             datetime=now(),
             expires=now() + timedelta(days=10),
+            sales_channel=event.organizer.sales_channels.get(identifier="web"),
             total=23,
         )
         o.save()
@@ -165,6 +167,7 @@ def orderpayment(order, date, remind_after, reminded=None, old_format=True):
     ],
 )
 @pytest.mark.django_db
+@scopes_disabled()
 def test_due_date_with_earliest_due_date(
     event, earliest_due_date, prenotification_days, order_date, due_date
 ):
@@ -179,6 +182,7 @@ def test_due_date_with_earliest_due_date(
         status=Order.STATUS_PENDING,
         datetime=order_date,
         expires=order_date + timedelta(days=10),
+        sales_channel=event.organizer.sales_channels.get(identifier="web"),
         total=23,
     )
 
@@ -271,11 +275,12 @@ def test_mail_context(event, order):
         assert ctx["reference"] == "TESTREF-123"
         assert ctx["debit_amount"] == "11.00"
         assert ctx["debit_amount_with_currency"] == "€11.00"
-        assert ctx["creditor_id"] == event.settings.sepadebit_payment__creditor_id
-        assert ctx["creditor_name"] == event.settings.sepadebit_payment__creditor_name
+        assert ctx["creditor_id"] == event.settings.payment_sepadebit_creditor_id
+        assert ctx["creditor_name"] == event.settings.payment_sepadebit_creditor_name
 
 
 @pytest.fixture
+@scopes_disabled()
 def mail_setup(event):
     with scopes_disabled():
         ts = now()
@@ -284,6 +289,7 @@ def mail_setup(event):
             Order.objects.create(
                 event=event,
                 status=Order.STATUS_PAID,
+                sales_channel=event.organizer.sales_channels.get(identifier="web"),
                 datetime=ts,
                 expires=ts + timedelta(days=10),
                 total=i,

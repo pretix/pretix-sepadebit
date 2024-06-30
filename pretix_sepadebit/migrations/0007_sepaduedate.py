@@ -67,7 +67,7 @@ def create_sepaduedate_instances(OrderPayment, SepaDueDate):
 
         # either use provided remind_after value or date and add a ts to it
         r_a = getattr(op_info_data, "remind_after", op_info_data["date"])
-        remind_after = timezone.utc.localize(datetime.strptime(r_a, "%Y-%m-%d"))
+        remind_after = datetime.strptime(r_a, "%Y-%m-%d").replace(tzinfo=timezone.utc)
 
         due_date = SepaDueDate(
             date=op_info_data["date"],
