@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-06-19 16:00+0000\n"
+"PO-Revision-Date: 2024-07-01 17:00+0000\n"
 "Last-Translator: Nikolai <nikolai@lengefeldt.de>\n"
 "Language-Team: Danish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/da/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.1\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -32,11 +32,9 @@ msgid "List of previous SEPA debits"
 msgstr ""
 
 #: pretix_sepadebit/exporters.py:17
-#, fuzzy
-#| msgid "Order date"
 msgctxt "export_category"
 msgid "Order data"
-msgstr "Bestillingsdato"
+msgstr "Bestillingsdata"
 
 #: pretix_sepadebit/exporters.py:18
 msgid ""
@@ -109,7 +107,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr ""
+msgstr "Tilgængelige pladsholdere: {list}"
 
 #: pretix_sepadebit/payment.py:100
 msgid ""
@@ -537,7 +535,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Arrangementsbillet {event}-{code}"
 
 #: pretix_sepadebit/views.py:137
 msgid ""
