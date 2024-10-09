@@ -520,7 +520,10 @@ class SepaDebit(BasePaymentProvider):
         ref = "%s-%s" % (self.event.slug.upper(), order.code)
         if self.settings.reference_prefix:
             ref = self.settings.reference_prefix + "-" + ref
-        iban_redacted = "XXXX " + payment.info_data.get("iban", "")[-4:]
+        if payment.info_data.get("iban", ""):
+            iban_redacted = "XXXX " + payment.info_data.get("iban", "")[-4:]
+        else:
+            iban_redacted = ""
         t = _(
             "We will debit the total amount of this order from your bank account %(account)s by "
             "direct debit on or shortly after %(date)s."
