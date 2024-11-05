@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2023-06-17 18:00+0000\n"
-"Last-Translator: Ronan LE MEILLAT <ronan.le_meillat@highcanfly.club>\n"
-"Language-Team: French <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/fr/>\n"
+"PO-Revision-Date: 2024-11-05 18:00+0000\n"
+"Last-Translator: CVZ-es <damien.bremont@casadevelazquez.org>\n"
+"Language-Team: French <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.8.1\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -28,10 +28,8 @@ msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr "Ce plugin ajoute la prise en charge du prélèvement SEPA à pretix"
 
 #: pretix_sepadebit/exporters.py:16
-#, fuzzy
-#| msgid "List of previous SEPA debits (CSV)"
 msgid "List of previous SEPA debits"
-msgstr "Liste des prélèvements SEPA précédents (CSV)"
+msgstr "Liste des débits SEPA antérieurs"
 
 #: pretix_sepadebit/exporters.py:17
 msgctxt "export_category"
@@ -55,13 +53,11 @@ msgstr "Date d’exportation"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Étiquette de l'événement"
 
 #: pretix_sepadebit/exporters.py:39
-#, fuzzy
-#| msgid "Account name"
 msgid "Event name"
-msgstr "Nom du compte"
+msgstr "Nom de l'événement"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -324,16 +320,13 @@ msgid "will be debited"
 msgstr "sera débité"
 
 #: pretix_sepadebit/payment.py:421
-#, fuzzy, python-format
-#| msgid ""
-#| "We will debit the total amount of this order from your bank account by "
-#| "direct debit on or shortly after %(date)s."
+#, python-format
 msgid ""
 "We will debit the total amount of this order from your bank account "
 "%(account)s by direct debit on or shortly after %(date)s."
 msgstr ""
-"Nous débiterons le montant total de cette commande de votre compte bancaire "
-"par prélèvement automatique le ou peu de temps après %(date)s."
+"Nous débiterons le montant total de la commande de votre compte bancaire "
+"%(account)s par prélèvement automatique le %(date)s."
 
 #: pretix_sepadebit/payment.py:427
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
