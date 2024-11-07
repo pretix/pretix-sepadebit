@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-11-07 21:00+0000\n"
+"PO-Revision-Date: 2024-11-08 06:00+0000\n"
 "Last-Translator: CVZ-es <damien.bremont@casadevelazquez.org>\n"
 "Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/es/>\n"
@@ -432,11 +432,11 @@ msgid ""
 "debited. Your rights are explained in a statement that you can obtain from "
 "your bank."
 msgstr ""
-"Como parte de sus derechos, tiene derecho a que su banco le devuelva el "
-"dinero según las condiciones de su contrato con el banco. La devolución debe "
-"reclamarse en un plazo de 8 semanas a partir de la fecha en que se efectuó "
-"el cargo en su cuenta. Sus derechos se explican en una declaración que puede "
-"obtener en su banco."
+"Como parte de sus derechos, tiene la posibilidad que su banco realice el "
+"reembolso del dinero según las condiciones del contrato que tiene con ellos. "
+"La devolución debe reclamarla en un plazo de 8 semanas a partir de la fecha "
+"en que se efectuó el cargo en su cuenta. Sus derechos se encuentra "
+"reflejados en una declaración que puede facilitarle su banco."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
@@ -522,16 +522,16 @@ msgstr "Ir a las exportaciones a nivel de organizador"
 msgid ""
 "Refunds for SEPA debit transactions are grouped with bank transfer refunds."
 msgstr ""
-"Los devoluciones por transacciones de débito SEPA se agrupan con las "
-"devoluciones por transferencia bancaria."
+"Los devoluciones de transacciones a débito SEPA serán agrupadas con el resto "
+"de devoluciones por transferencia bancaria."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Go to refund exports"
-msgstr "Ir a las exportaciones de devolución"
+msgstr "Ir a las exportaciones de reembolso"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:36
 msgid "Go to organizer-level refund exports"
-msgstr "Ir a las exportaciones de devolución a nivel de organizador"
+msgstr "Ir a las exportaciones de reembolso a nivel del organizador"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:65
