@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-11-05 18:00+0000\n"
+"PO-Revision-Date: 2024-11-07 21:00+0000\n"
 "Last-Translator: CVZ-es <damien.bremont@casadevelazquez.org>\n"
 "Language-Team: Spanish <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/es/>\n"
@@ -53,11 +53,11 @@ msgstr "Fecha de exportación"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "URL semántica"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event name"
-msgstr ""
+msgstr "Nombre del evento"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -73,18 +73,21 @@ msgstr "Facturas"
 
 #: pretix_sepadebit/exporters.py:42
 msgid "SEPA export date"
-msgstr ""
+msgstr "Fecha de exportación SEPA"
 
 #: pretix_sepadebit/exporters.py:43
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
-msgstr "Monto de pago"
+msgstr "Importe del pago"
 
 #: pretix_sepadebit/payment.py:36
 msgid ""
 "Direct debit is not allowed for this IBAN, please get in touch with the "
 "event organizer or choose a different payment method."
 msgstr ""
+"La domiciliación bancaria no está permitida para este IBAN, por favor "
+"póngase en contacto con el organizador del evento o elija un método de pago "
+"diferente."
 
 #: pretix_sepadebit/payment.py:61
 #, python-brace-format
@@ -93,24 +96,28 @@ msgid ""
 "banking details. According to our data, the correct BIC would be "
 "{correctbic}."
 msgstr ""
+"El código BIC {bic} no coincide con el IBAN. Por favor, compruebe sus datos "
+"bancarios. Según nuestros datos, el BIC correcto sería {correctbic}."
 
 #: pretix_sepadebit/payment.py:72 pretix_sepadebit/signals.py:46
 #: pretix_sepadebit/signals.py:66
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:5
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:7
 msgid "SEPA debit"
-msgstr ""
+msgstr "Adeudo SEPA"
 
 #: pretix_sepadebit/payment.py:78
 msgid ""
 "Test mode payments will only be debited if you submit a file created in test "
 "mode to your bank."
 msgstr ""
+"Los pagos en modo de prueba sólo se cobrarán si envía a su banco un fichero "
+"creado en modo de prueba."
 
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr ""
+msgstr "Marcadores de posición disponibles: {list}"
 
 #: pretix_sepadebit/payment.py:100
 msgid ""
@@ -118,46 +125,52 @@ msgid ""
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
+"Tengo entendido que debo crear periódicamente archivos de exportación SEPA "
+"XML y transferirlos a mi banco para que éste cobre los pagos de los clientes."
 
 #: pretix_sepadebit/payment.py:106
 msgid "Creditor name"
-msgstr ""
+msgstr "Nombre del acreedor"
 
 #: pretix_sepadebit/payment.py:111
 msgid "Creditor IBAN"
-msgstr ""
+msgstr "IBAN del acreedor"
 
 #: pretix_sepadebit/payment.py:115
 msgid "Creditor BIC"
-msgstr ""
+msgstr "BIC del acreedor"
 
 #: pretix_sepadebit/payment.py:119
 msgid "Creditor ID"
-msgstr ""
+msgstr "Identificador del acreedor"
 
 #: pretix_sepadebit/payment.py:124
 msgid "This must be a valid SEPA creditor ID."
-msgstr ""
+msgstr "Debe ser un identificador de acreedor SEPA válido."
 
 #: pretix_sepadebit/payment.py:131
 msgid "Mandate reference prefix"
-msgstr ""
+msgstr "Prefijo de referencia del mandato"
 
 #: pretix_sepadebit/payment.py:135
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
 msgstr ""
+"Sólo puede contener letras, números y los siguientes caracteres especiales: "
+"' , . : + - / ( ) ?"
 
 #: pretix_sepadebit/payment.py:140
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
 msgstr ""
+"Utilizaremos esta cadena y añadiremos la URL semántica del evento y el "
+"código de la orden para crear una referencia de mandato SEPA única."
 
 #: pretix_sepadebit/payment.py:146
 msgid "Pre-notification time"
-msgstr ""
+msgstr "Tiempo de preaviso"
 
 #: pretix_sepadebit/payment.py:147
 msgid ""
@@ -167,10 +180,16 @@ msgid ""
 "bank and you might even be required to inform the customer at least 14 days "
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
+"Número de días transcurridos entre la realización del pedido y la fecha de "
+"vencimiento del adeudo directo. En función de su legislación y de las normas "
+"de su banco, es posible que tenga que entregar el adeudo al menos 5 días "
+"antes de la fecha de vencimiento en su banco e incluso que tenga que "
+"informar al cliente al menos 14 días antes. Le recomendamos configurar al "
+"menos 7 días."
 
 #: pretix_sepadebit/payment.py:155
 msgid "IBAN blocklist"
-msgstr ""
+msgstr "Lista de bloqueo de IBAN"
 
 #: pretix_sepadebit/payment.py:159
 msgid ""
@@ -179,6 +198,10 @@ msgid ""
 "specific person. You can also list country codes such as \"GB\" if you never "
 "want to accept IBANs from a specific country."
 msgstr ""
+"Ponga un prefijo IBAN o IBAN por línea. El sistema no permitirá ninguno de "
+"estos IBAN. Es útil, por ejemplo, si ya ha recibido muchos pagos fallidos de "
+"una persona concreta. También puede indicar códigos de país como \"GB\" si "
+"no desea aceptar IBAN de un país concreto."
 
 #: pretix_sepadebit/payment.py:162
 msgid ""
@@ -186,10 +209,13 @@ msgid ""
 "illegal in most countries and can be cause for hefty fines from government "
 "watchdogs."
 msgstr ""
+"Añadir países enteros a su lista de bloqueados se considera como una "
+"discriminación SEPA, ilegal en la mayoría de los países y puede ser causa de "
+"fuertes multas por parte de los organismos de control gubernamentales."
 
 #: pretix_sepadebit/payment.py:168
 msgid "Earliest debit due date"
-msgstr ""
+msgstr "Fecha límite de adeudo"
 
 #: pretix_sepadebit/payment.py:169
 msgid ""
@@ -199,26 +225,38 @@ msgid ""
 "date will receive an email reminding them about the upcoming charge based on "
 "the configured pre-notification days."
 msgstr ""
+"Fecha más temprana en que puede vencer el adeudo directo. Esta fecha se "
+"utiliza como fecha de vencimiento de la domiciliación bancaria si la fecha "
+"del pedido supera el tiempo de preaviso y la fecha de vencimiento es "
+"anterior. Los clientes con pedidos que utilicen la fecha de vencimiento más "
+"temprana recibirán un correo electrónico recordándoles el próximo cargo en "
+"función de los días de preaviso configurados."
 
 #: pretix_sepadebit/payment.py:179
 msgid "Pre-notification mail subject"
-msgstr ""
+msgstr "Asunto del correo de preaviso"
 
 #: pretix_sepadebit/payment.py:180
 msgid ""
 "The subject of the notification email. This email is only sent if the "
 "earliest debit due date option is used."
 msgstr ""
+"El asunto del correo electrónico de notificación. Este correo electrónico "
+"sólo se envía si se utiliza la opción de fecha de vencimiento de adeudo más "
+"temprana."
 
 #: pretix_sepadebit/payment.py:192
 msgid "Pre-notification mail body"
-msgstr ""
+msgstr "Cuerpo del correo de notificación previa"
 
 #: pretix_sepadebit/payment.py:193
 msgid ""
 "The body of the notification email. This email is only sent if the earliest "
 "debit due date option is used."
 msgstr ""
+"El cuerpo del correo electrónico de notificación. Este correo electrónico "
+"sólo se envía si se utiliza la opción de fecha de vencimiento de adeudo más "
+"temprana."
 
 #: pretix_sepadebit/payment.py:217
 msgid ""
@@ -229,6 +267,14 @@ msgid ""
 "in the shop, so please mark it as unpaid and contact the user if any charge "
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
+"Si activa este método de pago, las órdenes de domiciliación SEPA se "
+"recopilarán a través de un formulario en línea. Dependiendo de su "
+"legislación, podría ser necesario recogerlos en papel (actualmente no se "
+"admite) para excluir el riesgo de devoluciones de cargos. Los pagos de "
+"débito SEPA se marcarán inmediatamente como pagados en la tienda, por lo que "
+"le rogamos que los marque como impagados y se ponga en contacto con el "
+"usuario si se produce alguna devolución de cargo o el cargo falla por falta "
+"de fondos."
 
 #: pretix_sepadebit/payment.py:225
 #, python-brace-format
@@ -237,12 +283,18 @@ msgid ""
 "configured email template for order payment notifications. This is legally "
 "required as it includes the mandate reference and the due date."
 msgstr ""
+"El marcador de posición <code>{payment_info}</code> no está presente en la "
+"plantilla de correo electrónico configurada para las notificaciones de pago "
+"de pedidos. Es un requisito legal, ya que incluye la referencia del mandato "
+"y la fecha de vencimiento."
 
 #: pretix_sepadebit/payment.py:243
 msgid ""
 "Due date reminder email fields are required if earliest due date feature is "
 "used."
 msgstr ""
+"Los campos de correo electrónico de recordatorio de fecha de vencimiento son "
+"obligatorios si se utiliza la función de fecha de vencimiento más temprana."
 
 #: pretix_sepadebit/payment.py:248
 msgid "Account holder"
@@ -260,11 +312,11 @@ msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:252
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
-msgstr ""
+msgstr "Concedo la orden de domiciliación SEPA para este pedido (ver más abajo)"
 
 #: pretix_sepadebit/payment.py:414
 msgid "will be debited"
-msgstr ""
+msgstr "se cargará en cuenta"
 
 #: pretix_sepadebit/payment.py:421
 #, python-format
@@ -272,6 +324,8 @@ msgid ""
 "We will debit the total amount of this order from your bank account "
 "%(account)s by direct debit on or shortly after %(date)s."
 msgstr ""
+"El importe total de este pedido se cargará en su cuenta bancaria %(account)s "
+"mediante domiciliación bancaria el %(date)s o poco después."
 
 #: pretix_sepadebit/payment.py:427
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
@@ -280,31 +334,37 @@ msgid ""
 "This payment will appear on your bank statement as %(creditor_name)s with "
 "mandate reference %(reference)s and creditor ID %(id)s."
 msgstr ""
+"Este pago aparecerá en su extracto bancario como %(creditor_name)s con "
+"referencia de mandato %(reference)s e ID de acreedor %(id)s."
 
 #: pretix_sepadebit/signals.py:36
 msgid "Pre-notification time setting of SEPA Payment isn't set."
-msgstr ""
+msgstr "No se ha configurado el tiempo de notificación previa del pago SEPA."
 
 #: pretix_sepadebit/signals.py:201
 msgid ""
 "A reminder for the upcoming direct debit due date has been sent to the "
 "customer."
 msgstr ""
+"Se ha remitido al cliente un recordatorio de la próxima fecha de vencimiento "
+"del adeudo directo."
 
 #: pretix_sepadebit/signals.py:205
 msgid "SEPA debit history"
-msgstr ""
+msgstr "Historial de adeudos SEPA"
 
 #: pretix_sepadebit/signals.py:207
 msgid ""
 "This will remove previously exported SEPA XML files containing banking "
 "information."
 msgstr ""
+"Esto eliminará los archivos XML SEPA exportados anteriormente que contengan "
+"información bancaria."
 
 #: pretix_sepadebit/signals.py:232
 #, python-brace-format
 msgid "Upcomming debit of {debit_amount_with_currency}"
-msgstr ""
+msgstr "Próximo cargo de {debit_amount_with_currency}"
 
 #: pretix_sepadebit/signals.py:242
 #, python-brace-format
@@ -323,6 +383,19 @@ msgid ""
 "Best regards,\n"
 "Your {event} team"
 msgstr ""
+"Hola,\n"
+"\n"
+"ha reservado una entrada para {event}.\n"
+"\n"
+"Realizaremos el cargo en su cuenta bancaria {iban} el {due_date} o poco "
+"después. El pago aparecerá en su extracto bancario como {creditor_name} con "
+"referencia {reference} e identificador de acreedor {creditor_id}.\n"
+"\n"
+"Puede modificar los datos de su pedido y consultar el estado del mismo en\n"
+"{url}\n"
+"\n"
+"Un cordial saludo,\n"
+"Su equipo de {event}"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -332,6 +405,9 @@ msgid ""
 "withdrawn from your bank account <strong>on or shortly after %(date)s</"
 "strong>."
 msgstr ""
+"Cargaremos el importe total indicado anteriormente en su cuenta bancaria "
+"<strong>%(iban)s</strong>. Por la presente, acepta que el importe se retire "
+"de su cuenta bancaria <strong>en %(date)s</strong> o poco después."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
@@ -342,6 +418,10 @@ msgid ""
 "your account and (B) your bank to debit your account in accordance with the "
 "instructions from the Creditor."
 msgstr ""
+"Al enviar este formulario de mandato, autoriza (A) al Acreedor "
+"<strong>%(creditor)s</strong> a enviar instrucciones a su banco para que "
+"cargue el importe en su cuenta y (B) a su banco a cargar el importe en su "
+"cuenta de conformidad con las instrucciones del Acreedor."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
@@ -352,6 +432,11 @@ msgid ""
 "debited. Your rights are explained in a statement that you can obtain from "
 "your bank."
 msgstr ""
+"Como parte de sus derechos, tiene derecho a que su banco le devuelva el "
+"dinero según las condiciones de su contrato con el banco. La devolución debe "
+"reclamarse en un plazo de 8 semanas a partir de la fecha en que se efectuó "
+"el cargo en su cuenta. Sus derechos se explican en una declaración que puede "
+"obtener en su banco."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
@@ -360,6 +445,9 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
+"La referencia de los acreedores es <strong>%(id)s</strong>. La referencia de "
+"su mandato se le enviará por correo electrónico una vez realizada la "
+"solicitud."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
 #, python-format
@@ -367,6 +455,8 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
+"Por la presente, acepta que el importe se retire de su cuenta bancaria "
+"<strong>en %(date)s</strong> o poco después."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
 #, python-format
@@ -374,67 +464,79 @@ msgid ""
 "This order has been paid via SEPA debit. It was part of the export file "
 "exported at %(date)s."
 msgstr ""
+"Este pedido se ha pagado mediante adeudo SEPA. Formaba parte del fichero de "
+"exportación exportado en %(date)s."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
 msgid "View export file"
-msgstr ""
+msgstr "Ver archivo de exportación"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
 msgid ""
 "This shall be paid via SEPA debit, but has not yet been included in any SEPA "
 "file export."
 msgstr ""
+"Se pagará mediante adeudo SEPA, pero aún no se ha incluido en ninguna "
+"exportación de ficheros SEPA."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
 msgid ""
 "This order has been planned to be paid via SEPA debit but has been marked as "
 "unpaid again (or could never be marked as paid)."
 msgstr ""
+"Este pedido estaba previsto que se pagara mediante adeudo SEPA, pero se ha "
+"vuelto a marcar como impagado (o nunca se ha podido marcar como pagado)."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
-msgstr ""
+msgstr "Titular de la cuenta"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
-msgstr ""
+msgstr "Referencia del mandato"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
 msgid "Due date"
-msgstr ""
+msgstr "Fecha de vencimiento"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
 msgstr ""
+"En modo de prueba, sus exportaciones sólo contendrán pedidos en modo de "
+"prueba."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:14
 msgid ""
 "If you want, you can now also create SEPA debit files for multiple events "
 "combined."
 msgstr ""
+"Si lo desea, ahora también puede crear ficheros de adeudo SEPA para varios "
+"eventos combinados."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
-msgstr ""
+msgstr "Ir a las exportaciones a nivel de organizador"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
 msgid ""
 "Refunds for SEPA debit transactions are grouped with bank transfer refunds."
 msgstr ""
+"Los devoluciones por transacciones de débito SEPA se agrupan con las "
+"devoluciones por transferencia bancaria."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Go to refund exports"
-msgstr ""
+msgstr "Ir a las exportaciones de devolución"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:36
 msgid "Go to organizer-level refund exports"
-msgstr ""
+msgstr "Ir a las exportaciones de devolución a nivel de organizador"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:65
 msgid "Create new export file"
-msgstr ""
+msgstr "Crear un nuevo archivo de exportación"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:48
 #, python-format
@@ -442,16 +544,20 @@ msgid ""
 "<strong>%(num_new)s</strong> SEPA debit orders have been placed and are not "
 "yet exported as Sepa XML."
 msgstr ""
+"<strong>%(num_new)s</strong> Se han realizado pedidos de adeudo SEPA y aún "
+"no se han exportado como archivo XML Sepa."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:59
 msgid ""
 "Create multiple files if the debits have different collection dates "
 "(required for some banks)"
 msgstr ""
+"Crear varios ficheros si los adeudos tienen diferentes fechas de cobro ("
+"necesario para algunos bancos)"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:72
 msgid "Exported XML files"
-msgstr ""
+msgstr "Archivos XML exportados"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
@@ -480,7 +586,7 @@ msgstr "Descargar XML"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Todavía no se ha creado ninguna exportación."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -488,15 +594,17 @@ msgid ""
 "We will debit the total amount of this order from your bank account by "
 "direct debit on or shortly after %(date)s."
 msgstr ""
+"El importe total de este pedido se cargará en su cuenta bancaria mediante "
+"domiciliación bancaria el %(date)s o poco después."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
-msgstr ""
+msgstr "Exportación SEPA"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:8
 #, python-format
 msgid "SEPA export: %(date)s"
-msgstr ""
+msgstr "Exportación SEPA: %(date)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:22
 msgid "Included orders"
@@ -525,13 +633,15 @@ msgstr "Facturas asociadas"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:70
 msgid "No orders have been part of this export."
-msgstr ""
+msgstr "Ningún pedido ha formado parte de esta exportación."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
 msgid ""
 "The SEPA direct debit failed to be completed. Please contact the organizer "
 "of the event as soon as possible!"
 msgstr ""
+"No se ha podido completar la domiciliación SEPA. ¡Póngase en contacto con el "
+"organizador del evento lo antes posible!"
 
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
@@ -544,12 +654,18 @@ msgid ""
 "contact pretix support for more information.\n"
 "{}"
 msgstr ""
+"El archivo generado no se ha validado por los siguientes motivos. Póngase en "
+"contacto con el servicio de asistencia de pretix para obtener más "
+"información.\n"
+"{}"
 
 #: pretix_sepadebit/views.py:148
 msgid ""
 "Multiple new export files have been created. Please make sure to process all "
 "of them!"
 msgstr ""
+"Se han creado varios archivos de exportación nuevos. ¡Asegúrese de "
+"procesarlos todos!"
 
 #: pretix_sepadebit/views.py:150
 msgid "A new export file has been created."
