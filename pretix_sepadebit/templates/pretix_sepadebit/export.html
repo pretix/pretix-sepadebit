@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load money %}
 {% load static %}
+{% load bootstrap3 %}
 {% block title %}{% trans "SEPA debit" %}{% endblock %}
 {% block content %}
     <h1>{% trans "SEPA debit" %}</h1>
@@ -50,16 +51,9 @@
                 {% endblocktrans %}
             </p>
             {% if num_new > 0 %}
-                <form action="" method="post" class="form-inline">
+                <form action="" method="post" class="form">
                     {% csrf_token %}
-                    {% if num_new > 1 %}
-                        <p>
-                            <label class="checkbox">
-                                <input type="checkbox" name="split-by-collection-date" value="on">
-                                {% trans "Create multiple files if the debits have different collection dates (required for some banks)" %}
-                            </label>
-                        </p>
-                    {% endif %}
+                    {% bootstrap_form export_form %}
                     <p>
                         <button class="btn btn-primary btn-lg">
                             {% trans "Create new export file" %}
