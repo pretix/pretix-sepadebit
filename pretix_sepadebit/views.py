@@ -6,6 +6,7 @@ from decimal import Decimal
 
 from django import forms
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Count, OuterRef, Q, Subquery, Sum
 from django.db.models.functions import Coalesce
@@ -15,7 +16,7 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, DeleteView
 from functools import reduce
 from operator import or_
 from pretix.base.models import Event, Order, OrderPayment, OrderRefund
@@ -282,6 +283,42 @@ class OrdersView(DetailView):
         return ctx
 
 
+class RevertView(DeleteView):
+    model = SepaExport
+    context_object_name = "export"
+    template_name = "pretix_sepadebit/revert.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not self.object.is_reversible():
+            raise PermissionDenied(_("This export can no longer be reverted."))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["basetpl"] = "pretixcontrol/event/base.html"
+        if not hasattr(self.request, "event"):
+            ctx["basetpl"] = "pretixcontrol/organizers/base.html"
+        return ctx
+
+    def get_success_url(self):
+        if hasattr(self.request, "event"):
+            return reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "event": self.request.event.slug,
+                    "organizer": self.request.organizer.slug,
+                },
+            )
+        else:
+            return reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "organizer": self.request.organizer.slug,
+                },
+            )
+
+
 class EventExportListView(EventPermissionRequiredMixin, ExportListView):
     permission = "can_change_orders"
 
@@ -349,6 +386,15 @@ class EventOrdersView(EventPermissionRequiredMixin, OrdersView):
         )
 
 
+class EventRevertView(EventPermissionRequiredMixin, RevertView):
+    permission = "can_change_orders"
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(
+            SepaExport, event=self.request.event, pk=self.kwargs.get("id")
+        )
+
+
 class OrganizerDownloadView(
     OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, DownloadView
 ):
@@ -362,6 +408,17 @@ class OrganizerDownloadView(
 
 class OrganizerOrdersView(
     OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, OrdersView
+):
+    permission = "can_change_organizer_settings"
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(
+            SepaExport, organizer=self.request.organizer, pk=self.kwargs.get("id")
+        )
+
+
+class OrganizerRevertView(
+    OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, RevertView
 ):
     permission = "can_change_organizer_settings"
 

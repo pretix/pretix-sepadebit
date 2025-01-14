@@ -14,6 +14,11 @@ urlpatterns = [
         name="download",
     ),
     path(
+        "control/organizer/<str:organizer>/sepa/exports/<int:id>/revert/",
+        views.OrganizerRevertView.as_view(),
+        name="revert",
+    ),
+    path(
         "control/organizer/<str:organizer>/sepa/exports/<int:id>/orders/",
         views.OrganizerOrdersView.as_view(),
         name="orders",
@@ -32,5 +37,10 @@ urlpatterns = [
         "control/event/<str:organizer>/<str:event>/sepa/exports/<int:id>/orders/",
         views.EventOrdersView.as_view(),
         name="orders",
+    ),
+    path(
+        "control/event/<str:organizer>/<str:event>/sepa/exports/<int:id>/revert/",
+        views.EventRevertView.as_view(),
+        name="revert",
     ),
 ]
