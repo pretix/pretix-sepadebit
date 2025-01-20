@@ -69,6 +69,7 @@
             <thead>
             <tr>
                 <th>{% trans "Export date" %}</th>
+                <th>{% trans "Collection date" %}</th>
                 <th>{% trans "Number of orders" %}</th>
                 <th>{% trans "Total amount" %}</th>
                 <th></th>
@@ -82,6 +83,9 @@
                         {% if export.testmode %}
                             <span class="label label-warning">{% trans "TEST MODE" %}</span>
                         {% endif %}
+                    </td>
+                    <td>
+                        {{ export.collection_date|date:"SHORT_DATE_FORMAT" }}
                     </td>
                     <td>{{ export.cnt }}</td>
                     <td>

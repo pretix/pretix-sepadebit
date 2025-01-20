@@ -120,6 +120,7 @@ class ExportListView(ListView):
                 )
             ) for payment in payments
         )
+        latest_collection_date = max(collection_dates)
         for payment in payments:
             if not payment.info_data:
                 # Should not happen
@@ -131,7 +132,7 @@ class ExportListView(ListView):
                 continue
 
             if self.export_form.cleaned_data["mode"] == "move":
-                collection_date = max(collection_dates)
+                collection_date = latest_collection_date
             else:
                 collection_date = self._bank_date(
                     max(
@@ -157,7 +158,7 @@ class ExportListView(ListView):
             }
 
             config = self._config_for_event(payment.order.event)
-            if self.export_form.cleaned_data["mode"] == "split":
+            if self.export_form.cleaned_data["mode"] in ("split", "move") or len(collection_dates) == 1:
                 key = (config, collection_date)
             else:
                 key = config
@@ -177,6 +178,7 @@ class ExportListView(ListView):
                     else:
                         exp = SepaExport(organizer=request.organizer, xmldata="")
                         exp.testmode = False
+                    if type(key) is tuple: exp.collection_date = key[1]
                     exp.xmldata = f.export(validate=False).decode("utf-8")
 
                     import xmlschema  # xmlschema does some weird monkeypatching in etree, if we import it globally, things fail
@@ -253,13 +255,14 @@ class DownloadView(DetailView):
         self.object = self.get_object()
 
         resp = HttpResponse(self.object.xmldata, content_type="application/xml")
-        resp["Content-Disposition"] = 'attachment; filename="{}-{}.xml"'.format(
+        resp["Content-Disposition"] = 'attachment; filename="{}-{}{}.xml"'.format(
             (
                 self.request.event.slug.upper()
                 if hasattr(self.request, "event")
                 else self.request.organizer.slug.upper()
             ),
             self.object.datetime.strftime("%Y-%m-%d-%H-%M-%S"),
+            self.object.collection_date and self.object.collection_date.strftime("--%Y-%m-%d"),
         )
         return resp
 
