@@ -120,6 +120,7 @@ class ExportListView(ListView):
                 )
             ) for payment in payments
         )
+        latest_collection_date = max(collection_dates)
         for payment in payments:
             if not payment.info_data:
                 # Should not happen
@@ -131,7 +132,7 @@ class ExportListView(ListView):
                 continue
 
             if self.export_form.cleaned_data["mode"] == "move":
-                collection_date = max(collection_dates)
+                collection_date = latest_collection_date
             else:
                 collection_date = self._bank_date(
                     max(
