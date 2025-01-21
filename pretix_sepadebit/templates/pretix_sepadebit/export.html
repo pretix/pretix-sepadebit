@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load money %}
 {% load static %}
+{% load bootstrap3 %}
 {% block title %}{% trans "SEPA debit" %}{% endblock %}
 {% block content %}
     <h1>{% trans "SEPA debit" %}</h1>
@@ -50,16 +51,9 @@
                 {% endblocktrans %}
             </p>
             {% if num_new > 0 %}
-                <form action="" method="post" class="form-inline">
+                <form action="" method="post" class="form">
                     {% csrf_token %}
-                    {% if num_new > 1 %}
-                        <p>
-                            <label class="checkbox">
-                                <input type="checkbox" name="split-by-collection-date" value="on">
-                                {% trans "Create multiple files if the debits have different collection dates (required for some banks)" %}
-                            </label>
-                        </p>
-                    {% endif %}
+                    {% bootstrap_form export_form %}
                     <p>
                         <button class="btn btn-primary btn-lg">
                             {% trans "Create new export file" %}
@@ -99,6 +93,11 @@
                     </td>
                     <td class="text-right">
                         {% if export.event %}
+                            {% if export.is_reversible %}
+                                <a class="btn btn-danger" href="{% url "plugins:pretix_sepadebit:revert" organizer=request.organizer.slug event=export.event.slug id=export.id %}">
+                                    <span class="fa fa-trash"></span> {% trans "Revert" %}
+                                </a>
+                            {% endif %}
                             <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.organizer.slug event=export.event.slug id=export.id %}">
                                 <span class="fa fa-list"></span> {% trans "Orders" %}
                             </a>
@@ -106,6 +105,11 @@
                                 <span class="fa fa-download"></span> {% trans "Download XML" %}
                             </a>
                         {% else %}
+                            {% if export.is_reversible %}
+                                <a class="btn btn-danger" href="{% url "plugins:pretix_sepadebit:revert" organizer=request.organizer.slug id=export.id %}">
+                                    <span class="fa fa-trash"></span> {% trans "Revert" %}
+                                </a>
+                            {% endif %}
                             <a class="btn btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.organizer.slug id=export.id %}">
                                 <span class="fa fa-list"></span> {% trans "Orders" %}
                             </a>

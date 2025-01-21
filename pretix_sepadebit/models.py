@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.db import models
+from django.utils.timezone import now
 
 
 class SepaExport(models.Model):
@@ -20,6 +23,9 @@ class SepaExport(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
     testmode = models.BooleanField(default=False)
     currency = models.CharField(max_length=9, blank=True)
+
+    def is_reversible(self):
+        return now() - self.datetime < timedelta(hours=48)
 
 
 class SepaExportOrder(models.Model):

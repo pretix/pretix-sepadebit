@@ -3,16 +3,20 @@ import logging
 import os
 from collections import defaultdict
 from decimal import Decimal
+
+from django import forms
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Count, OuterRef, Q, Subquery, Sum
 from django.db.models.functions import Coalesce
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, DeleteView
 from functools import reduce
 from operator import or_
 from pretix.base.models import Event, Order, OrderPayment, OrderRefund
@@ -27,10 +31,33 @@ from pretix_sepadebit.models import SepaExport, SepaExportOrder
 logger = logging.getLogger(__name__)
 
 
+class ExportForm(forms.Form):
+    mode = forms.ChoiceField(
+        label=_("Handling of debits with different collection dates"),
+        choices=(
+            ("split", _("Generate one file per collection date")),
+            ("move", _("Export all debits in one file with the same collection date")),
+            ("mix", _("Export all debits with their correct collection dates in one file (file might be rejected by some banks)")),
+        ),
+        initial="multiple",
+        widget=forms.RadioSelect,
+    )
+
+
 class ExportListView(ListView):
     template_name = "pretix_sepadebit/export.html"
     model = SepaExport
     context_object_name = "exports"
+
+    @cached_property
+    def export_form(self):
+        return ExportForm(
+            data=self.request.POST if "export-mode" in self.request.POST else None,
+            prefix="export",
+            initial={
+                "mode": self.settings_holder.settings.get("payment_sepadebit_export_mode", "split")
+            },
+        )
 
     def get_unexported(self):
         raise NotImplementedError()
@@ -38,6 +65,7 @@ class ExportListView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
         ctx["num_new"] = self.get_unexported().count()
+        ctx["export_form"] = self.export_form
         ctx["basetpl"] = "pretixcontrol/event/base.html"
         if not hasattr(self.request, "event"):
             ctx["basetpl"] = "pretixcontrol/organizers/base.html"
@@ -73,11 +101,27 @@ class ExportListView(ListView):
     def post(self, request, *args, **kwargs):
         self._event_cache = {}
 
+        if not self.export_form.is_valid():
+            messages.warning(request, _("Your input was invalid, please see below for details."))
+            return self.get(request, *args, **kwargs)
+
+        self.settings_holder.settings.set("payment_sepadebit_export_mode", self.export_form.cleaned_data["mode"])
+
         valid_payments = defaultdict(list)
         files = {}
-        for payment in self.get_unexported().select_related(
+        payments = self.get_unexported().select_related(
             "order", "order__event", "sepadebit_due"
-        ):
+        )
+        collection_dates = set(
+            self._bank_date(
+                max(
+                    now().astimezone(payment.order.event.timezone).date(),
+                    payment.sepadebit_due.date,
+                )
+            ) for payment in payments
+        )
+        latest_collection_date = max(collection_dates)
+        for payment in payments:
             if not payment.info_data:
                 # Should not happen
                 # TODO: Notify user
@@ -87,12 +131,15 @@ class ExportListView(ListView):
                 payment.order.save()
                 continue
 
-            collection_date = self._bank_date(
-                max(
-                    now().astimezone(payment.order.event.timezone).date(),
-                    payment.sepadebit_due.date,
+            if self.export_form.cleaned_data["mode"] == "move":
+                collection_date = latest_collection_date
+            else:
+                collection_date = self._bank_date(
+                    max(
+                        now().astimezone(payment.order.event.timezone).date(),
+                        payment.sepadebit_due.date,
+                    )
                 )
-            )
             remaining_amount = payment.amount - payment.refund_amount
             payment_dict = {
                 "name": payment.info_data["account"],
@@ -111,7 +158,7 @@ class ExportListView(ListView):
             }
 
             config = self._config_for_event(payment.order.event)
-            if request.POST.get("split-by-collection-date") == "on":
+            if self.export_form.cleaned_data["mode"] == "split":
                 key = (config, collection_date)
             else:
                 key = config
@@ -237,8 +284,48 @@ class OrdersView(DetailView):
         return ctx
 
 
+class RevertView(DeleteView):
+    model = SepaExport
+    context_object_name = "export"
+    template_name = "pretix_sepadebit/revert.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not self.object.is_reversible():
+            raise PermissionDenied(_("This export can no longer be reverted."))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["basetpl"] = "pretixcontrol/event/base.html"
+        if not hasattr(self.request, "event"):
+            ctx["basetpl"] = "pretixcontrol/organizers/base.html"
+        return ctx
+
+    def get_success_url(self):
+        if hasattr(self.request, "event"):
+            return reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "event": self.request.event.slug,
+                    "organizer": self.request.organizer.slug,
+                },
+            )
+        else:
+            return reverse(
+                "plugins:pretix_sepadebit:export",
+                kwargs={
+                    "organizer": self.request.organizer.slug,
+                },
+            )
+
+
 class EventExportListView(EventPermissionRequiredMixin, ExportListView):
     permission = "can_change_orders"
+
+    @property
+    def settings_holder(self):
+        return self.request.event
 
     def get_queryset(self):
         return (
@@ -300,6 +387,15 @@ class EventOrdersView(EventPermissionRequiredMixin, OrdersView):
         )
 
 
+class EventRevertView(EventPermissionRequiredMixin, RevertView):
+    permission = "can_change_orders"
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(
+            SepaExport, event=self.request.event, pk=self.kwargs.get("id")
+        )
+
+
 class OrganizerDownloadView(
     OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, DownloadView
 ):
@@ -322,10 +418,25 @@ class OrganizerOrdersView(
         )
 
 
+class OrganizerRevertView(
+    OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, RevertView
+):
+    permission = "can_change_organizer_settings"
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(
+            SepaExport, organizer=self.request.organizer, pk=self.kwargs.get("id")
+        )
+
+
 class OrganizerExportListView(
     OrganizerPermissionRequiredMixin, OrganizerDetailViewMixin, ExportListView
 ):
     permission = "can_change_organizer_settings"
+
+    @property
+    def settings_holder(self):
+        return self.request.organizer
 
     def get_queryset(self):
         return (
