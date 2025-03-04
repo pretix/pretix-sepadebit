@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2025-03-03 20:00+0000\n"
+"PO-Revision-Date: 2025-03-05 05:00+0000\n"
 "Last-Translator: Renne Rocha <renne@rocha.dev.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.1\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -479,7 +479,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "Nenhuma exportação foi criada ainda."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -558,4 +558,4 @@ msgstr ""
 
 #: pretix_sepadebit/views.py:152
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "Nenhum pedido válido foi encontrado."
