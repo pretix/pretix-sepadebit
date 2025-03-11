@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2025-03-05 05:00+0000\n"
+"PO-Revision-Date: 2025-03-12 08:00+0000\n"
 "Last-Translator: Renne Rocha <renne@rocha.dev.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/pt_BR/>\n"
@@ -454,7 +454,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
-msgstr ""
+msgstr "Número de pedidos"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:79
 msgid "Total amount"
