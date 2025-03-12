@@ -112,6 +112,10 @@ class ExportListView(ListView):
         payments = self.get_unexported().select_related(
             "order", "order__event", "sepadebit_due"
         )
+        if not len(payments):
+            messages.warning(request, _("No valid orders have been found."))
+            return self.get(request, *args, **kwargs)
+
         collection_dates = set(
             self._bank_date(
                 max(
