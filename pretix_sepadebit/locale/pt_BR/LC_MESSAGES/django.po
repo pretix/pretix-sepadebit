@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2025-03-12 08:00+0000\n"
+"PO-Revision-Date: 2025-03-14 23:00+0000\n"
 "Last-Translator: Renne Rocha <renne@rocha.dev.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/pt_BR/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.10.3\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -250,7 +250,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:249
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:250
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
@@ -405,6 +405,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
 msgstr ""
+"No modo de teste, suas exportações conterão apenas pedidos do modo de teste."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:14
 msgid ""
