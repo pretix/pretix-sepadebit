@@ -334,7 +334,7 @@ class SepaDebit(BasePaymentProvider):
                             RegexValidator(
                                 regex=r"^[a-zA-Z0-9':?,(+.)/ÄäÖöÜüß&*$% -]+$",
                                 message=_("Account holder name can only contain characters from A-Z, Ä, Ö, Ü, ß as "
-                                          "well as select special characters (&*$%':?.,-+()/ )"),
+                                          "well as select special characters (&*$%':?.,-+()/ )."),
                             )
                         ]
                     )
