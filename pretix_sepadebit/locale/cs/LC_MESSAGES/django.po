@@ -8,33 +8,33 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2023-09-15 17:00+0000\n"
-"Last-Translator: Michael <michael.happl@gmx.at>\n"
-"Language-Team: Czech <https://translate.pretix.eu/projects/pretix/pretix-"
-"plugin-sepadebit/cs/>\n"
+"PO-Revision-Date: 2025-09-08 17:00+0000\n"
+"Last-Translator: Alois Pospíšil <alois.pospisil@gmail.com>\n"
+"Language-Team: Czech <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1\n"
+"X-Generator: Weblate 5.13\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
-msgstr ""
+msgstr "SEPA inkaso"
 
 #: pretix_sepadebit/apps.py:14
 msgid "This plugin adds SEPA direct debit support to pretix"
-msgstr ""
+msgstr "Tento plugin přidává podporu SEPA inkasa do pretixu"
 
 #: pretix_sepadebit/exporters.py:16
 msgid "List of previous SEPA debits"
-msgstr ""
+msgstr "Seznam předchozích SEPA inkas"
 
 #: pretix_sepadebit/exporters.py:17
 msgctxt "export_category"
 msgid "Order data"
-msgstr ""
+msgstr "Data objednávky"
 
 #: pretix_sepadebit/exporters.py:18
 msgid ""
@@ -42,6 +42,9 @@ msgid ""
 "generated and exported by the system. To create a new export, use the \"SEPA "
 "debit\" section in the main menu."
 msgstr ""
+"Stáhněte tabulku všech SEPA inkas, které byly systémem dříve vygenerovány a "
+"exportovány. Pro vytvoření nového exportu použijte v hlavním menu sekci "
+"'SEPA inkaso'."
 
 #: pretix_sepadebit/exporters.py:28
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -50,15 +53,15 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Zkratka události"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event name"
-msgstr ""
+msgstr "Název události"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
-msgstr ""
+msgstr "Kód objednávky"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order date"
@@ -70,7 +73,7 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:42
 msgid "SEPA export date"
-msgstr ""
+msgstr "Datum exportu SEPA"
 
 #: pretix_sepadebit/exporters.py:43
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
@@ -82,6 +85,8 @@ msgid ""
 "Direct debit is not allowed for this IBAN, please get in touch with the "
 "event organizer or choose a different payment method."
 msgstr ""
+"Inkaso není pro tento IBAN povoleno, obraťte se prosím na organizátora akce "
+"nebo zvolte jiný způsob platby."
 
 #: pretix_sepadebit/payment.py:61
 #, python-brace-format
@@ -199,13 +204,15 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:179
 msgid "Pre-notification mail subject"
-msgstr ""
+msgstr "Odpovědě"
 
 #: pretix_sepadebit/payment.py:180
 msgid ""
 "The subject of the notification email. This email is only sent if the "
 "earliest debit due date option is used."
 msgstr ""
+"Předmět notifikačního e‑mailu. Tento e‑mail je odeslán pouze v případě, že "
+"je použita možnost nejbližšího data splatnosti inkasa."
 
 #: pretix_sepadebit/payment.py:192
 msgid "Pre-notification mail body"
@@ -240,6 +247,8 @@ msgid ""
 "Due date reminder email fields are required if earliest due date feature is "
 "used."
 msgstr ""
+"Pole pro e‑mail s připomenutím data splatnosti jsou vyžadována, pokud je "
+"použita funkce nejbližšího data splatnosti."
 
 #: pretix_sepadebit/payment.py:248
 msgid "Account holder"
@@ -357,6 +366,8 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
+"ID věřitele je <strong>%(id)s</strong>. Referenční číslo vašeho mandátu vám "
+"bude zasláno e‑mailem po odeslání objednávky."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
 #, python-format
@@ -364,6 +375,8 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
+"Tímto souhlasíte, že částka bude odepsána z vašeho bankovního účtu <strong>k "
+"datu %(date)s nebo krátce poté</strong>."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
 #, python-format
@@ -371,10 +384,12 @@ msgid ""
 "This order has been paid via SEPA debit. It was part of the export file "
 "exported at %(date)s."
 msgstr ""
+"Tato objednávka byla uhrazena přes SEPA inkaso. Byla součástí exportního "
+"souboru exportovaného dne %(date)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
 msgid "View export file"
-msgstr ""
+msgstr "Zobrazit exportní soubor"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
 msgid ""
