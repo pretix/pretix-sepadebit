@@ -8,9 +8,15 @@
                 {% blocktrans trimmed with date=seo.export.datetime|date:"SHORT_DATETIME_FORMAT" %}
                     This order has been paid via SEPA debit. It was part of the export file exported at {{ date }}.
                 {% endblocktrans %}
-                <a class="btn btn-xs btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.event.organizer.slug event=request.event.slug id=seo.export.id %}">
-                    <span class="fa fa-list"></span> {% trans "View export file" %}
-                </a>
+                {% if seo.export.event %}
+                    <a class="btn btn-xs btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.event.organizer.slug event=request.event.slug id=seo.export.id %}">
+                        <span class="fa fa-list"></span> {% trans "View export file" %}
+                    </a>
+                {% else %}
+                    <a class="btn btn-xs btn-default" href="{% url "plugins:pretix_sepadebit:orders" organizer=request.event.organizer.slug id=seo.export.id %}">
+                        <span class="fa fa-list"></span> {% trans "View export file" %}
+                    </a>
+                {% endif %}
             </p>
         {% else %}
             <p>{% blocktrans trimmed %}
