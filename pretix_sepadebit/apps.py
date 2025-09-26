@@ -21,7 +21,7 @@ class PluginApp(PluginConfig):
         )
         visible = True
         version = __version__
-        compatibility = "pretix>=4.18.0.dev0"
+        compatibility = "pretix>=2025.7.0"
         level = PLUGIN_LEVEL_EVENT_ORGANIZER_HYBRID
 
     def ready(self):
