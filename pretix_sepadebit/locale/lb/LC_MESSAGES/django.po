@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:50+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-10-21 21:00+0000\n"
+"Last-Translator: Sven Muhlen <sven.muhlen@bnl.etat.lu>\n"
+"Language-Team: Luxembourgish <https://translate.pretix.eu/projects/pretix/"
+"pretix-plugin-sepadebit/lb/>\n"
 "Language: lb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -32,7 +34,7 @@ msgstr ""
 #: pretix_sepadebit/exporters.py:17
 msgctxt "export_category"
 msgid "Order data"
-msgstr ""
+msgstr "Donnéeë vun der Bestellung"
 
 #: pretix_sepadebit/exporters.py:18
 msgid ""
@@ -48,23 +50,23 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Kuerzform vum Evenement"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event name"
-msgstr ""
+msgstr "Numm vum Evenement"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
-msgstr ""
+msgstr "Nummer vun der Bestellung"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order date"
-msgstr ""
+msgstr "Datum vun der Bestellung"
 
 #: pretix_sepadebit/exporters.py:41
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #: pretix_sepadebit/exporters.py:42
 msgid "SEPA export date"
@@ -105,7 +107,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr ""
+msgstr "Disponibel Platzhalter: {list}"
 
 #: pretix_sepadebit/payment.py:100
 msgid ""
@@ -246,12 +248,12 @@ msgstr ""
 #: pretix_sepadebit/payment.py:249
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:30
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #: pretix_sepadebit/payment.py:250
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:252
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
@@ -459,12 +461,12 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:89
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
 msgid "TEST MODE"
-msgstr ""
+msgstr "TEST-MODUS"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:103
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:110
 msgid "Orders"
-msgstr ""
+msgstr "Bestellungen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:106
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:113
@@ -504,11 +506,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
-msgstr ""
+msgstr "Bestellung"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
 msgid "Payment"
-msgstr ""
+msgstr "Bezuelung"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:34
 msgid "Mandate date"
@@ -531,7 +533,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "Ticket {event}-{code}"
 
 #: pretix_sepadebit/views.py:137
 msgid ""
