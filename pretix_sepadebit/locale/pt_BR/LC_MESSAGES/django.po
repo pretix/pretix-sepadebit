@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2025-11-11 05:00+0000\n"
+"PO-Revision-Date: 2025-11-11 22:00+0000\n"
 "Last-Translator: Marcos Xavier Gil Júnior <marcosxaviergiljr@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.pretix.eu/projects/"
 "pretix/pretix-plugin-sepadebit/pt_BR/>\n"
@@ -25,7 +25,7 @@ msgstr "Débito direto SEPA"
 
 #: pretix_sepadebit/apps.py:14
 msgid "This plugin adds SEPA direct debit support to pretix"
-msgstr ""
+msgstr "Este plugin adiciona suporte a débito direto SEPA ao pretix."
 
 #: pretix_sepadebit/exporters.py:16
 msgid "List of previous SEPA debits"
