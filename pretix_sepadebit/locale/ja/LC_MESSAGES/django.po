@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2025-11-18 18:00+0000\n"
+"PO-Revision-Date: 2025-12-23 02:28+0000\n"
 "Last-Translator: Hijiri Umemoto <hijiri@umemoto.org>\n"
-"Language-Team: Japanese <https://translate.pretix.eu/projects/pretix/"
-"pretix-plugin-sepadebit/ja/>\n"
+"Language-Team: Japanese <https://translate.pretix.eu/projects/pretix/pretix-"
+"plugin-sepadebit/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -42,6 +42,9 @@ msgid ""
 "generated and exported by the system. To create a new export, use the \"SEPA "
 "debit\" section in the main menu."
 msgstr ""
+"以前にシステムによって生成およびエクスポートされたすべてのSEPAデビットの"
+"スプレッドシートをダウンロードします。新しいエクスポートを作成するには、"
+"メインメニューの「SEPAデビット」セクションを使用します。"
 
 #: pretix_sepadebit/exporters.py:28
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -66,11 +69,11 @@ msgstr ""
 
 #: pretix_sepadebit/exporters.py:41
 msgid "Invoices"
-msgstr ""
+msgstr "インボイス"
 
 #: pretix_sepadebit/exporters.py:42
 msgid "SEPA export date"
-msgstr ""
+msgstr "SEPAエクスポート日"
 
 #: pretix_sepadebit/exporters.py:43
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
@@ -82,6 +85,8 @@ msgid ""
 "Direct debit is not allowed for this IBAN, please get in touch with the "
 "event organizer or choose a different payment method."
 msgstr ""
+"このIBANでは口座振替が許可されていません。イベント主催者に連絡するか、別の支"
+"払い方法を選択してください。"
 
 #: pretix_sepadebit/payment.py:61
 #, python-brace-format
@@ -90,19 +95,23 @@ msgid ""
 "banking details. According to our data, the correct BIC would be "
 "{correctbic}."
 msgstr ""
+"BIC 番号 {bic} が IBAN と一致しません。もう一度、銀行の詳細を確認してください"
+"。私たちのデータによると、正しいBICは{correctbic}です。"
 
 #: pretix_sepadebit/payment.py:72 pretix_sepadebit/signals.py:46
 #: pretix_sepadebit/signals.py:66
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:5
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:7
 msgid "SEPA debit"
-msgstr ""
+msgstr "SEPAデビット"
 
 #: pretix_sepadebit/payment.py:78
 msgid ""
 "Test mode payments will only be debited if you submit a file created in test "
 "mode to your bank."
 msgstr ""
+"テストモードでの支払いは、テストモードで作成されたファイルを銀行に提出した場"
+"合にのみ引き落とされます。"
 
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
@@ -115,10 +124,12 @@ msgid ""
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
+"私の銀行が顧客の支払いを回収するために、SEPA XMLエクスポートファイルを定期的"
+"に作成し、それらを銀行に転送する必要があることを理解しました。"
 
 #: pretix_sepadebit/payment.py:106
 msgid "Creditor name"
-msgstr ""
+msgstr "債権者名"
 
 #: pretix_sepadebit/payment.py:111
 msgid "Creditor IBAN"
