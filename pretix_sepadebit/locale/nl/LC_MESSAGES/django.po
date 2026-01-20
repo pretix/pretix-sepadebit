@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2024-11-07 03:00+0000\n"
-"Last-Translator: Christiaan de Die le Clercq <contact@techwolf12.nl>\n"
-"Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/"
-"pretix-plugin-sepadebit/nl/>\n"
+"PO-Revision-Date: 2026-01-20 23:28+0000\n"
+"Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
+"Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
+"plugin-sepadebit/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -43,6 +43,9 @@ msgid ""
 "generated and exported by the system. To create a new export, use the \"SEPA "
 "debit\" section in the main menu."
 msgstr ""
+"Download een spreadsheet met alle SEPA-incasso's die eerder door het systeem "
+"zijn gegenereerd en geëxporteerd. Om een nieuwe export aan te maken, "
+"gebruikt u het gedeelte \"SEPA-incasso\" in het hoofdmenu."
 
 #: pretix_sepadebit/exporters.py:28
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -78,7 +81,7 @@ msgstr "SEPA-exportdatum"
 #: pretix_sepadebit/exporters.py:43
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
-msgstr "Te betalen bedrag"
+msgstr "Betaalbaar bedrag"
 
 #: pretix_sepadebit/payment.py:36
 msgid ""
