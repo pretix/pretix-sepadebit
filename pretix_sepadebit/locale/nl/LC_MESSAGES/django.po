@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-01-20 23:28+0000\n"
+"PO-Revision-Date: 2026-01-22 00:28+0000\n"
 "Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/nl/>\n"
@@ -25,17 +25,13 @@ msgstr ""
 "pretix"
 
 #: pretix_sepadebit/exporters.py:16
-#, fuzzy
-#| msgid "List of SEPA debits (CSV)"
 msgid "List of previous SEPA debits"
-msgstr "Lijst van SEPA-incasso's (CSV)"
+msgstr "Lijst van eerdere SEPA-afschrijvingen"
 
 #: pretix_sepadebit/exporters.py:17
-#, fuzzy
-#| msgid "Order date"
 msgctxt "export_category"
 msgid "Order data"
-msgstr "Besteldatum"
+msgstr "Bestelgegevens"
 
 #: pretix_sepadebit/exporters.py:18
 msgid ""
@@ -54,13 +50,11 @@ msgstr "Exportdatum"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Evenement-slug"
 
 #: pretix_sepadebit/exporters.py:39
-#, fuzzy
-#| msgid "Account name"
 msgid "Event name"
-msgstr "Naam rekeninghouder"
+msgstr "Naam evenement"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -120,7 +114,7 @@ msgstr ""
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr "Beschikbare tijdelijke aanduidingen: {list}"
+msgstr "Beschikbare placeholders: {list}"
 
 #: pretix_sepadebit/payment.py:100
 msgid ""
