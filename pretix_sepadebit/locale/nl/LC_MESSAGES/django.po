@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-01-22 23:28+0000\n"
+"PO-Revision-Date: 2026-01-24 01:28+0000\n"
 "Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/nl/>\n"
@@ -50,7 +50,7 @@ msgstr "Exportdatum"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr "Evenement-slug"
+msgstr "Evenement-slug (verkorte vorm)"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event name"
@@ -435,8 +435,8 @@ msgid ""
 "your bank."
 msgstr ""
 "U hebt recht op een terugbetaling van uw bank volgens de voorwaarden van de "
-"overeenkomst met uw bank. Een terugbetaling moet binnen 8 weken na de datum "
-"waarop het bedrag is afgeschreven worden aangevraagd. Uw rechten worden "
+"overeenkomst met uw bank. Een terugbetaling moet worden aangevraagd binnen 8 "
+"weken na de datum waarop het bedrag is afgeschreven. Uw rechten worden "
 "beschreven in een verklaring die u bij uw bank kunt opvragen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
@@ -515,7 +515,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
-msgstr "Ga naar export op organisator-niveau"
+msgstr "Ga naar export op organisatorniveau"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
@@ -552,6 +552,8 @@ msgid ""
 "Create multiple files if the debits have different collection dates "
 "(required for some banks)"
 msgstr ""
+"Maak meerdere bestanden aan als de afschrijvingen verschillende incassodata "
+"hebben (vereist voor sommige banken)"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:72
 msgid "Exported XML files"
@@ -563,7 +565,7 @@ msgstr "Aantal bestellingen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:79
 msgid "Total amount"
-msgstr "Totaal bedrag"
+msgstr "Totaalbedrag"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:89
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
@@ -592,8 +594,8 @@ msgid ""
 "We will debit the total amount of this order from your bank account by "
 "direct debit on or shortly after %(date)s."
 msgstr ""
-"We zullen het totaalbedrag van deze bestelling via automatische incasso op "
-"of kort na %(date)s van uw bankrekening afschrijven."
+"We zullen het totaalbedrag van deze bestelling afschrijven van uw rekening "
+"via automatische incasso op of kort na %(date)s."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
@@ -631,7 +633,7 @@ msgstr "Geassocieerde facturen"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:70
 msgid "No orders have been part of this export."
-msgstr "Geen bestellingen waren deel van deze export."
+msgstr "Er zijn geen bestellingen onderdeel van deze export."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
 msgid ""
@@ -657,21 +659,16 @@ msgstr ""
 "{}"
 
 #: pretix_sepadebit/views.py:148
-#, fuzzy
-#| msgid ""
-#| "Multiple new export files have been created, since your events have "
-#| "differing SEPA settings. Please make sure to process all of them!"
 msgid ""
 "Multiple new export files have been created. Please make sure to process all "
 "of them!"
 msgstr ""
-"Er zijn meerdere exportbestanden aangemaakt, omdat uw evenementen "
-"verschillende SEPA-instellingen hebben. Zorg ervoor dat u alle bestanden "
-"correct verwerkt!"
+"Er zijn meerdere exportbestanden aangemaakt. Zorg ervoor dat u alle "
+"bestanden verwerkt!"
 
 #: pretix_sepadebit/views.py:150
 msgid "A new export file has been created."
-msgstr "Een nieuw exportbestand is aangemaakt."
+msgstr "Er is een nieuw exportbestand aangemaakt."
 
 #: pretix_sepadebit/views.py:152
 msgid "No valid orders have been found."
