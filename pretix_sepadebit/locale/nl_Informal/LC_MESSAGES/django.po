@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2021-08-05 04:00+0000\n"
-"Last-Translator: Maarten van den Berg <maartenberg1@gmail.com>\n"
+"PO-Revision-Date: 2026-01-28 21:28+0000\n"
+"Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
 "Language-Team: Dutch (informal) <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/nl_Informal/>\n"
 "Language: nl_Informal\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
-msgstr "SEPA Automatische incasso"
+msgstr "SEPA-incasso"
 
 #: pretix_sepadebit/apps.py:14
 msgid "This plugin adds SEPA direct debit support to pretix"
@@ -30,17 +30,13 @@ msgstr ""
 "pretix"
 
 #: pretix_sepadebit/exporters.py:16
-#, fuzzy
-#| msgid "List of SEPA debits (CSV)"
 msgid "List of previous SEPA debits"
-msgstr "Lijst van SEPA-incasso's (CSV)"
+msgstr "Lijst van eerdere SEPA-afschrijvingen"
 
 #: pretix_sepadebit/exporters.py:17
-#, fuzzy
-#| msgid "Order date"
 msgctxt "export_category"
 msgid "Order data"
-msgstr "Besteldatum"
+msgstr "Bestelgegevens"
 
 #: pretix_sepadebit/exporters.py:18
 msgid ""
@@ -48,6 +44,9 @@ msgid ""
 "generated and exported by the system. To create a new export, use the \"SEPA "
 "debit\" section in the main menu."
 msgstr ""
+"Download een spreadsheet met alle SEPA-afschrijvingen die eerder door het "
+"systeem zijn gegenereerd en geëxporteerd. Om een nieuwe export aan te maken, "
+"gebruik je het gedeelte \"SEPA-afschrijving\" in het hoofdmenu."
 
 #: pretix_sepadebit/exporters.py:28
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:77
@@ -56,13 +55,11 @@ msgstr "Exportdatum"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr ""
+msgstr "Evenement-slug"
 
 #: pretix_sepadebit/exporters.py:39
-#, fuzzy
-#| msgid "Account name"
 msgid "Event name"
-msgstr "Naam rekeninghouder"
+msgstr "Naam van het evenement"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -91,7 +88,7 @@ msgid ""
 "event organizer or choose a different payment method."
 msgstr ""
 "SEPA-incasso's zijn niet toegestaan voor dit IBAN. Neem contact op met de "
-"organisator van het evenement of kies een andere betalingsmethode."
+"organisator van het evenement of kies een andere betaalmethode."
 
 #: pretix_sepadebit/payment.py:61
 #, python-brace-format
@@ -100,8 +97,8 @@ msgid ""
 "banking details. According to our data, the correct BIC would be "
 "{correctbic}."
 msgstr ""
-"Het BIC-nummer {bic} komt niet met het IBAN overeen. Controleer je "
-"bankgegevens. Volgens onze informatie zou het juiste BIC-nummer {correctbic} "
+"De BIC-code {bic} komt niet met het IBAN overeen. Controleer je "
+"bankgegevens. Volgens onze informatie zou de juiste BIC-code {correctbic} "
 "moeten zijn."
 
 #: pretix_sepadebit/payment.py:72 pretix_sepadebit/signals.py:46
@@ -109,7 +106,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:5
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:7
 msgid "SEPA debit"
-msgstr "SEPA-afschrijving"
+msgstr "SEPA-incasso"
 
 #: pretix_sepadebit/payment.py:78
 msgid ""
@@ -117,12 +114,12 @@ msgid ""
 "mode to your bank."
 msgstr ""
 "Betalingen in de testmodus worden alleen afgeschreven als je een bestand dat "
-"je in de testmodus hebt gemaakt indient bij je bank."
+"je in de testmodus hebt gemaakt, indient bij je bank."
 
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
 msgid "Available placeholders: {list}"
-msgstr "Beschikbare plaatsaanduidingen: {list}"
+msgstr "Beschikbare placeholders: {list}"
 
 #: pretix_sepadebit/payment.py:100
 msgid ""
@@ -136,7 +133,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:106
 msgid "Creditor name"
-msgstr "Naam begunstigde"
+msgstr "Naam van de schuldeiser"
 
 #: pretix_sepadebit/payment.py:111
 msgid "Creditor IBAN"
@@ -148,30 +145,30 @@ msgstr "BIC begunstigde"
 
 #: pretix_sepadebit/payment.py:119
 msgid "Creditor ID"
-msgstr "Incassant-ID begunstigde"
+msgstr "Crediteur-ID"
 
 #: pretix_sepadebit/payment.py:124
 msgid "This must be a valid SEPA creditor ID."
-msgstr "Dit moet een geldig SEPA-incassant-ID zijn."
+msgstr "Dit moet een geldig SEPA-debiteuren-ID zijn."
 
 #: pretix_sepadebit/payment.py:131
 msgid "Mandate reference prefix"
-msgstr "Machtigingskenmerkvoorvoegsel"
+msgstr "Referentieprefix mandaat"
 
 #: pretix_sepadebit/payment.py:135
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
 msgstr ""
-"Dit mag alleen letters, cijfers, en de volgende speciale tekens bevatten: "
-"' , . : + - / ( ) ?"
+"Dit mag alleen letters, cijfers en de volgende speciale tekens bevatten: ' , "
+". : + - / ( ) ?"
 
 #: pretix_sepadebit/payment.py:140
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
 msgstr ""
-"We zullen deze tekst gebruiken en hier de evenementsslug en bestelcode aan "
+"We zullen deze tekst gebruiken en hier de evenementslug en bestelcode aan "
 "toevoegen om een uniek SEPA-machtigingskenmerk op te bouwen."
 
 #: pretix_sepadebit/payment.py:146
@@ -187,34 +184,29 @@ msgid ""
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
 "Aantal dagen tussen het plaatsen van de bestelling en de uitvoeringsdatum "
-"van de afschrijving. Afhankelijk van je wetgeving en regels van je bank kan "
-"je verplicht zijn om een afschrijving ten minste 5 dagen voor de "
+"van de afschrijving. Afhankelijk van je wetgeving en de regels van je bank "
+"kan je verplicht zijn om een afschrijving ten minste 5 dagen voor de "
 "uitvoeringsdatum bij je bank te melden, en kan je zelfs verplicht zijn om de "
-"klant ten minste 14 dagen van tevoren te informeren. We raden aan om ten "
-"minste 7 dagen in te stellen."
+"klant ten minste 14 dagen van tevoren te informeren. We raden aan om "
+"minstens 7 dagen in te stellen."
 
 #: pretix_sepadebit/payment.py:155
 msgid "IBAN blocklist"
 msgstr "IBAN-blokkeerlijst"
 
 #: pretix_sepadebit/payment.py:159
-#, fuzzy
-#| msgid ""
-#| "Put one IBAN or IBAN prefix per line. The system will not allow any of "
-#| "these IBANs. Useful e.g. if you had lots of failed payments already from "
-#| "a specific person. You can also list country codessuch as \"GB\" if you "
-#| "never want to accept IBANs from a specific country."
 msgid ""
 "Put one IBAN or IBAN prefix per line. The system will not allow any of these "
 "IBANs.  Useful e.g. if you had lots of failed payments already from a "
 "specific person. You can also list country codes such as \"GB\" if you never "
 "want to accept IBANs from a specific country."
 msgstr ""
-"Voer hier één IBAN of IBAN-voorvoegsel per regel in. Het systeem zal IBANs "
-"op deze lijst of IBANs beginnend met een voorvoegsel op deze lijst weigeren. "
-"Deze optie kan handig zijn als je al een groot aantal mislukte betalingen "
-"van een bepaalde persoon hebt gehad. Je kan hier ook landcodes zoals \"GB\" "
-"invoeren als jje nooit IBANs van een bepaald land wilt accepteren."
+"Voer hier één IBAN of IBAN-voorvoegsel per regel in. Het systeem zal IBAN's "
+"op deze lijst of IBAN's beginnend met een voorvoegsel op deze lijst "
+"weigeren. Deze optie kan handig zijn als je al een groot aantal mislukte "
+"betalingen van een bepaalde persoon hebt gehad. Je kan hier ook landcodes "
+"zoals \"GB\" invoeren als je nooit IBAN's van een bepaald land wilt "
+"accepteren."
 
 #: pretix_sepadebit/payment.py:162
 msgid ""
@@ -222,6 +214,9 @@ msgid ""
 "illegal in most countries and can be cause for hefty fines from government "
 "watchdogs."
 msgstr ""
+"Het toevoegen van hele landen aan je blokkeerlijst wordt beschouwd als SEPA-"
+"discriminatie, wat in de meeste landen illegaal is en kan leiden tot hoge "
+"boetes van toezichthoudende instanties."
 
 #: pretix_sepadebit/payment.py:168
 msgid "Earliest debit due date"
@@ -290,10 +285,10 @@ msgid ""
 "configured email template for order payment notifications. This is legally "
 "required as it includes the mandate reference and the due date."
 msgstr ""
-"De plaatsaanduiding <code>{payment_info}</code> is niet aanwezig in je "
-"ingestelde e-mailsjabloon voor betalingsmeldingen voor bestellingen. Dit is "
-"wettelijk verplicht, omdat hierin de mandaatreferentie en uitvoeringsdatum "
-"worden vermeld."
+"De placeholder <code>{payment_info}</code> is niet aanwezig in je ingestelde "
+"e-mailsjabloon voor betalingsmeldingen voor bestellingen. Dit is wettelijk "
+"verplicht, omdat hierin de mandaatreferentie en uitvoeringsdatum worden "
+"vermeld."
 
 #: pretix_sepadebit/payment.py:243
 msgid ""
@@ -325,7 +320,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:414
 msgid "will be debited"
-msgstr ""
+msgstr "zal worden afgeschreven"
 
 #: pretix_sepadebit/payment.py:421
 #, fuzzy, python-format
@@ -397,7 +392,7 @@ msgid ""
 msgstr ""
 "Hallo,\n"
 "\n"
-"Je hebt een kaartje besteld voor {event}.\n"
+"Je hebt een ticket besteld voor {event}.\n"
 "\n"
 "We zullen het te betalen bedrag automatisch van je bankrekening {iban} "
 "afschrijven op of kort na {due_date}. De betaling zal op je afschrift "
@@ -420,7 +415,7 @@ msgid ""
 "strong>."
 msgstr ""
 "We zullen het hierboven weergegeven totaalbedrag afschrijven van je "
-"bankrekening <strong>%(iban)s</strong>. Je gaat hierbij ermee akkoord dat "
+"bankrekening <strong>%(iban)s</strong>. Je gaat er hierbij mee akkoord dat "
 "het bedrag zal worden afgeschreven van je bankrekening <strong>op of kort na "
 "%(date)s</strong>."
 
@@ -449,8 +444,8 @@ msgid ""
 msgstr ""
 "Je hebt recht op een terugbetaling van je bank volgens de voorwaarden van de "
 "overeenkomst met jouw bank. Een terugbetaling moet binnen 8 weken na de "
-"datum waarop het bedrag is afgeschreven worden aangevraagd. Je rechten "
-"worden beschreven in een verklaring die je bij jouw bank kunt opvragen."
+"datum waarop het bedrag is afgeschreven, worden aangevraagd. Je rechten "
+"worden beschreven in een verklaring die je bij je bank kunt opvragen."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:27
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:27
@@ -468,7 +463,7 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
-"Je gaat hierbij ermee akkoord dat het bedrag zal worden afgeschreven van je "
+"Je gaat er hierbij mee akkoord dat het bedrag zal worden afgeschreven van je "
 "bankrekening <strong>op of kort na %(date)s</strong>."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
@@ -498,11 +493,11 @@ msgid ""
 "unpaid again (or could never be marked as paid)."
 msgstr ""
 "De bestelling werd gepland om te worden betaald via SEPA-incasso, maar werd "
-"weer als onbetaald aangeduid (of kon nooit als betaald worden aangeduid)."
+"weer als onbetaald aangemerkt (of kon nooit als betaald worden aangemerkt)."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
-msgstr "Naam rekeninghouder"
+msgstr "Accountnaam"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
@@ -510,7 +505,7 @@ msgstr "Machtigingskenmerk"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
 msgid "Due date"
-msgstr "Uitvoeringsdatum"
+msgstr "Vervaldatum"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
@@ -523,12 +518,12 @@ msgid ""
 "If you want, you can now also create SEPA debit files for multiple events "
 "combined."
 msgstr ""
-"Als je dit wilt kan je nu ook SEPA-incassobestanden maken voor meerdere "
+"Als je wilt, kun je nu ook SEPA-incassobestanden maken voor meerdere "
 "evenementen tegelijk."
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
-msgstr "Ga naar exporteren op organisator-niveau"
+msgstr "Ga naar exporteren op organisatorniveau"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
@@ -657,7 +652,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr "Kaartje {event}-{code}"
+msgstr "Ticket {event}-{code}"
 
 #: pretix_sepadebit/views.py:137
 msgid ""
