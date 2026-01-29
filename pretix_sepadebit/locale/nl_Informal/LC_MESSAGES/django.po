@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-01-28 21:28+0000\n"
+"PO-Revision-Date: 2026-01-29 22:28+0000\n"
 "Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
 "Language-Team: Dutch (informal) <https://translate.pretix.eu/projects/pretix/"
 "pretix-plugin-sepadebit/nl_Informal/>\n"
@@ -80,7 +80,7 @@ msgstr "SEPA-exportdatum"
 #: pretix_sepadebit/exporters.py:43
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:36
 msgid "Payment amount"
-msgstr "Te betalen bedrag"
+msgstr "Betalingsbedrag"
 
 #: pretix_sepadebit/payment.py:36
 msgid ""
@@ -323,16 +323,13 @@ msgid "will be debited"
 msgstr "zal worden afgeschreven"
 
 #: pretix_sepadebit/payment.py:421
-#, fuzzy, python-format
-#| msgid ""
-#| "We will debit the total amount of this order from your bank account by "
-#| "direct debit on or shortly after %(date)s."
+#, python-format
 msgid ""
 "We will debit the total amount of this order from your bank account "
 "%(account)s by direct debit on or shortly after %(date)s."
 msgstr ""
 "We zullen het totaalbedrag van deze bestelling op of kort na %(date)s van je "
-"bankrekening afschrijven via automatische incasso."
+"bankrekening %(account)s afschrijven via automatische incasso."
 
 #: pretix_sepadebit/payment.py:427
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
@@ -560,6 +557,8 @@ msgid ""
 "Create multiple files if the debits have different collection dates "
 "(required for some banks)"
 msgstr ""
+"Maak meerdere bestanden aan als de afschrijvingen verschillende incassodata "
+"hebben (vereist voor sommige banken)"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:72
 msgid "Exported XML files"
@@ -665,17 +664,12 @@ msgstr ""
 "{}"
 
 #: pretix_sepadebit/views.py:148
-#, fuzzy
-#| msgid ""
-#| "Multiple new export files have been created, since your events have "
-#| "differing SEPA settings. Please make sure to process all of them!"
 msgid ""
 "Multiple new export files have been created. Please make sure to process all "
 "of them!"
 msgstr ""
-"Er zijn meerdere exportbestanden aangemaakt, omdat je evenementen "
-"verschillende SEPA-instellingen hebben. Zorg ervoor dat je alle bestanden "
-"correct verwerkt!"
+"Er zijn meerdere nieuwe exportbestanden aangemaakt. Zorg ervoor dat je ze "
+"allemaal verwerkt!"
 
 #: pretix_sepadebit/views.py:150
 msgid "A new export file has been created."
