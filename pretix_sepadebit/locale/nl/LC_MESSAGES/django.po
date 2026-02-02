@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Dutch (pretix)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-01-31 05:28+0000\n"
+"PO-Revision-Date: 2026-02-02 23:28+0000\n"
 "Last-Translator: Ruud Hendrickx <ruud@leckxicon.eu>\n"
 "Language-Team: Dutch <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/nl/>\n"
@@ -16,12 +16,12 @@ msgstr ""
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
-msgstr "SEPA Automatische incasso"
+msgstr "SEPA-incasso"
 
 #: pretix_sepadebit/apps.py:14
 msgid "This plugin adds SEPA direct debit support to pretix"
 msgstr ""
-"Deze plugin voegt ondersteuning voor automatische SEPA-incasso's toe aan "
+"Deze plug-in voegt ondersteuning voor automatische SEPA-incasso's toe aan "
 "pretix"
 
 #: pretix_sepadebit/exporters.py:16
@@ -109,7 +109,7 @@ msgid ""
 "mode to your bank."
 msgstr ""
 "Betalingen in de testmodus zullen alleen worden geïncasseerd als u een "
-"bestand dat u in de testmodus heeft gemaakt indient bij uw bank."
+"bestand dat u in de testmodus heeft gemaakt, indient bij uw bank."
 
 #: pretix_sepadebit/payment.py:87
 #, python-brace-format
@@ -122,7 +122,7 @@ msgid ""
 "transfer them to my bank in order to have my bank collect the customer "
 "payments."
 msgstr ""
-"Ik heb begrepen dat ik regelmatig SEPA XML-exportbestanden moet aanmaken en "
+"Ik heb begrepen dat ik regelmatig SEPA-XML-exportbestanden moet aanmaken en "
 "ze moet overdragen aan mijn bank om mijn bank de betalingen van de klanten "
 "te laten innen."
 
@@ -144,11 +144,11 @@ msgstr "ID begunstigde"
 
 #: pretix_sepadebit/payment.py:124
 msgid "This must be a valid SEPA creditor ID."
-msgstr "Dit moet een geldig SEPA-crediteur-ID zijn."
+msgstr "Dit moet een geldig ID voor een SEPA-begunstigde zijn."
 
 #: pretix_sepadebit/payment.py:131
 msgid "Mandate reference prefix"
-msgstr "Voorvoegsel voor machtiging"
+msgstr "Referentieprefix mandaat"
 
 #: pretix_sepadebit/payment.py:135
 msgid ""
@@ -168,7 +168,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:146
 msgid "Pre-notification time"
-msgstr "Vooraanmeldingstijd"
+msgstr "Termijn voor voorafgaande kennisgeving"
 
 #: pretix_sepadebit/payment.py:147
 msgid ""
@@ -178,12 +178,11 @@ msgid ""
 "bank and you might even be required to inform the customer at least 14 days "
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
-"Aantal dagen tussen het plaatsen van de bestelling en de uitvoeringsdatum "
-"van de afschrijving. Afhankelijk van uw wetgeving en de regels van uw bank "
-"kunt u verplicht zijn om een afschrijving ten minste 5 dagen voor de "
-"uitvoeringsdatum bij uw bank te melden, en u kunt zelfs verplicht zijn om de "
-"klant ten minste 14 dagen van tevoren te informeren. We raden aan om ten "
-"minste 7 dagen in te stellen."
+"Aantal dagen tussen het plaatsen van de bestelling en de vervaldatum van de "
+"automatische incasso. Afhankelijk van uw wetgeving en uw bankregels kan het "
+"zijn dat u een incasso ten minste 5 dagen voor de vervaldatum bij uw bank "
+"moet indienen en dat u de klant zelfs ten minste 14 dagen van tevoren moet "
+"informeren. Wij raden aan om ten minste 7 dagen in te stellen."
 
 #: pretix_sepadebit/payment.py:155
 msgid "IBAN blocklist"
@@ -227,10 +226,9 @@ msgid ""
 msgstr ""
 "De eerste datum waarop automatische incasso's mogen worden uitgevoerd. Deze "
 "datum zal worden gebruikt als de datum om het incasso uit te voeren als de "
-"bestellingsdatum plus de meldingstijd in een eerdere datum zouden "
-"resulteren. Klanten die op deze datum een incasso zullen krijgen, ontvangen "
-"vooraf een herinneringsmail over de afschrijving volgens de ingestelde "
-"notificatietijd."
+"besteldatum plus de meldingstijd in een eerdere datum zouden resulteren. "
+"Klanten die op deze datum belast zullen worden, ontvangen vooraf een "
+"herinneringsmail over de afschrijving volgens de ingestelde notificatietijd."
 
 #: pretix_sepadebit/payment.py:179
 msgid "Pre-notification mail subject"
