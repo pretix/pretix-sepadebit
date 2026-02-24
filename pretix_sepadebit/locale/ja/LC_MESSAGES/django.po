@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-02-23 14:34+0000\n"
+"PO-Revision-Date: 2026-02-24 15:34+0000\n"
 "Last-Translator: Hijiri Umemoto <hijiri@umemoto.org>\n"
 "Language-Team: Japanese <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/ja/>\n"
@@ -133,7 +133,7 @@ msgstr "債権者名"
 
 #: pretix_sepadebit/payment.py:111
 msgid "Creditor IBAN"
-msgstr ""
+msgstr "作成者のIBAN"
 
 #: pretix_sepadebit/payment.py:115
 msgid "Creditor BIC"
@@ -422,7 +422,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
-msgstr ""
+msgstr "テストモードにおいて、エクスポートにはテストモードの注文のみが含まれます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:14
 msgid ""
@@ -432,7 +432,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
-msgstr ""
+msgstr "主催者レベルのエクスポートに移動"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:24
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
@@ -451,7 +451,7 @@ msgstr ""
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:65
 msgid "Create new export file"
-msgstr ""
+msgstr "新しいエクスポートファイルを作成します"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:48
 #, python-format
@@ -472,16 +472,16 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
-msgstr ""
+msgstr "注文数"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:79
 msgid "Total amount"
-msgstr ""
+msgstr "合計金額"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:89
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:19
 msgid "TEST MODE"
-msgstr ""
+msgstr "テストモード"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:103
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:110
@@ -497,7 +497,7 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
 msgid "No exports have been created yet."
-msgstr ""
+msgstr "まだエクスポートは作成されていません。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:2
 #, python-format
@@ -526,11 +526,11 @@ msgstr ""
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
-msgstr ""
+msgstr "注文"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:33
 msgid "Payment"
-msgstr ""
+msgstr "支払い"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:34
 msgid "Mandate date"
@@ -553,7 +553,7 @@ msgstr ""
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
 msgid "Event ticket {event}-{code}"
-msgstr ""
+msgstr "イベントチケット {event}-{code}"
 
 #: pretix_sepadebit/views.py:137
 msgid ""
@@ -574,4 +574,4 @@ msgstr ""
 
 #: pretix_sepadebit/views.py:152
 msgid "No valid orders have been found."
-msgstr ""
+msgstr "有効な注文は見つかりませんでした。"
