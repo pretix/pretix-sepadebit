@@ -77,7 +77,7 @@ class ExportListView(ListView):
                 ("name", event.settings.payment_sepadebit_creditor_name),
                 ("IBAN", event.settings.payment_sepadebit_creditor_iban),
                 ("BIC", event.settings.payment_sepadebit_creditor_bic),
-                ("batch", True),
+                ("batch", event.settings.payment_sepadebit_batchbooking),
                 ("creditor_id", event.settings.payment_sepadebit_creditor_id),
                 ("currency", event.currency),
             )
