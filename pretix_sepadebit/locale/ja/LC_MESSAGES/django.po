@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-04-20 08:07+0000\n"
+"PO-Revision-Date: 2026-04-20 21:34+0000\n"
 "Last-Translator: Yasunobu YesNo Kawaguchi <kawaguti@gmail.com>\n"
 "Language-Team: Japanese <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/ja/>\n"
@@ -271,12 +271,17 @@ msgid ""
 "configured email template for order payment notifications. This is legally "
 "required as it includes the mandate reference and the due date."
 msgstr ""
+"プレースホルダー <code>{payment_info}</code> が、オーダーの支払い通知用に設定"
+"された電子メールテンプレートに含まれていません。これには委任状の参照番号と引"
+"き落とし期日が含まれるため、法的に必須です。"
 
 #: pretix_sepadebit/payment.py:243
 msgid ""
 "Due date reminder email fields are required if earliest due date feature is "
 "used."
 msgstr ""
+"最短期日機能を使用する場合は、期日リマインダー電子メールのフィールドが必須で"
+"す。"
 
 #: pretix_sepadebit/payment.py:248
 msgid "Account holder"
@@ -294,7 +299,7 @@ msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:252
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
-msgstr ""
+msgstr "このオーダー（下記参照）について、SEPA ダイレクトデビットの委任を付与します"
 
 #: pretix_sepadebit/payment.py:414
 msgid "will be debited"
@@ -383,9 +388,9 @@ msgid ""
 "withdrawn from your bank account <strong>on or shortly after %(date)s</"
 "strong>."
 msgstr ""
-"上記の合計金額を、銀行口座 <strong>%(iban)s</strong> から引き落とします。 "
-"<strong>%(date)s またはその直後</strong> に当該金額が銀行口座から引き落とされ"
-"ることに、ここに同意いただきます。"
+"上記の合計金額を、銀行口座 <strong>%(iban)s</strong>. から引き落とします。 "
+"<strong>%(date)s またはその直後</strong>. に当該金額が銀行口座から引き落とさ"
+"れることに、ここに同意いただきます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
@@ -396,11 +401,10 @@ msgid ""
 "your account and (B) your bank to debit your account in accordance with the "
 "instructions from the Creditor."
 msgstr ""
-"この委任状フォームを提出することにより、(A) "
-"債権者<strong>%(creditor)s</strong>がお客様の銀行に対してお客様の口座から引き"
-"落としを行う指示を送信すること、および (B) "
-"お客様の銀行が債権者からの指示に従ってお客様の口座から引き落としを行うことを"
-"承認いたします。"
+"この委任状フォームを提出することにより、(A) 債権者 <strong>%(creditor)s</"
+"strong> がお客様の銀行に対してお客様の口座から引き落としを行う指示を送信する"
+"こと、および (B) お客様の銀行が債権者からの指示に従ってお客様の口座から引き落"
+"としを行うことを承認いたします。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:20
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:20
@@ -432,8 +436,8 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
-"当該金額が銀行口座から <strong>%(date)s またはその直後</strong>に引き落とされ"
-"ることに、ここに同意いただきます。"
+"当該金額は銀行口座から <strong>%(date)s またはその直後</strong>. に引き落とさ"
+"れることに、ここに同意いただきます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
 #, python-format
