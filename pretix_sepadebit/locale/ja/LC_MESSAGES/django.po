@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-02-24 15:34+0000\n"
-"Last-Translator: Hijiri Umemoto <hijiri@umemoto.org>\n"
+"PO-Revision-Date: 2026-04-20 08:07+0000\n"
+"Last-Translator: Yasunobu YesNo Kawaguchi <kawaguti@gmail.com>\n"
 "Language-Team: Japanese <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/ja/>\n"
 "Language: ja\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16\n"
+"X-Generator: Weblate 5.17\n"
 
 #: pretix_sepadebit/apps.py:11
 msgid "SEPA Direct debit"
@@ -137,35 +137,37 @@ msgstr "作成者のIBAN"
 
 #: pretix_sepadebit/payment.py:115
 msgid "Creditor BIC"
-msgstr ""
+msgstr "債権者 BIC"
 
 #: pretix_sepadebit/payment.py:119
 msgid "Creditor ID"
-msgstr ""
+msgstr "債権者識別コード"
 
 #: pretix_sepadebit/payment.py:124
 msgid "This must be a valid SEPA creditor ID."
-msgstr ""
+msgstr "有効な SEPA 債権者識別コードを入力してください。"
 
 #: pretix_sepadebit/payment.py:131
 msgid "Mandate reference prefix"
-msgstr ""
+msgstr "マンデート参照番号のプレフィックス"
 
 #: pretix_sepadebit/payment.py:135
 msgid ""
 "This may only contain letters, numbers, and the following special "
 "characters: ' , . : + - / ( ) ?"
-msgstr ""
+msgstr "使用できるのは英字、数字、および次の記号のみです: ' , . : + - / ( ) ?"
 
 #: pretix_sepadebit/payment.py:140
 msgid ""
 "We will use this string and append the event slug and the order code to "
 "build a unique SEPA mandate reference."
 msgstr ""
+"この文字列にイベントスラッグと注文コードを追加して、一意の SEPA マンデート参"
+"照番号を生成します。"
 
 #: pretix_sepadebit/payment.py:146
 msgid "Pre-notification time"
-msgstr ""
+msgstr "事前通知期間"
 
 #: pretix_sepadebit/payment.py:147
 msgid ""
@@ -175,10 +177,14 @@ msgid ""
 "bank and you might even be required to inform the customer at least 14 days "
 "beforehand. We recommend configuring at least 7 days."
 msgstr ""
+"注文日から口座振替実行日までの日数。法令や銀行の規則によっては、銀行に対して"
+"実行日の少なくとも 5 日前までに振替指示を提出する必要があり、さらに顧客には少"
+"なくとも 14 日前までに通知することが求められる場合があります。7 日以上の設定"
+"を推奨します。"
 
 #: pretix_sepadebit/payment.py:155
 msgid "IBAN blocklist"
-msgstr ""
+msgstr "IBAN ブロックリスト"
 
 #: pretix_sepadebit/payment.py:159
 msgid ""
@@ -187,6 +193,10 @@ msgid ""
 "specific person. You can also list country codes such as \"GB\" if you never "
 "want to accept IBANs from a specific country."
 msgstr ""
+"1 行につき 1 件の IBAN または IBAN プレフィックスを入力してください。これら"
+"の IBAN はシステムで拒否されます。特定の人物からの決済失敗が多発している場合"
+"などに便利です。特定の国の IBAN を一切受け付けたくない場合は、「GB」などの国"
+"コードを指定することもできます。"
 
 #: pretix_sepadebit/payment.py:162
 msgid ""
@@ -194,10 +204,12 @@ msgid ""
 "illegal in most countries and can be cause for hefty fines from government "
 "watchdogs."
 msgstr ""
+"国全体をブロックリストに追加することは SEPA 差別とみなされ、多くの国で違法と"
+"されており、政府の監督機関から高額な罰金を科される可能性があります。"
 
 #: pretix_sepadebit/payment.py:168
 msgid "Earliest debit due date"
-msgstr ""
+msgstr "最早の口座振替実行日"
 
 #: pretix_sepadebit/payment.py:169
 msgid ""
@@ -207,26 +219,34 @@ msgid ""
 "date will receive an email reminding them about the upcoming charge based on "
 "the configured pre-notification days."
 msgstr ""
+"口座振替を実行できる最も早い日付。注文日に事前通知期間を加えた日付がこれより"
+"早くなる場合、この日付が口座振替実行日として使用されます。最早実行日が適用さ"
+"れた注文の顧客には、設定した事前通知日数に基づいて、今後の引き落としを知らせ"
+"る電子メールが送信されます。"
 
 #: pretix_sepadebit/payment.py:179
 msgid "Pre-notification mail subject"
-msgstr ""
+msgstr "事前通知メールの件名"
 
 #: pretix_sepadebit/payment.py:180
 msgid ""
 "The subject of the notification email. This email is only sent if the "
 "earliest debit due date option is used."
 msgstr ""
+"通知電子メールの件名です。この電子メールは、最短引き落とし期日オプションを使"
+"用している場合にのみ送信されます。"
 
 #: pretix_sepadebit/payment.py:192
 msgid "Pre-notification mail body"
-msgstr ""
+msgstr "事前通知メールの本文"
 
 #: pretix_sepadebit/payment.py:193
 msgid ""
 "The body of the notification email. This email is only sent if the earliest "
 "debit due date option is used."
 msgstr ""
+"通知電子メールの本文です。この電子メールは、最短引き落とし期日オプションを使"
+"用している場合にのみ送信されます。"
 
 #: pretix_sepadebit/payment.py:217
 msgid ""
@@ -237,6 +257,12 @@ msgid ""
 "in the shop, so please mark it as unpaid and contact the user if any charge "
 "backs occur or the charge fails due to insufficient funds."
 msgstr ""
+"この決済方法を有効化すると、SEPA ダイレクトデビット委任状はオンラインフォーム"
+"で収集されます。法令によっては、チャージバックのリスクを排除するため、紙で収"
+"集する必要がある場合があります（現在未対応）。SEPA 引き落としでの支払いは、"
+"ショップ内で直ちに支払い済みとしてマークされますので、チャージバックが発生し"
+"た場合や残高不足により請求に失敗した場合は、未払いとしてマークしてユーザーに"
+"連絡してください。"
 
 #: pretix_sepadebit/payment.py:225
 #, python-brace-format
@@ -272,7 +298,7 @@ msgstr ""
 
 #: pretix_sepadebit/payment.py:414
 msgid "will be debited"
-msgstr ""
+msgstr "口座から引き落とされます"
 
 #: pretix_sepadebit/payment.py:421
 #, python-format
@@ -280,6 +306,8 @@ msgid ""
 "We will debit the total amount of this order from your bank account "
 "%(account)s by direct debit on or shortly after %(date)s."
 msgstr ""
+"この注文の合計金額を、%(date)s またはその直後に、口座振替で銀行口座 %"
+"(account)s から引き落とします。"
 
 #: pretix_sepadebit/payment.py:427
 #: pretix_sepadebit/templates/pretix_sepadebit/mail.txt:6
@@ -288,31 +316,33 @@ msgid ""
 "This payment will appear on your bank statement as %(creditor_name)s with "
 "mandate reference %(reference)s and creditor ID %(id)s."
 msgstr ""
+"この決済は、銀行の取引明細に %(creditor_name)s として、マンデート参照番号 %"
+"(reference)s および債権者識別コード %(id)s 付きで記載されます。"
 
 #: pretix_sepadebit/signals.py:36
 msgid "Pre-notification time setting of SEPA Payment isn't set."
-msgstr ""
+msgstr "SEPA 決済の事前通知期間設定がされていません。"
 
 #: pretix_sepadebit/signals.py:201
 msgid ""
 "A reminder for the upcoming direct debit due date has been sent to the "
 "customer."
-msgstr ""
+msgstr "次回の口座振替実行日に関するリマインダーを顧客に送信しました。"
 
 #: pretix_sepadebit/signals.py:205
 msgid "SEPA debit history"
-msgstr ""
+msgstr "SEPA 口座振替履歴"
 
 #: pretix_sepadebit/signals.py:207
 msgid ""
 "This will remove previously exported SEPA XML files containing banking "
 "information."
-msgstr ""
+msgstr "銀行情報を含む、以前にエクスポートされた SEPA XML ファイルを削除します。"
 
 #: pretix_sepadebit/signals.py:232
 #, python-brace-format
 msgid "Upcomming debit of {debit_amount_with_currency}"
-msgstr ""
+msgstr "今後の口座振替 {debit_amount_with_currency}"
 
 #: pretix_sepadebit/signals.py:242
 #, python-brace-format
@@ -331,6 +361,19 @@ msgid ""
 "Best regards,\n"
 "Your {event} team"
 msgstr ""
+"こんにちは。\n"
+"\n"
+"{event} のチケットをご注文いただきました。\n"
+"\n"
+"{due_date} またはその直後に、銀行口座 {iban} から引き落としを行います。この決"
+"済は、銀行の取引明細に {creditor_name} として、参照番号 {reference} および債"
+"権者識別コード {creditor_id} 付きで記載されます。\n"
+"\n"
+"注文内容の変更および注文状況の確認は、こちらから行えます:\n"
+"{url}\n"
+"\n"
+"今後ともよろしくお願いいたします。\n"
+"{event} 運営チーム"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:6
 #, python-format
@@ -340,6 +383,9 @@ msgid ""
 "withdrawn from your bank account <strong>on or shortly after %(date)s</"
 "strong>."
 msgstr ""
+"上記の合計金額を、銀行口座 <strong>%(iban)s</strong> から引き落とします。 "
+"<strong>%(date)s またはその直後</strong> に当該金額が銀行口座から引き落とされ"
+"ることに、ここに同意いただきます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_confirm.html:13
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:7
@@ -377,6 +423,8 @@ msgid ""
 "The creditors ID is <strong>%(id)s</strong>. Your mandate reference will be "
 "sent to you via email after your order has been submitted."
 msgstr ""
+"債権者識別コードは <strong>%(id)s</strong> です。 マンデート参照番号は、注文"
+"送信後に電子メールで送信されます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/checkout_payment_form.html:14
 #, python-format
@@ -384,6 +432,8 @@ msgid ""
 "You hereby agree that the amount will be withdrawn from your bank account "
 "<strong>on or shortly after %(date)s</strong>."
 msgstr ""
+"当該金額が銀行口座から <strong>%(date)s またはその直後</strong>に引き落とされ"
+"ることに、ここに同意いただきます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:8
 #, python-format
@@ -391,34 +441,40 @@ msgid ""
 "This order has been paid via SEPA debit. It was part of the export file "
 "exported at %(date)s."
 msgstr ""
+"このオーダーは SEPA 引き落としで支払い済みです。%(date)s にエクスポートされた"
+"エクスポートファイルに含まれていました。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:12
 msgid "View export file"
-msgstr ""
+msgstr "エクスポートファイルを表示"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:16
 msgid ""
 "This shall be paid via SEPA debit, but has not yet been included in any SEPA "
 "file export."
 msgstr ""
+"これは SEPA 引き落としで支払う予定ですが、まだ SEPA ファイルのエクスポートに"
+"は含まれていません。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:22
 msgid ""
 "This order has been planned to be paid via SEPA debit but has been marked as "
 "unpaid again (or could never be marked as paid)."
 msgstr ""
+"このオーダーは SEPA 引き落としで支払われる予定でしたが、再度「未払い」として"
+"マークされました (または支払い済みとしてマークされることはありませんでした)。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:34
 msgid "Account name"
-msgstr ""
+msgstr "アカウント名"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:36
 msgid "Mandate reference"
-msgstr ""
+msgstr "マンデート参照番号"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:38
 msgid "Due date"
-msgstr ""
+msgstr "支払期限"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:10
 msgid "In test mode, your exports will only contain test mode orders."
@@ -429,6 +485,8 @@ msgid ""
 "If you want, you can now also create SEPA debit files for multiple events "
 "combined."
 msgstr ""
+"必要に応じて、複数のイベントをまとめた SEPA 引き落としファイルを作成すること"
+"もできるようになりました。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:17
 msgid "Go to organizer-level exports"
@@ -438,15 +496,15 @@ msgstr "主催者レベルのエクスポートに移動"
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:33
 msgid ""
 "Refunds for SEPA debit transactions are grouped with bank transfer refunds."
-msgstr ""
+msgstr "SEPA 引き落とし取引の払い戻しは、銀行振込の払い戻しとまとめて処理されます。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:27
 msgid "Go to refund exports"
-msgstr ""
+msgstr "払い戻しエクスポートに移動"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:36
 msgid "Go to organizer-level refund exports"
-msgstr ""
+msgstr "オーガナイザー単位の払い戻しエクスポートに移動"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:44
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:65
@@ -459,16 +517,18 @@ msgid ""
 "<strong>%(num_new)s</strong> SEPA debit orders have been placed and are not "
 "yet exported as Sepa XML."
 msgstr ""
+"<strong>%(num_new)s</strong> 件の SEPA 引き落としオーダーが作成されており、ま"
+"だ SEPA XML にエクスポートされていません。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:59
 msgid ""
 "Create multiple files if the debits have different collection dates "
 "(required for some banks)"
-msgstr ""
+msgstr "引き落としの回収日が異なる場合は、複数のファイルを作成する (一部の銀行で必要)"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:72
 msgid "Exported XML files"
-msgstr ""
+msgstr "エクスポート済み XML ファイル"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:78
 msgid "Number of orders"
@@ -493,7 +553,7 @@ msgstr "注文"
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:11
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:15
 msgid "Download XML"
-msgstr ""
+msgstr "XML をダウンロード"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/export.html:121
 msgid "No exports have been created yet."
@@ -505,24 +565,26 @@ msgid ""
 "We will debit the total amount of this order from your bank account by "
 "direct debit on or shortly after %(date)s."
 msgstr ""
+"このオーダーの合計金額を %(date)s またはその直後に口座引き落としでお客様の銀"
+"行口座から引き落とします。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:5
 msgid "SEPA export"
-msgstr ""
+msgstr "SEPA エクスポート"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:8
 #, python-format
 msgid "SEPA export: %(date)s"
-msgstr ""
+msgstr "SEPA エクスポート: %(date)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:22
 msgid "Included orders"
-msgstr ""
+msgstr "含まれるオーダー"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:24
 #, python-format
 msgid "Total amount: %(total)s %(currency)s"
-msgstr ""
+msgstr "合計金額: %(total)s %(currency)s"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:32
 msgid "Order"
@@ -534,21 +596,23 @@ msgstr "支払い"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:34
 msgid "Mandate date"
-msgstr ""
+msgstr "マンデート日"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:35
 msgid "Associated invoices"
-msgstr ""
+msgstr "関連する請求書"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/orders.html:70
 msgid "No orders have been part of this export."
-msgstr ""
+msgstr "このエクスポートに含まれたオーダーはありません。"
 
 #: pretix_sepadebit/templates/pretix_sepadebit/pending.html:2
 msgid ""
 "The SEPA direct debit failed to be completed. Please contact the organizer "
 "of the event as soon as possible!"
 msgstr ""
+"SEPA 口座引き落としの完了に失敗しました。できるだけ早くイベントの"
+"オーガナイザーにお問い合わせください!"
 
 #: pretix_sepadebit/views.py:100
 #, python-brace-format
@@ -561,16 +625,21 @@ msgid ""
 "contact pretix support for more information.\n"
 "{}"
 msgstr ""
+"生成されたファイルは、以下の理由により検証に失敗しました。詳細は pretix "
+"サポートにお問い合わせください。\n"
+"{}"
 
 #: pretix_sepadebit/views.py:148
 msgid ""
 "Multiple new export files have been created. Please make sure to process all "
 "of them!"
 msgstr ""
+"複数の新しいエクスポートファイルが作成されました。すべてのファイルを必ず処理"
+"してください!"
 
 #: pretix_sepadebit/views.py:150
 msgid "A new export file has been created."
-msgstr ""
+msgstr "新しいエクスポートファイルが作成されました。"
 
 #: pretix_sepadebit/views.py:152
 msgid "No valid orders have been found."
