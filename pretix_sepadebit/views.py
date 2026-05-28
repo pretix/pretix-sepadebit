@@ -168,7 +168,7 @@ class ExportListView(ListView):
                 key = config
 
             if key not in files:
-                files[key] = SepaDD(dict(config), schema="pain.008.001.02")
+                files[key] = SepaDD(dict(config), schema="pain.008.001.08")
             file = files[key]
             file.add_payment(payment_dict)
             valid_payments[file].append(payment)
