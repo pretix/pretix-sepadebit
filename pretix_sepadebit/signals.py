@@ -288,3 +288,4 @@ settings_hierarkey.add_default(
 
 
 settings_hierarkey.add_default("payment_sepadebit_earliest_due_date", None, date)
+settings_hierarkey.add_default("payment_sepadebit_export_schema", "pain.008.001.02", str)
