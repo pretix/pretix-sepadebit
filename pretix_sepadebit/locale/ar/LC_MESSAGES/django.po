@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 11:42+0200\n"
-"PO-Revision-Date: 2026-07-12 21:48+0000\n"
+"PO-Revision-Date: 2026-07-13 19:48+0000\n"
 "Last-Translator: ahmed badr <ahmedbadr@oma.com.eg>\n"
 "Language-Team: Arabic <https://translate.pretix.eu/projects/pretix/pretix-"
 "plugin-sepadebit/ar/>\n"
@@ -54,11 +54,11 @@ msgstr "تاريخ التصدير"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event slug"
-msgstr "الاسم المختصر للحدث"
+msgstr "اسم المختصر للحدث"
 
 #: pretix_sepadebit/exporters.py:39
 msgid "Event name"
-msgstr "اسم الفعالية"
+msgstr "اسم الحدث"
 
 #: pretix_sepadebit/exporters.py:40
 msgid "Order code"
@@ -300,7 +300,7 @@ msgstr "رقم الحساب المصرفي الدولي"
 #: pretix_sepadebit/payment.py:250
 #: pretix_sepadebit/templates/pretix_sepadebit/control.html:32
 msgid "BIC"
-msgstr "من أجلك"
+msgstr "BIC"
 
 #: pretix_sepadebit/payment.py:252
 msgid "I hereby grant the SEPA direct debit mandate for this order (see below)"
