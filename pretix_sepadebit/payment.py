@@ -121,6 +121,19 @@ class SepaDebit(BasePaymentProvider):
                     ),
                 ),
                 (
+                    "batchbooking",  # https://github.com/pretix/pretix-sepadebit/issues/44
+                    forms.BooleanField(
+                        label=_("Batch booking"),
+                        help_text=_(
+                            "Enables the SEPA batch booking option where all payments are combined into a single "
+                            "booking on your bank statement. When disabled every payment shows up separately. This "
+                            "option might not be supported by your bank."
+                        ),
+                        initial=True,
+                        required=False,
+                    )
+                ),
+                (
                     "creditor_name",
                     forms.CharField(
                         label=_("Creditor name"),
