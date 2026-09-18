@@ -51,7 +51,7 @@ class DebitList(ListExporter):
         yield headers
 
         qs = (
-            SepaExportOrder.objects.filter(export__event__in=self.events)
+            SepaExportOrder.objects.filter(order__event__in=self.events)
             .order_by("export__datetime")
             .select_related("export", "order", "order__event")
             .prefetch_related("order__invoices")
