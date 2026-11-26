@@ -6,18 +6,17 @@ from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _, gettext_noop
 from django_scopes import scopes_disabled
 from i18nfield.strings import LazyI18nString
-from pretix.base.email import (
-    SimpleFunctionalMailTextPlaceholder, get_email_context,
-)
+from pretix.base.email import get_email_context
 from pretix.base.i18n import language
 from pretix.base.models.orders import OrderPayment
+from pretix.base.services.placeholders import SimpleFunctionalTextPlaceholder
 from pretix.base.settings import settings_hierarkey
 from pretix.base.shredder import BaseDataShredder
 from pretix.base.signals import (
     event_live_issues, logentry_display, periodic_task,
     register_data_exporters, register_data_shredders,
-    register_mail_placeholders, register_multievent_data_exporters,
-    register_payment_providers,
+    register_multievent_data_exporters,
+    register_payment_providers, register_text_placeholders,
 )
 from pretix.base.templatetags.money import money_filter
 from pretix.control.signals import nav_event, nav_organizer
@@ -105,19 +104,19 @@ def register_csv_multievent(sender, **kwargs):
     return DebitList
 
 
-DueDatePlaceholder = SimpleFunctionalMailTextPlaceholder(
+DueDatePlaceholder = SimpleFunctionalTextPlaceholder(
     "due_date",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.sepadebit_due.date,
     sample=date.today(),
 )
-AccountHolderPlaceholder = SimpleFunctionalMailTextPlaceholder(
+AccountHolderPlaceholder = SimpleFunctionalTextPlaceholder(
     "account_holder",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("account", " "),
     sample="Max Mustermann",
 )
-DebitAmountPlaceholder = SimpleFunctionalMailTextPlaceholder(
+DebitAmountPlaceholder = SimpleFunctionalTextPlaceholder(
     "debit_amount",
     ["sepadebit_payment", "event"],
     lambda sepadebit_payment, event: money_filter(
@@ -125,7 +124,7 @@ DebitAmountPlaceholder = SimpleFunctionalMailTextPlaceholder(
     ),
     lambda event: money_filter(Decimal("12.00"), event.currency, hide_currency=True),
 )
-DebitAmountCurrencyPlaceholder = SimpleFunctionalMailTextPlaceholder(
+DebitAmountCurrencyPlaceholder = SimpleFunctionalTextPlaceholder(
     "debit_amount_with_currency",
     ["sepadebit_payment", "event"],
     lambda sepadebit_payment, event: money_filter(
@@ -133,7 +132,7 @@ DebitAmountCurrencyPlaceholder = SimpleFunctionalMailTextPlaceholder(
     ),
     lambda event: money_filter(Decimal("12.00"), event.currency, hide_currency=False),
 )
-IbanPlaceholder = SimpleFunctionalMailTextPlaceholder(
+IbanPlaceholder = SimpleFunctionalTextPlaceholder(
     "iban",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("iban")[0:4]
@@ -141,25 +140,25 @@ IbanPlaceholder = SimpleFunctionalMailTextPlaceholder(
     + sepadebit_payment.info_data.get("iban")[-4:],
     sample="DE02xxxx2051",
 )
-BicPlaceholder = SimpleFunctionalMailTextPlaceholder(
+BicPlaceholder = SimpleFunctionalTextPlaceholder(
     "bic",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("bic"),
     sample="BYLADEM1001",
 )
-ReferencePlaceholder = SimpleFunctionalMailTextPlaceholder(
+ReferencePlaceholder = SimpleFunctionalTextPlaceholder(
     "reference",
     ["sepadebit_payment"],
     lambda sepadebit_payment: sepadebit_payment.info_data.get("reference"),
     lambda event: f'{event.settings.payment_sepadebit_reference_prefix + "-" if event.settings.payment_sepadebit_reference_prefix else ""}{event.slug.upper()}-XXXXXXX',  # noqa
 )
-CreditorIdPlaceholder = SimpleFunctionalMailTextPlaceholder(
+CreditorIdPlaceholder = SimpleFunctionalTextPlaceholder(
     "creditor_id",
     ["sepadebit_payment", "event"],
     lambda sepadebit_payment, event: event.settings.payment_sepadebit_creditor_id,
     sample="DE98ZZZ09999999999",
 )
-CreditorNamePlaceholder = SimpleFunctionalMailTextPlaceholder(
+CreditorNamePlaceholder = SimpleFunctionalTextPlaceholder(
     "creditor_name",
     ["sepadebit_payment", "event"],
     lambda sepadebit_payment, event: event.settings.payment_sepadebit_creditor_name,
@@ -179,9 +178,8 @@ mail_placeholders = [
 ]
 
 
-@receiver(register_mail_placeholders, dispatch_uid="payment_sepadebit_placeholders")
+@receiver(register_text_placeholders, dispatch_uid="payment_sepadebit_placeholders")
 def register_mail_renderers(sender, **kwargs):
-
     return mail_placeholders
 
 
