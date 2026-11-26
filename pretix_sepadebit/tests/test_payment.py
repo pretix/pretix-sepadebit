@@ -7,7 +7,7 @@ from django.utils.timezone import now
 from django_scopes import scopes_disabled
 from pretix.base.email import get_email_context
 from pretix.base.models import (
-    Event, Item, Order, OrderPayment, Organizer, Quota,
+    Event, Item, Order, OrderPayment, Organizer, Quota, Team, User,
 )
 from unittest import mock
 
@@ -35,11 +35,11 @@ def event():
     )
     event.settings.set("payment_sepadebit_creditor_name", "Acme Corp")
     event.settings.set("payment_sepadebit_creditor_iban", "DE13495179316396679327")
-    event.settings.set("payment_sepadebit_creditor_bic", "THISISNOBIC")
+    event.settings.set("payment_sepadebit_creditor_bic", "DEUTDEFFXXX")
     # testing creditor id from https://www.bundesbank.de/en/tasks/payment-systems/services/sepa/creditor-identifier/creditor-identifier-626704
     event.settings.set("payment_sepadebit_creditor_id", "DE98ZZZ09999999999")
     event.settings.set("payment_sepadebit__enabled", True)
-    event.currency = "€"
+    event.currency = "EUR"
 
     event.enable_plugin("pretix_sepadebit")
     event.save()
@@ -47,7 +47,14 @@ def event():
     quota = Quota.objects.create(name="Test", size=2, event=event)
     item1 = Item.objects.create(event=event, name="Ticket", default_price=23)
     quota.items.add(item1)
-    # OrderPosition.objects.create(order=o1, item=item1, variation=None, price=23)
+
+    user = User.objects.create_user("dummy@dummy.dummy", "dummy")
+    t = Team.objects.create(organizer=o, all_event_permissions=True,
+                            all_organizer_permissions=True,
+                            all_events=True, )
+    t.members.add(user)
+
+
     return event
 
 
@@ -268,6 +275,8 @@ def test_mail_context(event, order):
             remind_after=remind_after,
             old_format=False,
         )
+        op.save()
+        op.refresh_from_db()
 
         ctx = get_email_context(event=event, order=order, sepadebit_payment=op)
 
@@ -374,3 +383,26 @@ def test_organizer_get_unexported(mail_setup):
 
         ue = view.get_unexported()
         assert len(ue) == 8
+
+
+@pytest.mark.django_db
+def test_long_slug(client, event, order):
+    with scopes_disabled():
+        client.login(email="dummy@dummy.dummy", password="dummy")
+        op = orderpayment(
+            order, date=now(), remind_after=now(), reminded=False, old_format=False
+        )
+        long_reference = "I_AM_A_VERY_LONG_REFERENCE_THIS_MIGHT_HAPPEN_WHEN_THE_EVENT_HAS_A_LARGE_SLUG"
+        info_data = op.info_data
+        info_data["reference"] = long_reference
+        op.info_data = info_data
+        op.save()
+
+        export_url = "/control/event/{}/{}/sepa/exports/".format(
+            event.organizer.slug, event.slug
+        )
+        response = client.post(export_url, {"export-mode": "split"}, follow=True)
+        assert response.status_code == 200
+
+        messages = [str(m) for m in response.context["messages"]]
+        assert not any("did not validate" in m for m in messages), messages
