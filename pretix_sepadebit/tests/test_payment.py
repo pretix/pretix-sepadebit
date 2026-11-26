@@ -23,6 +23,9 @@ migration = importlib.import_module("pretix_sepadebit.migrations.0007_sepaduedat
 def event():
     # IBAN and BIC are random  values
     o = Organizer.objects.create(name="Dummy", slug="dummy")
+    o.enable_plugin("pretix_sepadebit")
+    o.save()
+
     event = Event.objects.create(
         organizer=o,
         name="Dummy",
