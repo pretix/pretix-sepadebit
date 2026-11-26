@@ -3,7 +3,9 @@ from django.utils.translation import gettext_lazy
 from . import __version__
 
 try:
-    from pretix.base.plugins import PluginConfig, PLUGIN_LEVEL_EVENT_ORGANIZER_HYBRID
+    from pretix.base.plugins import (
+        PLUGIN_LEVEL_EVENT_ORGANIZER_HYBRID, PluginConfig,
+    )
 except ImportError:
     raise RuntimeError("Please use pretix 2025.7 or above to run this plugin!")
 

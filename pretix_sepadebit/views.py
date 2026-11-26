@@ -3,7 +3,6 @@ import logging
 import os
 from collections import defaultdict
 from decimal import Decimal
-
 from django import forms
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -16,9 +15,11 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, ListView, DeleteView
+from django.views.generic import DeleteView, DetailView, ListView
 from functools import reduce
 from operator import or_
+
+from pretix import settings
 from pretix.base.models import Event, Order, OrderPayment, OrderRefund
 from pretix.control.permissions import (
     EventPermissionRequiredMixin, OrganizerPermissionRequiredMixin,
@@ -145,6 +146,14 @@ class ExportListView(ListView):
                     )
                 )
             remaining_amount = payment.amount - payment.refund_amount
+
+            reference = payment.info_data["reference"]
+            if len(reference) > 35:
+                divider = "..."
+                length_order_code = settings.ENTROPY["order_code"]
+                remainder = 35 - length_order_code - len(divider)
+                reference = f"{payment.info_data['reference'][:remainder]}{divider}{payment.info_data['reference'][-length_order_code:]}"
+
             payment_dict = {
                 "name": payment.info_data["account"],
                 "IBAN": payment.info_data["iban"],
@@ -152,7 +161,7 @@ class ExportListView(ListView):
                 "amount": int(remaining_amount * 100),
                 "type": "OOFF",
                 "collection_date": collection_date,
-                "mandate_id": payment.info_data["reference"],
+                "mandate_id": reference,
                 "mandate_date": (
                     payment.order.datetime if payment.migrated else payment.created
                 ).date(),
